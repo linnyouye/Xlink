@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="FanDirection_Positive">0</integer>
+    <integer name="FanDirection_Opposite">1</integer>
+    <integer name="FanModel_Nature">0</integer>
+    <integer name="FanModel_Machine">1</integer>
+</resources>
