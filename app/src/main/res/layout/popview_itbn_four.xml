@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+   <Button
+       android:text="1h"
+       style="@style/popview_btn4_style" />
+    <Button
+        android:text="2h"
+        style="@style/popview_btn4_style"  />
+    <Button
+        android:text="3h"
+        style="@style/popview_btn4_style"  />
+    <Button
+        android:text="4h"
+        style="@style/popview_btn4_style"/>
+
+    <Button
+        android:id="@+id/button"
+        style="@style/popview_btn4_style"
+        android:text="5h" />
+
+    <Button
+        android:text="6h"
+        style="@style/popview_btn4_style"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="7h"
+        style="@style/popview_btn4_style" />
+    <Button
+        android:text="8h"
+        style="@style/popview_btn4_style"
+        android:layout_height="wrap_content" />
+    <Button
+        android:text="9h"
+        style="@style/popview_btn4_style"/>
+
+</LinearLayout>

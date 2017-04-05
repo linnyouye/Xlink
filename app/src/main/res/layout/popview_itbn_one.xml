@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_controlbtn_popview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageButton
+android:id="@+id/ibtn_1_pop_one"
+        android:src="@drawable/selector_ibtn_1_cloud"
+        style="@style/popview_ibtn_style"  />
+    <ImageButton
+
+        android:src="@drawable/selector_ibtn_1_cloud"
+        style="@style/popview_ibtn_style"  />
+
+    
+</LinearLayout>

@@ -3,4 +3,43 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorMainGray">#343F45</color>
+    <color name="colorInnerGray">#2B3036</color>
+
+    <color name="colorStrokeGray">#262C2D</color>
+    <color name="colorItemGray">#6d7476</color>
+    <color name="colorIconGray">#cdcdcd</color>
+    <color name="colorIconAdddGray">#515151</color>
+
+    <color name="title_text">#eeeeff</color>
+    <color name="activity_bg">#eee</color>
+    <color name="linear_item_edge">#c5c5c5</color>
+    <color name="linear_item_divider">#e5e5e5</color>
+    <color name="linear_item_bg_normal">#ffffff</color>
+    <color name="linear_item_bg_pressed">#dddd</color>
+    <color name="btn_back_text_normal">#ccc</color>
+    <color name="btn_back_text_pressed">#eeee</color>
+
+    <color name="list_item_pressed">#FFFFFF</color>
+    <color name="list_item_divider">#bbbbbb</color>
+    <color name="list_item_text1_normal">#777</color>
+    <color name="list_item_text1_pressed">#883333ff</color>
+    <color name="list_item_text2_normal">#aaa</color>
+    <color name="list_item_text2_pressed">#883333ff</color>
+    <color name="blue_normal">#cc33a3dc</color>
+    <color name="blue_pressed">#cc2468a2</color>
+    <color name="green_normal">#27C4A2</color>
+    <color name="green_pressed">#336a2f</color>
+    <color name="red_normal">#88ff0000</color>
+    <color name="red_pressed">#eeff0000</color>
+    <color name="link_like_normal">#27C4A2</color>
+    <color name="link_like_pressed">#333333</color>
+    <color name="radiogroup_line">#1fb8ff</color>
+    <color name="rb_checked">#bb1fb8ff</color>
+    <color name="rb_normal">#00ffffff</color>
+
+    <color name="tab_text_normal">#666</color>
+    <color name="tab_text_selected">#fff</color>
+    <color name="status_bar">#27C4A2</color>
 </resources>

@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <include
+        android:id="@+id/layout_login"
+        layout="@layout/layout_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <include
+        android:id="@+id/layout_register"
+        layout="@layout/layout_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <include
+        android:id="@+id/launcher_view"
+        layout="@layout/activity_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

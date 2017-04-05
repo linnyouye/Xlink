@@ -59,7 +59,5 @@ public class Key {
     public static final String PM25="pm25";
     public static final String HUM="hum";
     public static final String TMP="tmp";
-
-
     public static final String IS_ONLINE="is_online";
 }

@@ -39,6 +39,7 @@ public class XlinkConnect {
 
         XlinkAgent.init(context);
         XlinkAgent.getInstance().debug(true);
+        XlinkeAgentLog();
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
             @Override
             public void onStart(int i) {
@@ -78,7 +79,7 @@ public class XlinkConnect {
 
             @Override
             public void onDataPointUpdate(XDevice xDevice, List<DataPoint> list, int i) {
-                Log.i(TAG, "onDataPointUpdate: "+i);
+                Log.i(TAG, "onDataPointUpdate: "+list.toString());
                 /*for(Device device:deviceList){
                     if(device.getxDevice().getDeviceId()==xDevice.getDeviceId()){
                         device.setData(DeviceData.parseFromDataPoints(list));
@@ -112,9 +113,6 @@ public class XlinkConnect {
                 }*/
             }
         });
-
-        XlinkAgent.getInstance().start();
-        XlinkAgent.getInstance().login(899317332, "220fa6b1819c3e00");
     }
 
 
@@ -222,6 +220,7 @@ public class XlinkConnect {
         });
         if(ret<0){
             listener.bindDevice(device,ret);
+            connectDeviceListener.onConnectDevice(device,ret);
         }
 
     }
@@ -337,7 +336,10 @@ public class XlinkConnect {
             e.printStackTrace();
         }
     }
-
+   public static void XlinkeAgentLog()
+   {
+       XlinkAgent.getInstance().login(1554475879,"220fa2b1500dd400");
+   }
 }
 
 

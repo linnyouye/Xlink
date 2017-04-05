@@ -9,5 +9,5 @@ import io.xlink.wifi.sdk.bean.DataPoint;
  */
 
 public abstract class DeviceDate {
-     public abstract  DeviceDate parseFromDataPoints(List<DataPoint> list);
+     public  abstract  DeviceDate parseFromDataPoints(List<DataPoint> list);
 }

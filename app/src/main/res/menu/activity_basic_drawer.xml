@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_addequitment"
+            android:icon="@drawable/drawer_item_add_normal"
+            android:title="添加设备" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/drawer_item_share_normal"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/drawer_item_about_normal"
+            android:title="关于本机" />
+
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/drawer_item_help_normal"
+            android:title="帮助" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/drawer_item_language_normal"
+            android:title="语言" />
+        <item
+            android:id="@+id/nav_theme"
+            android:icon="@drawable/drawer_item_theme_normal"
+            android:title="皮肤" />
+        <item
+            android:id="@+id/nav_backup"
+            android:icon="@drawable/drawer_item_backup_normal"
+            android:title="退出" />
+
+    </group>
+
+
+</menu>

@@ -1,0 +1,78 @@
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/TitleBar">
+
+        <TextView
+            style="@style/TitleTextView"
+            android:text="登录" />
+
+        <Button style="@style/TitleActionButton"
+            android:id="@+id/to_register"
+            android:text="去注册"/>
+
+    </RelativeLayout>
+
+    <Demo.View.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/ScrollViewContainer"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            >
+
+            <LinearLayout style="@style/InputItem">
+
+                <ImageView
+                    style="@style/InputIcon"
+                    android:src="@mipmap/ic_mail"/>
+
+                <EditText
+                    android:id="@+id/et_account"
+                    style="@style/LinearInputText"
+                    android:hint="@string/hint_phone_or_mail"
+                    android:text="13070254851"
+                     />
+
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/InputItem">
+
+                <ImageView
+                    style="@style/InputIcon"
+                    android:src="@mipmap/ic_lock"/>
+
+                <EditText
+                    android:id="@+id/et_password"
+                    style="@style/LinearInputText"
+                    android:text="123456"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+            <Button
+                style="@style/BigButton"
+                android:id="@+id/btn_login"
+                android:text="@string/title_login"
+                android:background="@drawable/btn_main_selector"/>
+
+            <Button
+                style="@style/LinklikeButton"
+                android:id="@+id/btn_reset_password"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/action_reset_pwd"/>
+
+        </LinearLayout>
+    </Demo.View.OverScrollView>
+
+</LinearLayout>

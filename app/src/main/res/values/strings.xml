@@ -1,3 +1,51 @@
 <resources>
-    <string name="app_name">ConnectUtil</string>
+
+    <!-- tab bar -->
+    <string name="tab_device">设备</string>
+    <string name="tab_data">实时数据</string>
+    <string name="tab_me">个人中心</string>
+
+    <!-- register and login -->
+    <string name="title_register">注册</string>
+    <string name="title_login">登录</string>
+    <string-array name="register_tab">
+        <item>手机</item>
+        <item>邮箱</item>
+    </string-array>
+    <string name="title_forget_password">找回密码</string>
+    <string name="action_reset_pwd">找回密码</string>
+    <string name="reset_password_success">已重置密码</string>
+    <string name="to_register">注册账号</string>
+    <string name="to_login">已有账号，直接登录</string>
+
+    <string name="hint_phone_or_mail">请输入手机或邮箱</string>
+    <string name="hint_phone">请输入手机号码</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="hint_user_name">用户名</string>
+    <string name="hint_mail">请输入邮箱</string>
+    <string name="hint_new_password">请输入新密码</string>
+    <string name="hint_auth_code">短信验证码</string>
+    <string name="get_auth_code">获取验证码</string>
+    <string name="get_auth_code_success">已发送短信验证码</string>
+    <string name="reset_mail_password">已发送重置密码邮件</string>
+    <string name="register_by_mail_suceess">注册成功，请登录邮箱激活账号</string>
+
+
+
+
+    <string name="app_name">量磁家居物联</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="equit_list">设备列表</string>
+
+    <string name="btn_fenled">风扇灯</string>
+    <string name="btn_open">开关</string>
+    <string name="btn_light">灯</string>
+    <string name="btn_led">LED</string>
+    <string name="btn_bath">浴霸</string>
+    <string name="select_equitment">选择设备列表</string>
+
 </resources>

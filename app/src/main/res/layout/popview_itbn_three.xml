@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageButton
+
+        style="@style/popview_ibtn_style"
+        android:src="@drawable/selector_ibtn_3_lightone" />
+
+    <ImageButton
+        style="@style/popview_ibtn_style"
+        android:src="@drawable/selector_ibtn_3_lighttwo" />
+
+    <ImageButton
+        style="@style/popview_ibtn_style"
+        android:src="@drawable/selector_ibtn_3_lightthree" />
+
+
+</LinearLayout>

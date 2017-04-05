@@ -20,7 +20,7 @@ public class LoginUtil {
 
             try {
                 JSONObject content=new JSONObject();
-                content.put(Key.corp_id, Cotent.CORP_ID);
+                content.put(Key.corp_id, Content.CORP_ID);
                 content.put(Key.phone,phone);
                 HttpUtils.init();
                 HttpUtils.postJson(Url.GET_AUTH_CODE, content.toString(),null, listener);
@@ -36,7 +36,7 @@ public class LoginUtil {
     public static void verifyCode(String phone, String code, HttpUtils.HttpUtilsListner listener){
         try {
             JSONObject data=new JSONObject();
-            data.put(Key.corp_id, Cotent.CORP_ID);
+            data.put(Key.corp_id, Content.CORP_ID);
             data.put(Key.phone,phone);
             data.put(Key.verifycode,code);
             HttpUtils.postJson(Key.verifycode, data.toString(),null, listener);
@@ -59,7 +59,7 @@ public class LoginUtil {
     }*/
         try {
             JSONObject data=new JSONObject();
-            data.put(Key.corp_id, Cotent.CORP_ID);
+            data.put(Key.corp_id, Content.CORP_ID);
             data.put(Key.email,mail);
             data.put(Key.nickname,userName);
             data.put("source",Key.source);
@@ -78,7 +78,7 @@ public class LoginUtil {
     public static void register(String phone, String password, String code,String userName, HttpUtils.HttpUtilsListner listener) {
         try{
             JSONObject data=new JSONObject();
-            data.put(Key.corp_id, Cotent.CORP_ID);
+            data.put(Key.corp_id, Content.CORP_ID);
             data.put(Key.phone,phone);
             data.put(Key.nickname,userName);
             data.put(Key.verifycode,code);
@@ -96,7 +96,7 @@ public class LoginUtil {
     public static void login(String user, String password, HttpUtils.HttpUtilsListner listener) {
         try{
             JSONObject data=new JSONObject();
-            data.put(Key.corp_id, Cotent.CORP_ID);
+            data.put(Key.corp_id, Content.CORP_ID);
             if(user.contains("@")){
                 data.put(Key.email,user);
             }else{
@@ -149,7 +149,7 @@ public class LoginUtil {
     public static void forgetPassword(String account, HttpUtils.HttpUtilsListner listener){
         try{
             JSONObject data=new JSONObject();
-            data.put(Key.CORP_ID, Cotent.CORP_ID);
+            data.put(Key.CORP_ID, Content.CORP_ID);
             if(account.contains("@")){
                 data.put(Key.EMAIL,account);
             }else{
@@ -166,7 +166,7 @@ public class LoginUtil {
     public static void resetPassword(String account, String code, String password, HttpUtils.HttpUtilsListner listener){
         try{
             JSONObject data=new JSONObject();
-            data.put(Key.CORP_ID, Cotent.CORP_ID);
+            data.put(Key.CORP_ID, Content.CORP_ID);
             if(account.contains("@")){
                 data.put(Key.EMAIL,account);
             }else{
