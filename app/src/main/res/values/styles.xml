@@ -213,4 +213,9 @@
         <item name="android:minHeight">@dimen/linear_item_height</item>
     </style>
 
+    <style name="led_btn_stytle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
 </resources>
