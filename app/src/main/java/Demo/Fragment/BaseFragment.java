@@ -19,9 +19,10 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment  {
 
+
      protected Activity mActivity;
      private View rootview;
-protected  HolderListener holderListener;
+    protected  HolderListener holderListener;
 
     @Nullable
     @Override
