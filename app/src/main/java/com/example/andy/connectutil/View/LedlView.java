@@ -33,6 +33,10 @@ public class LedlView extends View {
 
     private int lightNum = 50;
 
+    public void setLightNum(int lightNum) {
+        this.lightNum = lightNum;
+    }
+
     private int outBtnr;
     private int a;
     private Context context;

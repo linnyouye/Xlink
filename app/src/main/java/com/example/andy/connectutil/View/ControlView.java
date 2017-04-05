@@ -30,7 +30,8 @@ import java.util.List;
 public class ControlView extends View {
 
     boolean btnState = false;
-
+    int lightNum;
+    int outBtnr;
     private int a;
     private Context context;
     private PaintHelper paintHelper;
@@ -116,6 +117,10 @@ public class ControlView extends View {
     public void setArcState(int mArcState) {
         this.mArcState = mArcState;
         invalidate();
+    }
+
+    public void setLightNum(int lightNum) {
+        this.lightNum = lightNum;
     }
 
     public interface OnControlListener {
@@ -227,7 +232,7 @@ public class ControlView extends View {
         minwidth *= 0.95;
         a= minwidth/200;
         //外围按键的画图范围
-        int outBtnr = minwidth / 2;  //外围四按键
+         outBtnr = minwidth / 2;  //外围四按键
         //内围的圆的宽度，中心圆的宽度是内围圆的一半
         innerWidth = minwidth;
         innerWidth *= 0.8;
@@ -422,6 +427,13 @@ public class ControlView extends View {
         }
         //画顶部显示
         canvas.drawPath(top_Show_p, mDeafultPaint);
+
+        if(lightNum>=0&&lightNum<=100) {
+            String str = String.valueOf(lightNum);
+            canvas.drawText(str, center_x - paintHelper.getTextWidth(textPaint, str) / 2, center_y-outBtnr-paintHelper.getTexHeight(textPaint)*3, textPaint);
+        }
+
+
 
         mDeafultPaint.setColor(mDefaultColor);
         mCirclePaint.setColor(mCircleColor);
