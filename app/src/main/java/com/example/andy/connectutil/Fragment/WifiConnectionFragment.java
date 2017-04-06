@@ -128,15 +128,15 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                break;
             case R.id.ibtn_password_see:
                 if (password_status) {
-                    //密码可见
+                    //密码隐藏
                     et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     password_status = false;
-                    ibtn_password_see.setImageResource(R.drawable.password_eye_orange);
+                    ibtn_password_see.setImageResource(R.drawable.password_eye_white);
                 } else {
-                    //密码不可见
+                    //密码可见
                     et_wifi_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     password_status = true;
-                    ibtn_password_see.setImageResource(R.drawable.password_eye_white);
+                    ibtn_password_see.setImageResource(R.drawable.password_eye_orange);
                 }
                break;
         }
