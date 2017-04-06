@@ -66,6 +66,9 @@
                 android:layout_weight="10" />
 
             <ImageButton
+               android:background="@color/colorItemGray"
+                android:scaleType="fitCenter"
+                android:src="@drawable/password_eye_white"
                 android:id="@+id/ibtn_password_see"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -88,7 +91,7 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <!--<include layout="@layout/view_firstguide" />-->
+    <include layout="@layout/view_firstguide" />
 
 
 </FrameLayout>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/new_guide"
+    android:id="@+id/view_new_guide"
     android:background="@drawable/shape_select_btn"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
         <TextView
-            android:id="@+id/tv_firstguide"
+            android:id="@+id/tv_first_guide"
             android:textSize="18sp"
             android:textColor="#fff"
             android:background="@drawable/shape_fragmentlayout"

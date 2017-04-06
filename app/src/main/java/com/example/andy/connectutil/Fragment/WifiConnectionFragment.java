@@ -57,9 +57,9 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public void initView(View view) {
         showLog("initview");
         wifi_name = obtainView(view, R.id.tv_wifi_num);
-        linearLayout_firstguide =(LinearLayout)view.findViewById(R.id.new_guide);
+        linearLayout_firstguide =(LinearLayout) view.findViewById(R.id.view_new_guide);
         btn_next = obtainView(view, R.id.btn_next);
-        tv_firstguide = obtainView(view, R.id.tv_firstguide);
+        tv_firstguide = obtainView(view, R.id.tv_first_guide);
         ibtn_password_see = obtainView(view, R.id.ibtn_password_see);
         et_wifi_password = obtainView(view, R.id.et_wifi_password);
 
@@ -79,8 +79,8 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public void initData() {
         Bundle args = getArguments();
         String str = args.getString("wifi名称"); //拿到传送过来的数据
-        tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
-                "出现‘滴’的一声。" + "\n" + "不带遥控激活方式：按墙壁开关键5次即配对成功。" + "\n" + "再按“next”键");
+      tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
+               "出现‘滴’的一声。" + "\n" + "不带遥控激活方式：按墙壁开关键5次即配对成功。" + "\n" + "再按“next”键");
         wifi_name.setText(str);
     }
 
@@ -112,31 +112,33 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-               /* String password=et_wifi_password.getText().toString();
-                 WiFiConfig wiFiConfig=new WiFiConfig(getActivity());
-                 wiFiConfig.StartConfig(password);
-                  holderListener.startCountdownFragment();*/
+//               /* String password=et_wifi_password.getText().toString();
+//                 WiFiConfig wiFiConfig=new WiFiConfig(getActivity());
+//                 wiFiConfig.StartConfig(password);
+//                  holderListener.startCountdownFragment();*/
                 //获取FargmentHolder跳转到DeviceFargement
                 MainActivity mainActivity = (MainActivity) getActivity();
                 FragmentHolder holder = mainActivity.getHolder();
                 DeviceFragement deviceFragement = DeviceFragement.newInstance(product_ID);
                 holder.replaceFragment(deviceFragement, DeviceFragement.TAG);
                 break;
-            case R.id.new_guide:
+           case R.id.view_new_guide:
                 //点击即消失
                 linearLayout_firstguide.setVisibility(View.INVISIBLE);
-                break;
+               break;
             case R.id.ibtn_password_see:
                 if (password_status) {
                     //密码可见
                     et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     password_status = false;
+                    ibtn_password_see.setImageResource(R.drawable.password_eye_orange);
                 } else {
                     //密码不可见
                     et_wifi_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     password_status = true;
+                    ibtn_password_see.setImageResource(R.drawable.password_eye_white);
                 }
-                break;
+               break;
         }
     }
 

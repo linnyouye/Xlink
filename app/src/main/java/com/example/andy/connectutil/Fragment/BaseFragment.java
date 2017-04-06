@@ -29,6 +29,7 @@ public abstract class BaseFragment extends Fragment  {
             return rootview;
         } else {
             rootview = inflater.inflate(getFragmentLayoutId(), container, false);
+
         }
         initView(rootview);
         setListener();
