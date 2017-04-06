@@ -75,7 +75,7 @@ public class FragmentHolder {
     /**
      * @param tag 移除fragment
      */
-    public void removeFragment(String tag) {
+    public void removeFragmentByTag(String tag) {
             FragmentTransaction transaction = manager.beginTransaction();
             Fragment fragment = manager.findFragmentByTag(tag);
         if(fragment != null){

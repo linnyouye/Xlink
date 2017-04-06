@@ -5,10 +5,10 @@
     android:background="@color/colorInnerGray"
     android:orientation="vertical">
 <include layout="@layout/toolbar_others"/>
-    <com.waiwen.liangcide2.Demo.View.LedlViewtest
+    <com.example.andy.connectutil.View.LedlView
+        android:layout_weight="7"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7" />
+        android:layout_height="0dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

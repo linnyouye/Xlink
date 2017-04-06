@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -91,6 +92,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         mAdapter = new AddEquitAdapter(this, equitmentList);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
         Log.d("waiwen","setAdapter：");
 
@@ -180,10 +182,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.img_backup:
                 if(holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT){
-                             holder.removeFragment(WifiConnectionFragment.fragment_tag);
+                             holder.removeFragmentByTag(WifiConnectionFragment.fragment_tag);
                 }
                 else if(holder.getState() == FragmentHolder.SELECT_FRAGMENT){
-                    holder.removeFragment(EquitmentSelectFragment.fragment_tag);
+                    holder.removeFragmentByTag(EquitmentSelectFragment.fragment_tag);
                 }
                 break;
 
