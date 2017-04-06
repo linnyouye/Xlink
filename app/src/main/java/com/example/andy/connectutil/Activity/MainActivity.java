@@ -86,8 +86,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     protected void initData() {
         //测试数据
-        equitmentList.add(new Equitment("风扇", R.drawable.button_menu_fanc));
+        equitmentList.add(new Equitment("风扇灯", R.drawable.buttom_menu_fan_light));
         equitmentList.add(new Equitment("LED灯",R.drawable.button_menu_led));
+        equitmentList.add(new Equitment("灯",R.drawable.button_menu_fanc));
+        equitmentList.add(new Equitment("浴霸",R.drawable.buttom_menu_bathbully));
         mAdapter = new AddEquitAdapter(this, equitmentList);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
@@ -272,7 +274,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
 
 
-    protected void setBottomSheetOnOff() {
+    public void setBottomSheetOnOff() {
         int state = behavior.getState();
         if (state == BottomSheetBehavior.STATE_EXPANDED) {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

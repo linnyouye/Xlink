@@ -6,6 +6,7 @@
     android:orientation="vertical">
 <include layout="@layout/toolbar_others"/>
     <com.waiwen.liangcide2.Demo.View.LedlViewtest
+        android:id="@+id/LEDLightView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7" />

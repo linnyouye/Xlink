@@ -51,10 +51,19 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             @Override
             public void onClick(View v) {
                String DeviceName=viewHolder.tv_name.getText().toString();
-                if(DeviceName.equals("风扇")){
+                if(DeviceName.equals("风扇灯")){
                     MainActivity mainActivity=(MainActivity)mContext;
+                    mainActivity.setBottomSheetOnOff();
                     FragmentHolder fragmentHolder=mainActivity.getHolder();
                     fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment");
+                }else if(DeviceName.equals("灯")) {
+
+                }else  if(DeviceName.equals("LED灯"))
+                {
+
+                }else if(DeviceName.equals("浴霸"))
+                {
+
                 }
 
             }
