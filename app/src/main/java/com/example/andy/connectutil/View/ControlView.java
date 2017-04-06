@@ -121,6 +121,7 @@ public class ControlView extends View {
 
     public void setLightNum(int lightNum) {
         this.lightNum = lightNum;
+        invalidate();
     }
 
     public interface OnControlListener {

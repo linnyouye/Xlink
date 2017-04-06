@@ -12,9 +12,9 @@ import android.widget.PopupWindow;
 
 import com.example.andy.connectutil.Activity.FanLightHelper;
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.View.ControlView;
 import com.example.andy.connectutil.entity.Device.FanLinght;
 
-import com.example.andy.connectutil.View.ControlView;
 import io.xlink.wifi.sdk.XlinkCode;
 
 
@@ -23,6 +23,12 @@ import io.xlink.wifi.sdk.XlinkCode;
  */
 
 public class ContFanLedFragment extends Fragment {
+
+
+    private boolean pop_state1 =true;
+    private boolean pop_state2 =true;
+    private boolean pop_state3 =true;
+    private boolean pop_state4 =true;
 
     private boolean state = false;
     private  byte date=1;
@@ -35,6 +41,9 @@ public class ContFanLedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // return super.onCreateView(inflater, container, savedInstanceState);
+
+
+
 
           fanLightHelper=new FanLightHelper();
           fanLightHelper.getDevice();
@@ -109,12 +118,12 @@ public class ContFanLedFragment extends Fragment {
       imageButton1.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-           if(!state) {popupWindow1.setWidth(v.getMeasuredWidth());
-              popupWindow1.showAsDropDown(v,0,-150);
-           state = true;}
+           if(!pop_state1) {popupWindow1.setWidth(v.getMeasuredWidth());
+              popupWindow1.showAsDropDown(v,0,15);
+           pop_state1 = true;}
               else {
                popupWindow1.dismiss();
-               state = false;
+               pop_state1 = false;
            }
           }
       });
@@ -122,12 +131,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow2.setWidth(v.getMeasuredWidth());
+                if(!pop_state2) {popupWindow2.setWidth(v.getMeasuredWidth());
                     popupWindow2.showAsDropDown(v,0,15);
-                    state = true;}
+                    pop_state2 = true;}
                 else {
                     popupWindow2.dismiss();
-                    state = false;
+                    pop_state2 = false;
                 }
             }
         });
@@ -135,12 +144,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow3.setWidth(v.getMeasuredWidth());
+                if(!pop_state3) {popupWindow3.setWidth(v.getMeasuredWidth());
                     popupWindow3.showAsDropDown(v,0,15);
-                    state = true;}
+                    pop_state3 = true;}
                 else {
                     popupWindow3.dismiss();
-                    state = false;
+                    pop_state3 = false;
                 }
             }
         });
@@ -148,12 +157,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow4.setWidth(v.getMeasuredWidth());
+                if(!pop_state4) {popupWindow4.setWidth(v.getMeasuredWidth());
                     popupWindow4.showAsDropDown(v,0,15);
-                    state = true;}
+                    pop_state4 = true;}
                 else {
                     popupWindow4.dismiss();
-                    state = false;
+                    pop_state4 = false;
                 }
             }
         });

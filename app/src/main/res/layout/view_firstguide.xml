@@ -8,13 +8,14 @@
 
 
         <TextView
+
             android:id="@+id/tv_first_guide"
             android:textSize="18sp"
             android:textColor="#fff"
             android:background="@drawable/shape_fragmentlayout"
             android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后
 出现‘滴’的一声。"
             android:layout_width="300dp"
