@@ -1,6 +1,5 @@
 package com.example.andy.connectutil.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,8 +18,6 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment  {
 
-
-     protected Activity mActivity;
      private View rootview;
     protected   HolderListener holderListener;
 
@@ -44,12 +41,6 @@ protected void showLog(String str){
     Log.d("waiwen",this.getTag()+": "+str);
 
 }
-     //获取到相关联的
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mActivity = activity;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
