@@ -15,6 +15,10 @@ public interface HolderListener {
     void setMainPage(String fragment_title, int view_status);
 
     void startWifiConnection(String str);
+       //更改主页面状态
+    void setFraagment_State(String Tag_State);
+    void mainViewUpdate(String state);
+
 
     void startCountdownFragment();
 

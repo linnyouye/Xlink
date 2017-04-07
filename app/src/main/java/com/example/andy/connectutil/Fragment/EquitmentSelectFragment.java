@@ -8,6 +8,10 @@ import android.widget.Button;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Net.Content;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by 95815 on 2017/3/10.
  */
@@ -15,13 +19,23 @@ import com.example.andy.connectutil.entity.Net.Content;
 public class EquitmentSelectFragment extends BaseFragment implements View.OnClickListener {
 
 
-    public static final String fragment_tag = "EquitmentSelectFragment";
+    public static final String Fragment_Tag_State = "EquitmentSelectFragment";
 
 
-    private Button btn_fanLed;
-    private Button btn_open;
-    private Button btn_LED;
-    private Button btn_bath;
+    @Bind(R.id.select_btn_fanled)
+    Button btn_fanLed;
+    @Bind(R.id.select_btn_open)
+    Button btn_open;
+    @Bind(R.id.select_btn_led)
+    Button btn_LED;
+    @Bind(R.id.select_btn_bath)
+        Button btn_bath;
+
+
+    @Override
+    protected String getState() {
+        return Fragment_Tag_State;
+    }
 
     public static EquitmentSelectFragment newInstance() {
 
@@ -39,23 +53,10 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void initView(View view) {
-
-        btn_bath = (Button) view.findViewById(R.id.select_btn_bath);
-        btn_fanLed = (Button) view.findViewById(R.id.select_btn_fanled);
-        btn_open = (Button) view.findViewById(R.id.select_btn_open);
-        btn_LED = (Button) view.findViewById(R.id.select_btn_led);
-
+        ButterKnife.bind(this,view);
     }
 
-    @Override
-    public void setListener() {
 
-        btn_bath.setOnClickListener(EquitmentSelectFragment.this);
-        btn_LED.setOnClickListener(EquitmentSelectFragment.this);
-        btn_open.setOnClickListener(EquitmentSelectFragment.this);
-        btn_fanLed.setOnClickListener(EquitmentSelectFragment.this);
-
-    }
 
     @Override
     public void initData() {
@@ -63,12 +64,9 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
     }
 
 
-    @Override
-    public <T extends View> T obtainView(View view, int ReId) {
-        return super.obtainView(view, ReId);
-    }
 
 
+@OnClick({R.id.select_btn_bath,R.id.select_btn_open,R.id.select_btn_led,R.id.select_btn_fanled})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

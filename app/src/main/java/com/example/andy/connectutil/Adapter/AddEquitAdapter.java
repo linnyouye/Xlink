@@ -9,14 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.R;
 
 import java.util.List;
-
-import com.example.andy.connectutil.Bean.Equitment;
-import com.example.andy.connectutil.Fragment.ContFanLedFragment;
-import com.example.andy.connectutil.Fragment.CountDownFragment;
-import com.example.andy.connectutil.Fragment.FragmentHolder;
 
 
 /**
@@ -53,8 +49,10 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                String DeviceName=viewHolder.tv_name.getText().toString();
                 if(DeviceName.equals("风扇")){
                     MainActivity mainActivity=(MainActivity)mContext;
-                    FragmentHolder fragmentHolder=mainActivity.getHolder();
-                    fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment");
+//                    FragmentHolder fragmentHolder=mainActivity.getHolder();
+//                    fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment");
+
+
                 }
 
             }

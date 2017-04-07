@@ -1,11 +1,16 @@
 package com.example.andy.connectutil.Activity;
 
+import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.andy.connectutil.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -17,6 +22,10 @@ import com.example.andy.connectutil.R;
  */
 
 public class SplashActivity extends BasicActivity {
+    @Bind(R.id.image_splash)
+    ImageView imageSplash;
+    @Bind(R.id.rl_splash)
+    RelativeLayout rlSplash;
     private ImageView mRlSplash;
 
 
@@ -32,7 +41,7 @@ public class SplashActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-        mRlSplash = obtainView(R.id.image_splash);
+
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mHandler.post(new Runnable() {
@@ -100,4 +109,10 @@ public class SplashActivity extends BasicActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

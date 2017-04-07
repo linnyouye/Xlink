@@ -136,7 +136,7 @@ public void drawBitmapTL(Canvas canvas, Paint paint, boolean state){
         canvas.drawBitmap(bitmap,null,dst,paint);
 
     }
-    public void drawLedBitmapBR(Canvas canvas, Paint paint, boolean state ){
+    public void drawLedBitmapBL(Canvas canvas, Paint paint, boolean state ){
         Rect dst = new Rect(center_x-a*100,center_y+a*80,center_x-a*80,center_y+a*100);
         Bitmap bitmap_white = BitmapFactory.decodeResource(context.getResources(),R.drawable.led_colorpick_white);
         Bitmap bitmap_orange = BitmapFactory.decodeResource(context.getResources(),R.drawable.led_colorpick_orange);
@@ -147,7 +147,7 @@ public void drawBitmapTL(Canvas canvas, Paint paint, boolean state){
 
 
 
-    public void drawLedBitmapBL(Canvas canvas, Paint paint, boolean state ){
+    public void drawLedBitmapBR(Canvas canvas, Paint paint, boolean state ){
         Rect dst = new Rect(center_x+a*80,center_y+a*80,center_x+a*100,center_y+a*100);
         Bitmap bitmap_white = BitmapFactory.decodeResource(context.getResources(),R.drawable.led_nightlight_white);
         Bitmap bitmap_orange = BitmapFactory.decodeResource(context.getResources(),R.drawable.led_nightlight_orange);

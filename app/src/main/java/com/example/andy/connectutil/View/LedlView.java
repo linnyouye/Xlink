@@ -225,7 +225,7 @@ public class LedlView extends View {
 
 
         globalRegion = new Region(-w, -h, w, h);
-       int  minwidth = w > h ? h : w;
+        int minwidth = w > h ? h : w;
         minwidth *= 0.95;
         a = minwidth / 200;
         //外围按键的画图范围
@@ -313,9 +313,9 @@ public class LedlView extends View {
         canvas.drawPath(center_p, mCirclePaint);
         canvas.drawPath(center_p, mLinePaint);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.led_center);
-        Rect rect = new Rect(center_x-innerWidth/8,center_y-innerWidth/8,center_x+innerWidth/8,center_y+innerWidth/8);
-        canvas.drawBitmap(bitmap,null,rect,textPaint);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.led_center);
+        Rect rect = new Rect(center_x - innerWidth / 8, center_y - innerWidth / 8, center_x + innerWidth / 8, center_y + innerWidth / 8);
+        canvas.drawBitmap(bitmap, null, rect, textPaint);
 
 //画档位扇形
         canvas.drawPath(one_p, mDeafultPaint);
@@ -359,15 +359,15 @@ public class LedlView extends View {
             //点击右下角按键变色
             canvas.drawPath(rb_Btn_p, mDeafultPaint);
             paintHelper.drawLedBitmapBR(canvas, textPaint, true);
+        } else if (current_flag == LB_BTN) {
+            canvas.drawPath(lb_Btn_p, mDeafultPaint);
+            paintHelper.drawLedBitmapBL(canvas, textPaint, true);
         } else if (current_flag == RT_BTN) {
             canvas.drawPath(rt_Btn_p, mDeafultPaint);
             paintHelper.drawBitmapTR(canvas, textPaint, true);
         } else if (current_flag == LT_BTN) {
             canvas.drawPath(lt_Btn_p, mDeafultPaint);
             paintHelper.drawBitmapTL(canvas, textPaint, true);
-        } else if (current_flag == LB_BTN) {
-            canvas.drawPath(lb_Btn_p, mDeafultPaint);
-            paintHelper.drawLedBitmapBL(canvas, textPaint, true);
         } else if (current_flag == CENTER) {
             canvas.drawPath(center_p, mCirclePaint);
         } else if (current_flag == ONE) {
@@ -387,13 +387,12 @@ public class LedlView extends View {
         //画顶部的数字显示
         canvas.drawPath(top_Show_p, mDeafultPaint);
 
-      if(lightNum>=0&&lightNum<=100) {
-          String str = String.valueOf(lightNum);
-          canvas.drawText(str, center_x - paintHelper.getTextWidth(textPaint, str) / 2, center_y-outBtnr-paintHelper.getTexHeight(textPaint)*3, textPaint);
-      }
+        if (lightNum >= 0 && lightNum <= 100) {
+            String str = String.valueOf(lightNum);
+            canvas.drawText(str, center_x - paintHelper.getTextWidth(textPaint, str) / 2, center_y - outBtnr - paintHelper.getTexHeight(textPaint) * 3, textPaint);
+        }
         //画光圈
         canvas.drawPath(outCir_p, mOutArcPaint);
-
 
 
     }

@@ -26,6 +26,8 @@ import io.xlink.wifi.sdk.XlinkCode;
  */
 
 public class DeviceFragement extends Fragment {
+
+    public static final String Fragment_Tag_State ="ChoseScanedDevice";
     public static final String TAG="ChoseScanedDevice";
     List<View> buttonlist;
     private String produt_id;
@@ -79,6 +81,7 @@ public class DeviceFragement extends Fragment {
                         public void bindDevice(XDevice device, int i) {
                             if(i== XlinkCode.SUCCEED)
                             {
+
                                 Log.d(TAG, "bindDevice:  绑定设备成功");
                             }else 
                             {

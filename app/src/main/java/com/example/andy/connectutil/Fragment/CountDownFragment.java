@@ -1,7 +1,6 @@
 package com.example.andy.connectutil.Fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +14,9 @@ import com.example.andy.connectutil.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by 95815 .
  * Date:2017/3/31.
@@ -24,15 +26,19 @@ import java.util.TimerTask;
 
 public class CountDownFragment extends BaseFragment {
 
-    public static final String fragment_tag = "CountDownFragment";
+
+    @Bind(R.id.img_countdown)
+    ImageView img_gif_wifi;
+    @Bind(R.id.tv_countdown)
+    TextView tv_countdown;
+    public static final String Fragment_Tag_State= "CountDownFragment";
 
 
-    private int count=0;
+    private int count = 0;
     private Handler mHandler;
     private Handler mHandler1;
     private Timer timer;
-    private ImageView img_gif_wifi;
-    private TextView tv_countdown;
+
 
     public static CountDownFragment newInstance() {
 
@@ -50,14 +56,15 @@ public class CountDownFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        img_gif_wifi = obtainView(view, R.id.img_countdown);
-        tv_countdown = obtainView(view, R.id.tv_countdown);
+        ButterKnife.bind(this,view);
     }
 
     @Override
-    public void setListener() {
-
+    protected String getState() {
+        return Fragment_Tag_State;
     }
+
+
 
     @Override
     public void initData() {
@@ -71,17 +78,6 @@ public class CountDownFragment extends BaseFragment {
         startCountDown();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 
     /**
      * 倒计时
@@ -99,13 +95,13 @@ public class CountDownFragment extends BaseFragment {
                     if (msg.what == 0) {
                         tv_countdown.setText("0s");
                         timer.cancel();
-                        holderListener.setMainPage("设备连接失败",View.VISIBLE);
+                        holderListener.setMainPage("设备连接失败", View.VISIBLE);
                         mHandler1.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 holderListener.startWifiConnection("返回");
                             }
-                        },3000);
+                        }, 3000);
 //                        timer.schedule(new TimerTask() {
 //
 //                            @Override
@@ -122,8 +118,6 @@ public class CountDownFragment extends BaseFragment {
             }
 
         };
-
-
         timer = new Timer(true);
         TimerTask tt = new TimerTask() {
             int countTime = 60;
@@ -135,10 +129,8 @@ public class CountDownFragment extends BaseFragment {
                 Message msg = new Message();
                 msg.what = countTime;
                 mHandler.sendMessage(msg);
-
             }
         };
         timer.schedule(tt, 1000, 1000);
-
     }
 }

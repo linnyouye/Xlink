@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 
@@ -48,16 +47,6 @@ public abstract class BasicActivity extends AppCompatActivity
     protected abstract void setListener();
 
 
-    /**
-     * 作用：获取控件 Id (避免类型转换的繁琐，抽取 findViewById() )
-     *
-     * @param ReId 控件的ID
-     * @param <T>  具体控件View
-     * @return
-     */
-    public <T extends View> T obtainView(int ReId) {
-        return (T) findViewById(ReId);
-    }
 
     /**
      * @param context
@@ -82,8 +71,7 @@ public abstract class BasicActivity extends AppCompatActivity
 
              @Override
              public void onBackPressed() {
-               //  super.onBackPressed();
-                 super.finish();
+                 super.onBackPressed();
              }
 
              @Override

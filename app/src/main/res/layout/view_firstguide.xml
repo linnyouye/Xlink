@@ -8,7 +8,7 @@
 
 
         <TextView
-
+android:padding="20dp"
             android:id="@+id/tv_first_guide"
             android:textSize="18sp"
             android:textColor="#fff"

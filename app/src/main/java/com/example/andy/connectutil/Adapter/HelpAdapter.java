@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.andy.connectutil.Bean.HelpItem;
 import com.example.andy.connectutil.R;
 
 import java.util.List;
-
-import com.example.andy.connectutil.Bean.HelpItem;
 
 /**
  * Created by 95815 .
@@ -64,6 +63,7 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
 
         public TextView tv_helpName;
         public TextView tv_helpInfo;

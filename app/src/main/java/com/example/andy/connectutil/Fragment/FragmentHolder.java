@@ -68,6 +68,8 @@ public class FragmentHolder {
      */
     public void addFragment(Fragment fragment,String tag) {
             FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.animator_fragment_enter,R.anim.animator_fragment_exit,
+                R.anim.animator_fragment_enter,R.anim.animator_fragment_exit);
             transaction.add(R.id.fragment_layout,fragment,tag);
             transaction.commit();
     }

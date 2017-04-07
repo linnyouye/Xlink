@@ -18,7 +18,8 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment  {
 
-     private View rootview;
+    public static final String Fragment_Tag_State ="BaseFragment";
+    private View rootview;
     protected   HolderListener holderListener;
 
     @Nullable
@@ -32,42 +33,24 @@ public abstract class BaseFragment extends Fragment  {
 
         }
         initView(rootview);
-        setListener();
         initData();
-        showLog("onCreateView");
+        showLog("  onCreateView");
         return rootview;
     }
 
-protected void showLog(String str){
-    Log.d("waiwen",this.getTag()+": "+str);
 
-}
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        showLog("onCreate");
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        showLog("onstart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        showLog("onResume");
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getActivity() instanceof HolderListener) {
-            holderListener = (HolderListener) getActivity();
-            showLog("取得接口实现类");
+        try{
+            holderListener = (HolderListener)context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(getClass().getName()+"未继承接口");
         }
+        showLog(":   onAttch");
     }
 
     /**
@@ -79,19 +62,71 @@ protected void showLog(String str){
      * @param view
      */
     public abstract void initView(View view);
-    public abstract void setListener();
+
     public abstract void initData();
 
     /**
-     * 作用：获取控件 Id (避免类型转换的繁琐，抽取 findViewById() )
-     *
-     * @param view 父View
-     * @param ReId 控件的ID
-     * @param <T>  具体控件View
-     * @return
+     * @returndang 当前的fragmentTag
      */
-    public <T extends View> T obtainView(View view,int ReId) {
-        return (T) view.findViewById(ReId);
+    protected abstract String getState();
+    public void   showLog(String str){
+        Log.d("waiwen",getClass().getName()+str);
+
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showLog(":  onCreate");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showLog(":  onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showLog("    :onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showLog(":   onResume"+getState());
+        holderListener.setFraagment_State(getState());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showLog(":   onStop");
+        holderListener.mainViewUpdate("主界面");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showLog(":   onDestroyView");
+
+    }
+
+    public void onDestroy(){
+
+        super.onDestroy();
+        showLog(":   onDestroy");
+
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        showLog(":     onDetach");
+
+    }
+
 
 }
