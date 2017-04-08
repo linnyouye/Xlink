@@ -13,8 +13,11 @@ import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.BathbullyFragment;
 import com.example.andy.connectutil.Fragment.ContFanLedFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
+<<<<<<< HEAD
 import com.example.andy.connectutil.Fragment.LEDLightFragment;
 import com.example.andy.connectutil.Fragment.LightFragment;
+=======
+>>>>>>> waiwen1
 import com.example.andy.connectutil.R;
 
 import java.util.List;
@@ -52,6 +55,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             @Override
             public void onClick(View v) {
                String DeviceName=viewHolder.tv_name.getText().toString();
+<<<<<<< HEAD
                 MainActivity mainActivity=(MainActivity)mContext;
                 mainActivity.setBottomSheetOnOff();
                 FragmentHolder fragmentHolder=mainActivity.getHolder();
@@ -65,6 +69,12 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                 }else if(DeviceName.equals("浴霸"))
                 {
                     fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment");
+=======
+                if(DeviceName.equals("风扇")){
+                    MainActivity mainActivity=(MainActivity)mContext;
+                    FragmentHolder fragmentHolder=mainActivity.getHolder();
+                    fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment",true);
+>>>>>>> waiwen1
                 }
 
             }

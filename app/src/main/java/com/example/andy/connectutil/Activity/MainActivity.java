@@ -56,6 +56,7 @@ import java.util.TimerTask;
 public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
 
+
     private boolean isExit = false;
     private Timer tExit;
 
@@ -128,7 +129,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         fragmentManager = getSupportFragmentManager();
         holder = new FragmentHolder(this, fragmentManager);
-        holder.setState(FragmentHolder.MAIN_PAGE);
+
 
 
         account = new Account(getApplicationContext());
@@ -203,24 +204,18 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.bottom_add_ibtn:
-                if (holder.getState() == FragmentHolder.MAIN_PAGE) {
-                    holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-                    holder.setState(FragmentHolder.SELECT_FRAGMENT);
-                }
-                if (holder.getState() != FragmentHolder.SELECT_FRAGMENT) {
-                    holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-                    holder.setState(FragmentHolder.SELECT_FRAGMENT);
-                }
+
+                 //   holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
+
+                holder.replaceFragment(EquitmentSelectFragment.newInstance(),
+                        EquitmentSelectFragment.Fragment_Tag_State,false);
+
 
 
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-                if (holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT) {
-                    holder.removeFragmentByTag(WifiConnectionFragment.fragment_tag);
-                } else if (holder.getState() == FragmentHolder.SELECT_FRAGMENT) {
-                    holder.removeFragmentByTag(EquitmentSelectFragment.fragment_tag);
-                }
+
                 break;
 
         }
@@ -254,15 +249,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void add_Aquitment() {
-        if (holder.getState() == FragmentHolder.MAIN_PAGE) {
-            holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-            holder.setState(FragmentHolder.SELECT_FRAGMENT);
-        }
-        if (holder.getState() != FragmentHolder.SELECT_FRAGMENT) {
-            holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-            holder.setState(FragmentHolder.SELECT_FRAGMENT);
-        }
-
+       holder.replaceFragment(EquitmentSelectFragment.newInstance(),
+               EquitmentSelectFragment.Fragment_Tag_State,true);
 
     }
 
@@ -278,22 +266,19 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public void startCountdownFragment() {
-        if (holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT) {
-            holder.replaceFragment(CountDownFragment.newInstance(), CountDownFragment.fragment_tag);
-        }
-
+            holder.replaceFragment(CountDownFragment.newInstance(), CountDownFragment.fragment_tag,true);
     }
 
 
     @Override
     public void startWifiConnection(String produt_id) {
 
-        if (holder.getState() == FragmentHolder.SELECT_FRAGMENT) {
-            holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.fragment_tag);
-            holder.setState(FragmentHolder.WIFI_CONNECTION_FRAGMENT);
-        }
+            holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.Fragment_Tag_State,true);
     }
+    @Override
+    public void setFraagment_State(String str) {
 
+    }
     /**
      * @param fragment_title 页面标题
      * @param view_status    后退键的状态
