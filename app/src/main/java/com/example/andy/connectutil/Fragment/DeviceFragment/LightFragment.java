@@ -1,4 +1,4 @@
-package com.example.andy.connectutil.Fragment;
+package com.example.andy.connectutil.Fragment.DeviceFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.andy.connectutil.Activity.LightHelper;
+import com.example.andy.connectutil.Helper.LightHelper;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.Light;

@@ -3,7 +3,7 @@
     android:id="@+id/view_new_guide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_select_btn"
+    android:background="@drawable/shape_newguide_view"
     android:orientation="vertical">
 
 

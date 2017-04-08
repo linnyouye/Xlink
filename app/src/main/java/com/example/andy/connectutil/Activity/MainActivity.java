@@ -189,7 +189,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.bottom_add_ibtn:
                 holder.replaceFragment(EquitmentSelectFragment.newInstance(),
-                        EquitmentSelectFragment.Fragment_Tag_State, true);
+                        EquitmentSelectFragment.TAG, true);
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
@@ -226,9 +226,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void add_Aquitment() {
-        holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.Fragment_Tag_State, true);
+        holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.TAG, true);
     }
-
 
     protected void setDrawerOnOff() {
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
@@ -247,7 +246,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public void startWifiConnection(String produt_id) {
 
         holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id),
-                WifiConnectionFragment.fragment_tag, true);
+                WifiConnectionFragment.TAG, true);
     }
 
     @Override
@@ -300,10 +299,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         return false;  //super.onKeyDown(keyCode, event);
     }
 
-    public FragmentHolder getHolder() {
+     public FragmentHolder getHolder() {
         return holder;
     }
-
+     public FragmentManager getFragmentManger(){return fragmentManager;}
     public void backup() {
         if (isExit == false) {
             isExit = true; // 准备退出
@@ -341,9 +340,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
     public void notifyAdapter() {
         online_device_adapter.notifyDataSetChanged();
     }

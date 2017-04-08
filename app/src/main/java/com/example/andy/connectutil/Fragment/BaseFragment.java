@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.andy.connectutil.Activity.MainActivity;
+
 /**
  * Created by 95815 .
  * Date:2017/3/30.
@@ -16,11 +19,13 @@ import android.view.ViewGroup;
  * E-mail:iwaiwen@163.com .
  */
 
-public abstract class BaseFragment extends Fragment  {
+public abstract class BaseFragment extends Fragment {
 
 
-     private View rootview;
-    protected   HolderListener holderListener;
+
+    protected MainActivity mActivity = null;
+    private View rootview;
+    protected HolderListener holderListener;
 
     @Nullable
     @Override
@@ -30,7 +35,6 @@ public abstract class BaseFragment extends Fragment  {
             return rootview;
         } else {
             rootview = inflater.inflate(getFragmentLayoutId(), container, false);
-
         }
         initView(rootview);
         setListener();
@@ -39,19 +43,24 @@ public abstract class BaseFragment extends Fragment  {
         return rootview;
     }
 
-protected void showLog(String str){
-    Log.d("waiwen","----"+getClass().getName()+"-----"+str);
-
-}
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getActivity() instanceof HolderListener) {
-            holderListener = (HolderListener) getActivity();
-            showLog("取得接口实现类");
+        try{
+            holderListener = (HolderListener)context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(getClass().getName()+"未继承接口");
         }
+        showLog(":   onAttch");
+        if(mActivity ==null){
+       mActivity = (MainActivity) getActivity();}
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
     }
 
     /**
@@ -63,8 +72,11 @@ protected void showLog(String str){
      * @param view
      */
     public abstract void initView(View view);
+
     public abstract void setListener();
+
     public abstract void initData();
+
 
     /**
      * 作用：获取控件 Id (避免类型转换的繁琐，抽取 findViewById() )
@@ -74,8 +86,67 @@ protected void showLog(String str){
      * @param <T>  具体控件View
      * @return
      */
-    public <T extends View> T obtainView(View view,int ReId) {
+    public <T extends View> T obtainView(View view, int ReId) {
         return (T) view.findViewById(ReId);
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showLog(":  onCreate");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showLog(":  onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showLog("    :onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showLog(":   onResume"+getTag());
+        holderListener.setFraagment_State(getTag());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showLog(":   onStop");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showLog(":   onDestroyView");
+
+    }
+
+    public void onDestroy(){
+
+        super.onDestroy();
+        showLog(":   onDestroy");
+
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        showLog(":     onDetach");
+
+    }
+
+    public void   showLog(String str){
+        Log.d("waiwen","---"+getClass().getName()+"----"+str);
+
+    }
 }

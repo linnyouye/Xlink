@@ -17,7 +17,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.andy.connectutil.PaintHelper;
+import com.example.andy.connectutil.Helper.PaintHelper;
 import com.example.andy.connectutil.R;
 
 
