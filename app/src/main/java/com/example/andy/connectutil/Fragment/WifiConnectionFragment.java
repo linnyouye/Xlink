@@ -25,7 +25,7 @@ import com.example.andy.connectutil.R;
 public class WifiConnectionFragment extends BaseFragment implements View.OnClickListener {
 
 
-    public static final String fragment_tag = "WifiConnectionFragment";
+    public static final String Fragment_Tag_State = "WifiConnectionFragment";
 
     private static final String TAG = "waiwen";
 
@@ -39,6 +39,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     private static String product_ID;
 
     public static WifiConnectionFragment newInstance(String wifiName, String produt_id) {
+
 
         Bundle args = new Bundle();
         args.putString("wifi名称", wifiName);
@@ -124,7 +125,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                 MainActivity mainActivity = (MainActivity) getActivity();
                 FragmentHolder holder = mainActivity.getHolder();
                 DeviceFragement deviceFragement = DeviceFragement.newInstance(product_ID);
-                holder.replaceFragment(deviceFragement, DeviceFragement.TAG);
+                holder.replaceFragment(deviceFragement, DeviceFragement.TAG,true);
                 break;
            case R.id.view_new_guide:
                 //点击即消失
