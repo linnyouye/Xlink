@@ -6,15 +6,17 @@
 
 
     <ImageButton
-
+        android:id="@+id/ibt_3_pop_one"
         style="@style/popview_ibtn_style"
         android:src="@drawable/selector_ibtn_3_lightone" />
 
     <ImageButton
+        android:id="@+id/ibt_3_pop_two"
         style="@style/popview_ibtn_style"
         android:src="@drawable/selector_ibtn_3_lighttwo" />
 
     <ImageButton
+        android:id="@+id/ibt_3_pop_three"
         style="@style/popview_ibtn_style"
         android:src="@drawable/selector_ibtn_3_lightthree" />
 

@@ -7,11 +7,11 @@
 
 
     <ImageButton
-android:id="@+id/ibtn_1_pop_one"
+    android:id="@+id/ibtn_1_pop_one"
         android:src="@drawable/selector_ibtn_1_cloud"
         style="@style/popview_ibtn_style"  />
     <ImageButton
-
+        android:id="@+id/ibt_1_pop_two"
         android:src="@drawable/selector_ibtn_1_cloud"
         style="@style/popview_ibtn_style"  />
 

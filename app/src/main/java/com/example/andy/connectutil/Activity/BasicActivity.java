@@ -26,7 +26,9 @@ public abstract class BasicActivity extends AppCompatActivity {
 
     }
 
-    //布局加载前的操作
+             protected abstract void getOnlinedevicelist();
+
+             //布局加载前的操作
     protected abstract void setBefortLayout();
 
     //设置toolbar

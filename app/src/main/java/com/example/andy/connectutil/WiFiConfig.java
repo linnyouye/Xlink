@@ -75,7 +75,7 @@ public class WiFiConfig {
     //扫描周围设备
     public void ScanWifi(String productID, final OnBindDeviceListner listner)
     {
-        int DeviceNum= XlinkAgent.getInstance().scanDeviceByProductId("160fa6b0f89e03e9160fa6b0f89ed401", new ScanDeviceListener() {
+        int DeviceNum= XlinkAgent.getInstance().scanDeviceByProductId(productID, new ScanDeviceListener() {
             @Override
             public void onGotDeviceByScan(XDevice xDevice) {
 

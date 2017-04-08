@@ -6,13 +6,14 @@
 
 
     <ImageButton
+        android:id="@+id/ibt_2_pop_one"
         android:background="#2000"
         android:src="@drawable/selector_ibtn_2_naturalcloud"
         style="@style/popview_ibtn_style" />
     <ImageButton
 
-android:background="#2000"
-
+        android:id="@+id/ibt_2_pop_two"
+        android:background="#2000"
         android:src="@drawable/selector_ibtn_2_fancloud"
         style="@style/popview_ibtn_style" />
 

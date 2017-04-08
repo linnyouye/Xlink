@@ -6,36 +6,44 @@
 
 
    <Button
+       android:id="@+id/ibt_4_pop_one"
        android:text="1h"
        style="@style/popview_btn4_style" />
     <Button
+        android:id="@+id/ibt_4_pop_two"
         android:text="2h"
         style="@style/popview_btn4_style"  />
     <Button
+        android:id="@+id/ibt_4_pop_three"
         android:text="3h"
         style="@style/popview_btn4_style"  />
     <Button
+        android:id="@+id/ibt_4_pop_four"
         android:text="4h"
         style="@style/popview_btn4_style"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/ibt_4_pop_five"
         style="@style/popview_btn4_style"
         android:text="5h" />
 
     <Button
+        android:id="@+id/ibt_4_pop_six"
         android:text="6h"
         style="@style/popview_btn4_style"
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/ibt_4_pop_seven"
         android:text="7h"
         style="@style/popview_btn4_style" />
     <Button
+        android:id="@+id/ibt_4_pop_eighte"
         android:text="8h"
         style="@style/popview_btn4_style"
         android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/ibt_4_pop_nine"
         android:text="9h"
         style="@style/popview_btn4_style"/>
 
