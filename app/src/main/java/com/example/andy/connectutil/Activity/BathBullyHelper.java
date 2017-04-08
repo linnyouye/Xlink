@@ -1,9 +1,12 @@
 package com.example.andy.connectutil.Activity;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.example.andy.connectutil.entity.Device.BathBully;
 import com.example.andy.connectutil.entity.Device.Device;
-import com.example.andy.connectutil.entity.Device.FanLinght;
+import com.example.andy.connectutil.entity.Device.Light;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
@@ -24,21 +27,10 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
  * Created by andy on 2017/3/30.
  */
 
-public class FanLightHelper {
+public class BathBullyHelper {
     private Device device;
-    private FanLinght data;
-
-   public   FanLightHelper(Device device)
-   {
-       this.device=device;
-       XlinkAgent.getInstance().connectDevice(device.getxDevice(), new ConnectDeviceListener() {
-           @Override
-           public void onConnectDevice(XDevice xDevice, int i) {
-               Log.d(TAG, "onConnectDevice: code:"+i);
-           }
-       });
-   }
-   /* private List<Device> list;
+    private BathBully data;
+    private List<Device> list;
 
     public Device getDevice() {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
@@ -63,10 +55,13 @@ public class FanLightHelper {
         });
         return device;
     }
-*/
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 
     public String TAG="FanLightHelper";
-    public FanLinght update()
+    public BathBully update()
     {
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
             @Override
@@ -107,7 +102,7 @@ public class FanLightHelper {
             @Override
             public void onDataPointUpdate(XDevice xDevice, List<DataPoint> list, int i) {
                 Log.d(TAG, "onDataPointUpdate: "+list.toString());
-                FanLinght f=new FanLinght();
+                BathBully f=new BathBully();
                 /*data=(FanLinght) f.parseFromDataPoints(list);*/
             }
 
@@ -118,6 +113,7 @@ public class FanLightHelper {
         });
         return data;
     }
+
 
     public void setDataPoint(final int index, int type, final Object value) {
 
@@ -143,43 +139,30 @@ public class FanLightHelper {
 
 
         XlinkAgent.getInstance().setDataPoint(device.getxDevice(), list, new SetDataPointListener() {
-            FanLinght date=(FanLinght)device.getData();
+            BathBully date=(BathBully) device.getData();
             @Override
             public void onSetDataPoint(XDevice xDevice, int i, int i1) {
                 if(i==XlinkCode.SUCCEED){
                     switch (index){
                         case 0:
-                              date.Power=(boolean)value;
+                            date.Power=(boolean)value;
                             break;
                         case 1:
-                            date.PowerOfFanc=(boolean)value;
+                            date.Power_one=(boolean)value;
                             break;
                         case 2:
-                            date.PowerOfLight=(boolean)value;
+                            date.Power_Two=(boolean)value;
                             break;
                         case 3:
-                            date.FanDirection=(byte)value;
+                            date.Power_Light=(boolean)value;
                             break;
                         case 4:
-                            date.Model=(byte)value;
+                            date.Power_Pump=(boolean)value;
                             break;
                         case 5:
-                            date.FanModel=(byte)value;
-                            break;
-                        case 6:
-                            date.FanPosition=(byte)value;
-                            break;
-                        case 7:
-                            date.Coolor_Tem=(byte)value;
-                            break;
-                        case 8:
-                            date.brightness=(byte)value;
-                            break;
-                        case 9:
-                            date.Timing=(byte)value;
+                            date.delayed=(boolean)value;
                             break;
                     }
-
                 }
 
             }

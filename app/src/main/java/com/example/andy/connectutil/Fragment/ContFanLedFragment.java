@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import com.example.andy.connectutil.Activity.FanLightHelper;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.View.ControlView;
+import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;
 
 import io.xlink.wifi.sdk.XlinkCode;
@@ -25,10 +26,14 @@ import io.xlink.wifi.sdk.XlinkCode;
 public class ContFanLedFragment extends Fragment {
 
 
+
     private boolean pop_state1 =true;
     private boolean pop_state2 =true;
     private boolean pop_state3 =true;
     private boolean pop_state4 =true;
+
+
+    private Device device;
 
     private boolean state = false;
     private  byte date=1;
@@ -37,6 +42,11 @@ public class ContFanLedFragment extends Fragment {
     private PopupWindow popupWindow1,popupWindow2,popupWindow3,popupWindow4;
     private FanLightHelper fanLightHelper;
     FanLinght fanLinght;
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,8 +55,11 @@ public class ContFanLedFragment extends Fragment {
 
 
 
-          fanLightHelper=new FanLightHelper();
-          fanLightHelper.getDevice();
+
+
+
+          fanLightHelper=new FanLightHelper(device);
+
           fanLinght=fanLightHelper.update();
           initData();//初始化数据值
 
@@ -118,6 +131,7 @@ public class ContFanLedFragment extends Fragment {
       imageButton1.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+
            if(!pop_state1) {popupWindow1.setWidth(v.getMeasuredWidth());
               popupWindow1.showAsDropDown(v,0,15);
            pop_state1 = true;}

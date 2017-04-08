@@ -215,7 +215,7 @@
 
     <style name="led_btn_stytle">
         <item name="android:textSize">30sp</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">#343f45</item>
     </style>
 
 </resources>

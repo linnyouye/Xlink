@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.DividerItemDecoration;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
+import com.example.andy.connectutil.Adapter.Online_device_adapter;
 import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
@@ -33,6 +34,10 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
+import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Net.HttpUtils;
+import com.example.andy.connectutil.entity.Net.JsonParser;
+import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
@@ -63,8 +68,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     List<Equitment> equitmentList;
+    List<Device> OnlinedeviceList;
     RecyclerView recyclerView;
     AddEquitAdapter mAdapter;
+    RecyclerView OnlineDeviceRecycleview;
+    Online_device_adapter online_device_adapter;
 
     EditText et_tb_search;
     ImageView ibtn_tb_search;
@@ -93,15 +101,30 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     protected void initData() {
+        OnlinedeviceList=new ArrayList<>();
         //测试数据
-        equitmentList.add(new Equitment("风扇", R.drawable.button_menu_fanc));
-        equitmentList.add(new Equitment("LED灯", R.drawable.button_menu_led));
+
+
+        equitmentList.add(new Equitment("风扇灯", R.drawable.buttom_menu_fan_light));
+        equitmentList.add(new Equitment("LED灯",R.drawable.button_menu_led));
+        equitmentList.add(new Equitment("灯",R.drawable.button_menu_fanc));
+        equitmentList.add(new Equitment("浴霸",R.drawable.buttom_menu_bathbully));
+
         mAdapter = new AddEquitAdapter(this, equitmentList);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+     //   recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+
         Log.d("waiwen", "setAdapter：");
+
+
+        getOnlinedevicelist();
+        online_device_adapter=new Online_device_adapter(this,OnlinedeviceList);
+        OnlineDeviceRecycleview.setAdapter(online_device_adapter);
+
+        Log.d("waiwen","setAdapter：");
+
 
         fragmentManager = getSupportFragmentManager();
         holder = new FragmentHolder(this, fragmentManager);
@@ -150,6 +173,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         recyclerView = obtainView(R.id.pop_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        OnlineDeviceRecycleview=obtainView(R.id.Online_device);
+        OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
+
         equitmentList = new ArrayList<>();
         Log.d("waiwen", "initview");
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -279,7 +306,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
 
-    protected void setBottomSheetOnOff() {
+
+
+
+
+    public void setBottomSheetOnOff() {
+
         int state = behavior.getState();
         if (state == BottomSheetBehavior.STATE_EXPANDED) {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -300,6 +332,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         }
     }
+
 
 
     @Override
@@ -340,7 +373,32 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
 
-    public FragmentHolder getHolder() {
-        return holder;
+
+   public FragmentHolder getHolder()
+   {
+       return holder;
+   }
+   public void getOnlinedevicelist()
+    {
+        LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
+            @Override
+            public void onSuccess(String content) {
+                List<Device> list=new ArrayList<Device>();
+                list= JsonParser.parseDeviceList(content);
+                for(Device device:list)
+                {
+                    if(device.isOnline())
+                    {
+                        OnlinedeviceList.add(device);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg) {
+                Toast.makeText(getApplicationContext(),"获取设备列表失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

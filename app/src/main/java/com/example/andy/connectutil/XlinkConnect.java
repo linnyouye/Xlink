@@ -39,7 +39,6 @@ public class XlinkConnect {
 
         XlinkAgent.init(context);
         XlinkAgent.getInstance().debug(true);
-        XlinkeAgentLog();
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
             @Override
             public void onStart(int i) {
@@ -113,57 +112,10 @@ public class XlinkConnect {
                 }*/
             }
         });
+        XlinkAgent.getInstance().start();
+        XlinkAgent.getInstance().login(userId,authorize);
     }
 
-
-/*    public static void init(XDevice device) {
-        Log.i(TAG, "bindDevice: "+XlinkAgent.deviceToJson(device));
-        //首先通过subkey判断设备是否被订阅  <0 代表没有被订阅
-        //假如被订阅了先判断是否存在accesskey假如没有，要先设定accesskey
-        if (device.getSubKey() <= 0) {
-            Log.d(TAG, "init: 没有subkey");
-            XlinkAgent.getInstance().getInstance().getDeviceSubscribeKey(device, device.getAccessKey(), new GetSubscribeKeyListener() {
-                @Override
-                public void onGetSubscribekey(XDevice xdevice, int code, int subKey) {
-                    xdevice.setSubKey(subKey);
-                    subscribeDevice(xdevice);
-                    Log.d(TAG, "onGetSubscribekey: SUCCESS");
-                }
-            });
-        } else {
-            Log.d(TAG, "init: 有subkey");
-            int ret = XlinkAgent.getInstance().connectDevice(device, device.getAccessKey(), device.getSubKey(), connectDeviceListener);
-            if (ret < 0) {
-                Log.d(TAG, "init: 没有accesskey");
-                XlinkAgent.getInstance().setDeviceAccessKey(device, new Random().nextInt(999999), new SetDeviceAccessKeyListener()
-                {
-                    @Override public void onSetLocalDeviceAccessKey(XDevice device, int code, int messageId) {
-                        switch (code)
-                        {
-                            case XlinkCode.SUCCEED: //设置成功 break;
-                                Log.d(TAG, "onSetLocalDeviceAccessKey: 设置accesskey成功");
-
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    private static void subscribeDevice(XDevice device) {
-        XlinkAgent.getInstance().subscribeDevice(device, device.getSubKey(), new SubscribeDeviceListener() {
-            @Override
-            public void onSubscribeDevice(XDevice xdevice, int code) {
-                if (code == XlinkCode.SUCCEED) {
-                    Log.d(TAG, "onSubscribeDevice: 订阅设备成功");
-                }
-            }
-        });
-    }*/
-//连接设备的回调监听事件
 
 
     //订阅（绑定）局域网扫描到的设备
@@ -336,10 +288,6 @@ public class XlinkConnect {
             e.printStackTrace();
         }
     }
-   public static void XlinkeAgentLog()
-   {
-       XlinkAgent.getInstance().login(1554475879,"220fa2b1500dd400");
-   }
 }
 
 
