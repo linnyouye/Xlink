@@ -18,6 +18,5 @@ public interface HolderListener {
 
      void setFraagment_State(String str);
 
-    void startCountdownFragment();
 
 }

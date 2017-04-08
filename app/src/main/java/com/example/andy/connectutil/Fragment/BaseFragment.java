@@ -1,6 +1,5 @@
 package com.example.andy.connectutil.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,11 +56,6 @@ public abstract class BaseFragment extends Fragment {
        mActivity = (MainActivity) getActivity();}
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-    }
 
     /**
      * @return 获取该Fragment关联的View；
@@ -120,7 +114,7 @@ public abstract class BaseFragment extends Fragment {
     public void onStop() {
         super.onStop();
         showLog(":   onStop");
-
+          holderListener.setFraagment_State(MainActivity.TAG);
     }
 
     @Override
@@ -131,10 +125,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void onDestroy(){
-
         super.onDestroy();
         showLog(":   onDestroy");
-
 
     }
 

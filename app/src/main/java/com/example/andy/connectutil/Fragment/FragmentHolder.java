@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.example.andy.connectutil.LogUtil;
 import com.example.andy.connectutil.R;
 
 import java.util.ArrayList;
@@ -13,9 +14,8 @@ import java.util.List;
 /**
  * Created by 95815 on 2017/3/10.
  * 该类用于管理Fragment,以及回调界面视图变化
- *
+ * <p>
  * 目前网上有更好的fragment管理实现方法，将可以考虑替换，
- *
  */
 
 public class FragmentHolder {
@@ -28,8 +28,8 @@ public class FragmentHolder {
 
     public static int fragmentLayoutId = R.id.fragment_layout;
 
-    public FragmentHolder(HolderListener holderListener,FragmentManager fragmentManager) {
-        this.holderListener=holderListener;
+    public FragmentHolder(HolderListener holderListener, FragmentManager fragmentManager) {
+        this.holderListener = holderListener;
         this.fragmentManager = fragmentManager;
         fragmentList = new ArrayList<>();
     }
@@ -51,17 +51,17 @@ public class FragmentHolder {
 
 
     /**
-     * @param fragment 要添加的fragment
-     * @param tag      fragment的tag
-     * @param isBackToStack  是否添加到回退栈中
+     * @param fragment      要添加的fragment
+     * @param tag           fragment的tag
+     * @param isBackToStack 是否添加到回退栈中
      */
     public void addFragment(Fragment fragment, String tag, boolean isBackToStack) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.animator_fragment_enter,R.anim.animator_fragment_exit,
-                R.anim.animator_fragment_enter,R.anim.animator_fragment_exit
-        ).add(fragmentLayoutId,fragment,tag);
-        if(isBackToStack){
+        transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
+                R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
+        ).add(fragmentLayoutId, fragment, tag);
+        if (isBackToStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
@@ -69,17 +69,17 @@ public class FragmentHolder {
     }
 
     /**
-     * @param fragment 要替换的fragment
+     * @param fragment      要替换的fragment
      * @param tag
-     * @param isBackToStack   是否添加到回退栈中
+     * @param isBackToStack 是否添加到回退栈中
      */
-    public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack){
+    public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.animator_fragment_enter,R.anim.animator_fragment_exit,
-                R.anim.animator_fragment_enter,R.anim.animator_fragment_exit
-        ).replace(fragmentLayoutId,fragment,tag);
-        if(isBackToStack){
+        transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
+                R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
+        ).replace(fragmentLayoutId, fragment, tag);
+        if (isBackToStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
@@ -90,11 +90,11 @@ public class FragmentHolder {
     /**
      * @param tag 根据tag值来删除fragment
      */
-    public void removeFragmentByTag(String tag){
+    public void removeFragmentByTag(String tag) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if( fragment!= null && fragment.isAdded()){
+        if (fragment != null && fragment.isAdded()) {
             transaction.remove(fragment).commit();
         }
     }
@@ -102,13 +102,13 @@ public class FragmentHolder {
     /**
      * 删除所有的fragment，且事务不添加到回退栈
      */
-    public void removeAllFragment(){
+    public void removeAllFragment() {
         fragmentList = fragmentManager.getFragments();
-        for(Fragment fragment:fragmentList){
-            if(fragment !=null){
+        for (Fragment fragment : fragmentList) {
+            if (fragment != null) {
                 fragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
                 //同时把栈清空
-               fragmentManager.popBackStackImmediate();
+                fragmentManager.popBackStackImmediate();
             }
         }
 
@@ -121,6 +121,47 @@ public class FragmentHolder {
         this.fragmentLayoutId = fragmentLayoutId;
     }
 
+    /**
+     * 维护有一个单例的EquitmentSelect,show和hidden
+     */
+    public void showAddEquitmentSelect() {
+
+        Fragment fragmentSelect = EquitmentSelectFragment.newInstance();
+        if (fragmentSelect.isAdded()) {
+            if (fragmentSelect.isHidden()) {
+                fragmentManager.beginTransaction().
+                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).show(fragmentSelect).commit();
+                LogUtil.showLog("选择设备页面被隐藏");
+            }
+        } else {
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).
+                    add(fragmentLayoutId, fragmentSelect, EquitmentSelectFragment.TAG).commit();
+        }
+
+    }
+
+    /**
+     * @param hidden_FragmentTag 隐藏
+     * @param show_Fragment      展现
+     */
+    public void showWifiConnectFragment(String hidden_FragmentTag, WifiConnectionFragment show_Fragment) {
+
+        Fragment fragment = fragmentManager.findFragmentByTag(hidden_FragmentTag);
+        if (!fragment.isAdded() || fragment.isVisible()) {
+            if (!show_Fragment.isAdded()) {
+                fragmentManager.beginTransaction().
+                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).add(fragmentLayoutId, show_Fragment, WifiConnectionFragment.TAG).
+                        addToBackStack(WifiConnectionFragment.TAG).commit();
+            } else {
+                fragmentManager.beginTransaction().
+                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).remove(show_Fragment).add(fragmentLayoutId, show_Fragment, WifiConnectionFragment.TAG).
+                        addToBackStack(WifiConnectionFragment.TAG).commit();
+            }
+        }
+
+
+    }
 
     /**
      * @return 获取到fragmentManager
@@ -128,23 +169,6 @@ public class FragmentHolder {
     public FragmentManager getFragmentManager() {
         return fragmentManager;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    private HolderListener holderListener;
@@ -221,7 +245,6 @@ public class FragmentHolder {
 //            transaction.addToBackStack(null);
 //            transaction.commit();
 //    }
-
 
 
 }

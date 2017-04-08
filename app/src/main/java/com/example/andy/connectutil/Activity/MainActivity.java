@@ -54,6 +54,10 @@ import java.util.TimerTask;
 
 public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
+   public static final String TAG = "MainActivity";
+
+
+    private String fragment_state =null;
     private boolean isExit = false;
     private Timer tExit;
     private Account account;
@@ -188,12 +192,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.bottom_add_ibtn:
-                holder.replaceFragment(EquitmentSelectFragment.newInstance(),
-                        EquitmentSelectFragment.TAG, true);
+                holder.showAddEquitmentSelect();
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-                holder.removeAllFragment();
+              fragmentManager.popBackStackImmediate();
                 break;
         }
     }
@@ -202,7 +205,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_addequitment) {
-            add_Aquitment();
+           holder.showAddEquitmentSelect();
             setDrawerOnOff();
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(this, ShareActivity.class));
@@ -225,9 +228,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         return true;
     }
 
-    public void add_Aquitment() {
-        holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.TAG, true);
-    }
+
 
     protected void setDrawerOnOff() {
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
@@ -239,18 +240,37 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     @Override
-    public void startCountdownFragment() {
-        holder.replaceFragment(CountDownFragment.newInstance(), CountDownFragment.fragment_tag, true);
-    }
-    @Override
     public void startWifiConnection(String produt_id) {
 
-        holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id),
-                WifiConnectionFragment.TAG, true);
+      holder.showWifiConnectFragment(EquitmentSelectFragment.TAG, WifiConnectionFragment.newInstance(
+              WifiUtils.getWifiSSID(this),produt_id));
     }
 
     @Override
     public void setFraagment_State(String str) {
+        fragment_state = str;
+        switch (fragment_state){
+            case MainActivity.TAG:
+                main_title.setText("主界面");
+                break;
+
+            case EquitmentSelectFragment.TAG:
+                main_title.setText("选择设备型号");
+                break;
+
+            case WifiConnectionFragment.TAG:
+                main_title.setText("设备联网");
+                break;
+
+            case CountDownFragment.TAG:
+                main_title.setText("正在连接");
+                break;
+
+
+        }
+
+
+
 
     }
 
@@ -284,6 +304,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -299,6 +320,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         return false;  //super.onKeyDown(keyCode, event);
     }
 
+    public String getFragment_state() {
+        return fragment_state;
+    }
      public FragmentHolder getHolder() {
         return holder;
     }

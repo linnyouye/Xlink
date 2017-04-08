@@ -152,7 +152,7 @@ public class CountDownFragment extends BaseFragment {
 
         timer = new Timer(true);
         TimerTask tt = new TimerTask() {
-            int countTime = 60;
+            int countTime = 30;
 
             @Override
             public void run() {

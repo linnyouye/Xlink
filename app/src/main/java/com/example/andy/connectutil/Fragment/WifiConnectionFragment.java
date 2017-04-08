@@ -95,11 +95,11 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                 String password=et_wifi_password.getText().toString();
                  WiFiConfig wiFiConfig=new WiFiConfig(getActivity());
                  wiFiConfig.StartConfig(password);
-                 holderListener.startCountdownFragment();
+
                  //获取FargmentHolder跳转到DeviceFargement
                  FragmentHolder holder = mActivity.getHolder();
                  CountDownFragment deviceFragement = new CountDownFragment();
-                 holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
+                 holder.addFragment(deviceFragement,DeviceFragement.TAG,true);
                  break;
              case R.id.view_new_guide:
                  //点击即消失
