@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Bean.Equitment;
@@ -35,6 +37,8 @@ import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 95815 .
@@ -44,8 +48,11 @@ import java.util.List;
  * 描述：该活动是app的主活动，管理view和维护fragment
  */
 
-public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,HolderListener {
+public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
+
+    private boolean isExit = false;
+    private Timer tExit;
 
     private Account account;
     private FragmentManager fragmentManager;
@@ -88,20 +95,20 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected void initData() {
         //测试数据
         equitmentList.add(new Equitment("风扇", R.drawable.button_menu_fanc));
-        equitmentList.add(new Equitment("LED灯",R.drawable.button_menu_led));
+        equitmentList.add(new Equitment("LED灯", R.drawable.button_menu_led));
         mAdapter = new AddEquitAdapter(this, equitmentList);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-        Log.d("waiwen","setAdapter：");
+        Log.d("waiwen", "setAdapter：");
 
-         fragmentManager = getSupportFragmentManager();
-         holder = new FragmentHolder(this,fragmentManager);
-         holder.setState(FragmentHolder.MAIN_PAGE);
+        fragmentManager = getSupportFragmentManager();
+        holder = new FragmentHolder(this, fragmentManager);
+        holder.setState(FragmentHolder.MAIN_PAGE);
 
 
-        account=new Account(getApplicationContext());
+        account = new Account(getApplicationContext());
 
     }
 
@@ -144,8 +151,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         recyclerView = obtainView(R.id.pop_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         equitmentList = new ArrayList<>();
-         Log.d("waiwen","initview");
-       // recyclerView.setItemAnimator(new DefaultItemAnimator());
+        Log.d("waiwen", "initview");
+        // recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
     }
@@ -169,11 +176,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.bottom_add_ibtn:
-                if(holder.getState() == FragmentHolder.MAIN_PAGE){
-                holder.addFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.fragment_tag);
-                holder.setState(FragmentHolder.SELECT_FRAGMENT);}
-                if(holder.getState() != FragmentHolder.SELECT_FRAGMENT){
-                    holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.fragment_tag);
+                if (holder.getState() == FragmentHolder.MAIN_PAGE) {
+                    holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
+                    holder.setState(FragmentHolder.SELECT_FRAGMENT);
+                }
+                if (holder.getState() != FragmentHolder.SELECT_FRAGMENT) {
+                    holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
                     holder.setState(FragmentHolder.SELECT_FRAGMENT);
                 }
 
@@ -181,10 +189,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-                if(holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT){
-                             holder.removeFragmentByTag(WifiConnectionFragment.fragment_tag);
-                }
-                else if(holder.getState() == FragmentHolder.SELECT_FRAGMENT){
+                if (holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT) {
+                    holder.removeFragmentByTag(WifiConnectionFragment.fragment_tag);
+                } else if (holder.getState() == FragmentHolder.SELECT_FRAGMENT) {
                     holder.removeFragmentByTag(EquitmentSelectFragment.fragment_tag);
                 }
                 break;
@@ -208,13 +215,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             startActivity(new Intent(this, HelpActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
-            startActivity(new Intent(this,LanguageActivity.class));
+            startActivity(new Intent(this, LanguageActivity.class));
             setDrawerOnOff();
-        }
-        else if (id == R.id.nav_backup) {
-            account.setAccount(account.getUser(),"");
+        } else if (id == R.id.nav_backup) {
+            account.setAccount(account.getUser(), "");
             finish();
-            Intent intent=new Intent(MainActivity.this,RegisterAndLoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, RegisterAndLoginActivity.class);
             startActivity(intent);
         }
         return true;
@@ -245,8 +251,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public void startCountdownFragment() {
-        if(holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT){
-            holder.replaceFragment(CountDownFragment.newInstance(),CountDownFragment.fragment_tag);
+        if (holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT) {
+            holder.replaceFragment(CountDownFragment.newInstance(), CountDownFragment.fragment_tag);
         }
 
     }
@@ -255,15 +261,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void startWifiConnection(String produt_id) {
 
-        if(holder.getState() == FragmentHolder.SELECT_FRAGMENT){
-           holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this),produt_id),WifiConnectionFragment.fragment_tag);
-           holder.setState(FragmentHolder.WIFI_CONNECTION_FRAGMENT);
+        if (holder.getState() == FragmentHolder.SELECT_FRAGMENT) {
+            holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.fragment_tag);
+            holder.setState(FragmentHolder.WIFI_CONNECTION_FRAGMENT);
         }
     }
 
     /**
-     * @param fragment_title  页面标题
-     * @param view_status  后退键的状态
+     * @param fragment_title 页面标题
+     * @param view_status    后退键的状态
      */
     @Override
     public void setMainPage(String fragment_title, int view_status) {
@@ -271,7 +277,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         main_title.setText(fragment_title);
 
     }
-
 
 
     protected void setBottomSheetOnOff() {
@@ -295,8 +300,46 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         }
     }
 
-   public FragmentHolder getHolder()
-   {
-       return holder;
-   }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == event.KEYCODE_BACK) {
+            if (!fragmentManager.popBackStackImmediate()) {
+                backup();
+            }
+
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    public void backup() {
+        if (isExit == false) {
+
+            isExit = true; // 准备退出
+
+            Toast.makeText(this, "双击退出程序", Toast.LENGTH_SHORT).show();
+
+            tExit = new Timer();
+
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 1000); // 如果时间内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+            onBackPressed();
+            System.exit(0);
+        }
+
+    }
+
+
+    public FragmentHolder getHolder() {
+        return holder;
+    }
 }
