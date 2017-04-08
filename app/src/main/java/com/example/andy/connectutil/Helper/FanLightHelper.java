@@ -1,4 +1,4 @@
-package com.example.andy.connectutil.Activity;
+package com.example.andy.connectutil.Helper;
 
 import android.util.Log;
 

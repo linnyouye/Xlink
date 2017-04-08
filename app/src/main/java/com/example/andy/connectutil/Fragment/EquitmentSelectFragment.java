@@ -14,9 +14,7 @@ import com.example.andy.connectutil.entity.Net.Content;
 
 public class EquitmentSelectFragment extends BaseFragment implements View.OnClickListener {
 
-
-    public static final String Fragment_Tag_State= "EquitmentSelectFragment";
-
+    public static final String TAG = "EquitmentSelectFragment";
 
     private Button btn_fanLed;
     private Button btn_open;
@@ -88,9 +86,6 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
         }
     }
 
-    private void testgithub(){
 
-        
-    }
 
 }

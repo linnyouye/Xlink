@@ -1,4 +1,4 @@
-package com.example.andy.connectutil;
+package com.example.andy.connectutil.Helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,8 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
+
+import com.example.andy.connectutil.R;
 
 
 /**

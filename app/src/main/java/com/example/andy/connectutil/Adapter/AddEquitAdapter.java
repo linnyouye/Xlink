@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Bean.Equitment;
-import com.example.andy.connectutil.Fragment.BathbullyFragment;
-import com.example.andy.connectutil.Fragment.ContFanLedFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.BathbullyFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.ContFanLedFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
 
-import com.example.andy.connectutil.Fragment.LEDLightFragment;
-import com.example.andy.connectutil.Fragment.LightFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
 
 import com.example.andy.connectutil.R;
 

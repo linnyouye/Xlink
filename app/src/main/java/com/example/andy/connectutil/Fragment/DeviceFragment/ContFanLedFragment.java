@@ -1,19 +1,17 @@
-package com.example.andy.connectutil.Fragment;
+package com.example.andy.connectutil.Fragment.DeviceFragment;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
-import com.example.andy.connectutil.Activity.FanLightHelper;
+import com.example.andy.connectutil.Helper.FanLightHelper;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;

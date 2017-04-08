@@ -1,12 +1,9 @@
-package com.example.andy.connectutil.Activity;
+package com.example.andy.connectutil.Helper;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.example.andy.connectutil.entity.Device.BathBully;
 import com.example.andy.connectutil.entity.Device.Device;
-import com.example.andy.connectutil.entity.Device.Light;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.LoginUtil;

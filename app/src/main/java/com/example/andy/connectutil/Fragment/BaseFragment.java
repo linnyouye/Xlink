@@ -16,11 +16,13 @@ import android.view.ViewGroup;
  * E-mail:iwaiwen@163.com .
  */
 
-public abstract class BaseFragment extends Fragment  {
+public abstract class BaseFragment extends Fragment {
 
 
-     private View rootview;
-    protected   HolderListener holderListener;
+
+
+    private View rootview;
+    protected HolderListener holderListener;
 
     @Nullable
     @Override
@@ -30,7 +32,6 @@ public abstract class BaseFragment extends Fragment  {
             return rootview;
         } else {
             rootview = inflater.inflate(getFragmentLayoutId(), container, false);
-
         }
         initView(rootview);
         setListener();
@@ -38,11 +39,6 @@ public abstract class BaseFragment extends Fragment  {
         showLog("onCreateView");
         return rootview;
     }
-
-protected void showLog(String str){
-    Log.d("waiwen","----"+getClass().getName()+"-----"+str);
-
-}
 
 
     @Override
@@ -63,8 +59,11 @@ protected void showLog(String str){
      * @param view
      */
     public abstract void initView(View view);
+
     public abstract void setListener();
+
     public abstract void initData();
+
 
     /**
      * 作用：获取控件 Id (避免类型转换的繁琐，抽取 findViewById() )
@@ -74,8 +73,67 @@ protected void showLog(String str){
      * @param <T>  具体控件View
      * @return
      */
-    public <T extends View> T obtainView(View view,int ReId) {
+    public <T extends View> T obtainView(View view, int ReId) {
         return (T) view.findViewById(ReId);
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showLog(":  onCreate");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showLog(":  onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showLog("    :onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showLog(":   onResume"+getTag());
+        holderListener.setFraagment_State(getTag());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showLog(":   onStop");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showLog(":   onDestroyView");
+
+    }
+
+    public void onDestroy(){
+
+        super.onDestroy();
+        showLog(":   onDestroy");
+
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        showLog(":     onDetach");
+
+    }
+
+    public void   showLog(String str){
+        Log.d("waiwen","---"+getClass().getName()+"----"+str);
+
+    }
 }
