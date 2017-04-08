@@ -297,6 +297,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -311,7 +312,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         }
 
-        return super.onKeyDown(keyCode, event);
+        return false;//super.onKeyDown(keyCode, event);
     }
 
 
