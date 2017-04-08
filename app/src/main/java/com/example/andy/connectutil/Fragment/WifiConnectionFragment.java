@@ -82,6 +82,10 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
       tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
                "出现‘滴’的一声。" + "\n" + "不带遥控激活方式：按墙壁开关键5次即配对成功。" + "\n" + "再按“next”键");
         wifi_name.setText(str);
+//密码默认是隐藏的
+        et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+
     }
 
     @Override
