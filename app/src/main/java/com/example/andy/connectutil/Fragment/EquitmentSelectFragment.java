@@ -1,7 +1,6 @@
 package com.example.andy.connectutil.Fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +15,9 @@ import com.example.andy.connectutil.entity.Net.Content;
 public class EquitmentSelectFragment extends BaseFragment implements View.OnClickListener {
 
 
-    public static final String fragment_tag = "EquitmentSelectFragment";
+    public static final String Fragment_Tag_State= "EquitmentSelectFragment";
 
-    private HolderListener holderListener;
+
     private Button btn_fanLed;
     private Button btn_open;
     private Button btn_LED;
@@ -89,11 +88,4 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (getActivity() instanceof HolderListener) {
-            holderListener = (HolderListener) getActivity();
-        }
-    }
 }

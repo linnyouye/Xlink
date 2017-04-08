@@ -6,10 +6,10 @@
     android:orientation="vertical">
 <include layout="@layout/toolbar_others"/>
     <com.example.andy.connectutil.View.LedlView
+        android:layout_weight="7"
         android:id="@+id/LEDLightView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7" />
+        android:layout_height="0dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,9 +18,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1">
-
        <include layout="@layout/view_led_bottom_ibtn"/>
-
 
     </RelativeLayout>
 

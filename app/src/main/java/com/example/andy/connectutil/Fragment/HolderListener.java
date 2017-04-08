@@ -16,6 +16,8 @@ public interface HolderListener {
 
     void startWifiConnection(String str);
 
+     void setFraagment_State(String str);
+
     void startCountdownFragment();
 
 }

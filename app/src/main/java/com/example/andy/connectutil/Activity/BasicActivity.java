@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
-public abstract class BasicActivity extends AppCompatActivity
-         {
+public abstract class BasicActivity extends AppCompatActivity {
     protected Handler mHandler = new Handler();
 
     @Override
@@ -82,24 +81,5 @@ public abstract class BasicActivity extends AppCompatActivity
 
     }
 
-             @Override
-             public void onBackPressed() {
-               //  super.onBackPressed();
-                 super.finish();
-             }
 
-             @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

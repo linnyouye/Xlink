@@ -15,7 +15,6 @@ import com.example.andy.connectutil.View.LedlView;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.LEDLight;
 
-
 import io.xlink.wifi.sdk.XlinkCode;
 
 /**
