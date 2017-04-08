@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.andy.connectutil.Activity.MainActivity;
 
 /**
  * Created by 95815 .
@@ -20,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
 
 
 
-
+    protected MainActivity mActivity = null;
     private View rootview;
     protected HolderListener holderListener;
 
@@ -44,10 +47,20 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getActivity() instanceof HolderListener) {
-            holderListener = (HolderListener) getActivity();
-            showLog("取得接口实现类");
+        try{
+            holderListener = (HolderListener)context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(getClass().getName()+"未继承接口");
         }
+        showLog(":   onAttch");
+        if(mActivity ==null){
+       mActivity = (MainActivity) getActivity();}
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
     }
 
     /**

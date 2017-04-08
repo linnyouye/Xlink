@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 
@@ -38,7 +37,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public static WifiConnectionFragment newInstance(String str, String produt_id) {
         
         Bundle args = new Bundle();
-        args.putString("设备类型",str);
+        args.putString("wifi名称",str);
         WifiConnectionFragment fragment = new WifiConnectionFragment();
         fragment.setArguments(args);
         product_ID = produt_id;
@@ -77,7 +76,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     @Override
     public void initData() {
         Bundle args = getArguments();
-        String str = args.getString("设备类型"); //拿到传送过来的数据
+        String str = args.getString("wifi名称"); //拿到传送过来的数据
         wifi_name.setText(str);
 
         tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
@@ -85,14 +84,6 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
         wifi_name.setText(str);
 //密码默认是隐藏的
         et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-    }
-
-
-
-    @Override
-    public <T extends View> T obtainView(View view, int ReId) {
-        return super.obtainView(view, ReId);
     }
 
 
@@ -106,8 +97,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                  wiFiConfig.StartConfig(password);
                  holderListener.startCountdownFragment();
                  //获取FargmentHolder跳转到DeviceFargement
-                 MainActivity mainActivity = (MainActivity)getActivity();
-                 FragmentHolder holder = mainActivity.getHolder();
+                 FragmentHolder holder = mActivity.getHolder();
                  CountDownFragment deviceFragement = new CountDownFragment();
                  holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
                  break;

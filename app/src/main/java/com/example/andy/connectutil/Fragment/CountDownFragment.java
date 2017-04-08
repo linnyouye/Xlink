@@ -1,7 +1,6 @@
 package com.example.andy.connectutil.Fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,12 +44,12 @@ public class CountDownFragment extends BaseFragment {
     public static final String fragment_tag = "CountDownFragment";
 
 
-    public static final String TAG="ChoseScanedDevice";
-    private  List<XDevice> devicelist;
-    private  List<Device> Exitslist;
+    public static final String TAG = "ChoseScanedDevice";
+    private List<XDevice> devicelist;
+    private List<Device> Exitslist;
     private List<String> MacList;
 
-    private int count=0;
+    private int count = 0;
     private Handler mHandler;
     private Handler mHandler1;
     private Timer timer;
@@ -61,9 +59,9 @@ public class CountDownFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        devicelist=new ArrayList<>();
-        Exitslist=new ArrayList<>();
-        MacList=new ArrayList<>();
+        devicelist = new ArrayList<>();
+        Exitslist = new ArrayList<>();
+        MacList = new ArrayList<>();
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }
@@ -105,11 +103,6 @@ public class CountDownFragment extends BaseFragment {
         startCountDown();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
 
     @Override
     public void onResume() {
@@ -117,7 +110,7 @@ public class CountDownFragment extends BaseFragment {
         scanDevice();
         getExitDevice();
         BindDevice();
-        MainActivity m=(MainActivity)getActivity();
+        MainActivity m = (MainActivity) getActivity();
         m.getOnlinedevicelist();
         m.notifyAdapter();
         /*FragmentHolder fragmentHolder=m.getHolder();
@@ -141,22 +134,13 @@ public class CountDownFragment extends BaseFragment {
                     if (msg.what == 0) {
                         tv_countdown.setText("0s");
                         timer.cancel();
-                        holderListener.setMainPage("设备连接失败",View.VISIBLE);
+                        holderListener.setMainPage("设备连接失败", View.VISIBLE);
                         mHandler1.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                holderListener.startWifiConnection("返回");
+                           mActivity.getFragmentManger().popBackStackImmediate();
                             }
-                        },3000);
-//                        timer.schedule(new TimerTask() {
-//
-//                            @Override
-//                            public void run() {
-//                                if(count==0){
-//                                    count++;
-//                                }
-//                            }
-//                        },1000,1000);
+                        }, 3000);
 
 
                     }
@@ -169,6 +153,7 @@ public class CountDownFragment extends BaseFragment {
         timer = new Timer(true);
         TimerTask tt = new TimerTask() {
             int countTime = 60;
+
             @Override
             public void run() {
                 if (countTime > 0) {
@@ -188,7 +173,7 @@ public class CountDownFragment extends BaseFragment {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Exitslist= JsonParser.parseDeviceList(content);
+                Exitslist = JsonParser.parseDeviceList(content);
             }
 
             @Override
@@ -196,18 +181,17 @@ public class CountDownFragment extends BaseFragment {
                 Log.d(TAG, "onFailed: 获取设备列表失败");
             }
         });
-        for(Device d:Exitslist)
-        {
+        for (Device d : Exitslist) {
             MacList.add(d.getxDevice().getMacAddress());
         }
     }
 
     public void scanDevice() {
-        WiFiConfig w=new WiFiConfig(getActivity());
+        WiFiConfig w = new WiFiConfig(getActivity());
         w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
-                Toast.makeText(getActivity(),"you yige ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "you yige ", Toast.LENGTH_SHORT).show();
                 devicelist.add(device);
             }
         });
@@ -231,22 +215,16 @@ public class CountDownFragment extends BaseFragment {
         });
     }
 
-    public void BindDevice()
-    {
+    public void BindDevice() {
         XlinkConnect.init(getActivity());
-        for(int i=0;i<devicelist.size();i++)
-        {
-            if(!MacList.contains(devicelist.get(i).getMacAddress()))
-            {
-                XlinkConnect.bindDevice(devicelist.get(i),new  XlinkConnect.BinderDeviceListner()
-                {
+        for (int i = 0; i < devicelist.size(); i++) {
+            if (!MacList.contains(devicelist.get(i).getMacAddress())) {
+                XlinkConnect.bindDevice(devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
                     @Override
                     public void bindDevice(XDevice device, int i) {
-                        if(i== XlinkCode.SUCCEED)
-                        {
+                        if (i == XlinkCode.SUCCEED) {
                             Log.d(TAG, "bindDevice:  绑定设备成功");
-                        }else
-                        {
+                        } else {
                             Log.d(TAG, "bindDevice: 绑定设备失败");
                         }
 

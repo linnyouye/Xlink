@@ -299,10 +299,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         return false;  //super.onKeyDown(keyCode, event);
     }
 
-    public FragmentHolder getHolder() {
+     public FragmentHolder getHolder() {
         return holder;
     }
-
+     public FragmentManager getFragmentManger(){return fragmentManager;}
     public void backup() {
         if (isExit == false) {
             isExit = true; // 准备退出
