@@ -19,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
+import com.example.andy.connectutil.Adapter.Online_device_adapter;
 import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
@@ -30,6 +32,10 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
+import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Net.HttpUtils;
+import com.example.andy.connectutil.entity.Net.JsonParser;
+import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
@@ -55,8 +61,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     List<Equitment> equitmentList;
+    List<Device> OnlinedeviceList;
     RecyclerView recyclerView;
     AddEquitAdapter mAdapter;
+    RecyclerView OnlineDeviceRecycleview;
+    Online_device_adapter online_device_adapter;
 
     EditText et_tb_search;
     ImageView ibtn_tb_search;
@@ -85,6 +94,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     protected void initData() {
+        OnlinedeviceList=new ArrayList<>();
         //测试数据
         equitmentList.add(new Equitment("风扇灯", R.drawable.buttom_menu_fan_light));
         equitmentList.add(new Equitment("LED灯",R.drawable.button_menu_led));
@@ -94,6 +104,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
+
+        getOnlinedevicelist();
+        online_device_adapter=new Online_device_adapter(this,OnlinedeviceList);
+        OnlineDeviceRecycleview.setAdapter(online_device_adapter);
+
         Log.d("waiwen","setAdapter：");
 
          fragmentManager = getSupportFragmentManager();
@@ -143,6 +158,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         recyclerView = obtainView(R.id.pop_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        OnlineDeviceRecycleview=obtainView(R.id.Online_device);
+        OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
+
         equitmentList = new ArrayList<>();
          Log.d("waiwen","initview");
        // recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -299,4 +318,26 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
    {
        return holder;
    }
+   public void getOnlinedevicelist()
+    {
+        LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
+            @Override
+            public void onSuccess(String content) {
+                List<Device> list=new ArrayList<Device>();
+                list= JsonParser.parseDeviceList(content);
+                for(Device device:list)
+                {
+                    if(device.isOnline())
+                    {
+                        OnlinedeviceList.add(device);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg) {
+                Toast.makeText(getApplicationContext(),"获取设备列表失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

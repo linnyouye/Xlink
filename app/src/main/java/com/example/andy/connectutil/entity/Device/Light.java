@@ -14,7 +14,7 @@ import io.xlink.wifi.sdk.bean.DataPoint;
 public class Light extends DeviceDate implements Serializable{
     private String TAG="Light";
     public boolean Power;
-    public boolean Light_ID;//路数ID
+    public byte Light_ID;//路数ID
     public boolean Power_One;//一路开关
     public boolean Power_Two;//二路开关
     public boolean Pwoer_Three;//三路开关
@@ -32,7 +32,7 @@ public class Light extends DeviceDate implements Serializable{
                     data.Power=(boolean)dp.getValue();
                     break;
                 case 1:
-                    data.Light_ID=(boolean)dp.getValue();
+                    data.Light_ID=(byte)dp.getValue();
                     break;
                 case 2:
                     data.Power_One=(boolean)dp.getValue();

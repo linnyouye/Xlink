@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 
 import com.example.andy.connectutil.Activity.FanLightHelper;
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;
 
 import com.example.andy.connectutil.View.ControlView;
@@ -23,7 +24,7 @@ import io.xlink.wifi.sdk.XlinkCode;
  */
 
 public class ContFanLedFragment extends Fragment {
-
+    private Device device;
     private boolean state = false;
     private  byte date=1;
     private ControlView controlView;
@@ -31,13 +32,17 @@ public class ContFanLedFragment extends Fragment {
     private PopupWindow popupWindow1,popupWindow2,popupWindow3,popupWindow4;
     private FanLightHelper fanLightHelper;
     FanLinght fanLinght;
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // return super.onCreateView(inflater, container, savedInstanceState);
 
-          fanLightHelper=new FanLightHelper();
-          fanLightHelper.getDevice();
+          fanLightHelper=new FanLightHelper(device);
           fanLinght=fanLightHelper.update();
           initData();//初始化数据值
 
@@ -110,7 +115,7 @@ public class ContFanLedFragment extends Fragment {
           @Override
           public void onClick(View v) {
            if(!state) {popupWindow1.setWidth(v.getMeasuredWidth());
-              popupWindow1.showAsDropDown(v,0,-150);
+              popupWindow1.showAsDropDown(v,0,15);
            state = true;}
               else {
                popupWindow1.dismiss();

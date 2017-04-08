@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
+import com.example.andy.connectutil.entity.Net.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ import io.xlink.wifi.sdk.XlinkCode;
 
 public class DeviceFragement extends Fragment {
     public static final String TAG="ChoseScanedDevice";
-    List<View> buttonlist;
+    List<Button> buttonlist;
     private String produt_id;
     private  List<XDevice> devicelist;
 
@@ -57,10 +59,12 @@ public class DeviceFragement extends Fragment {
         scanDevice();
         for(int i=0;i<devicelist.size();i++)
         {
-            View buttonview=inflater.inflate(R.layout.devicetextveiw,null);
+            Button buttonview=(Button)inflater.inflate(R.layout.devicetextveiw,null);
             view.addView(buttonview);
+            buttonlist.add(buttonview);
         }
         setOnclik();
+        setText();
         return view;
     }
 
@@ -91,7 +95,30 @@ public class DeviceFragement extends Fragment {
             });
         }
     }
+    public void setText()
+    {
+        String DeviceName="";
+        for(int i=0;i<buttonlist.size();i++)
+        {
+            switch (devicelist.get(i).getProductId())
+            {
+                case Content.FanLIght_ID:
+                    DeviceName="风扇灯";
+                    break;
+                case Content.Light_ID:
+                    DeviceName="灯";
+                    break;
+                case Content.LEDLIght_ID:
+                    DeviceName="LED灯";
+                    break;
+                case Content.BathBully_ID:
+                    DeviceName="浴霸";
+                    break;
+            }
+            buttonlist.get(i).setText(DeviceName);
+        }
 
+    }
     private void scanDevice() {
         WiFiConfig w=new WiFiConfig(getActivity());
         w.ScanWifi(produt_id, new WiFiConfig.OnBindDeviceListner() {

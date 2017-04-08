@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.Fragment.BathbullyFragment;
+import com.example.andy.connectutil.Fragment.LEDLightFragment;
+import com.example.andy.connectutil.Fragment.LightFragment;
 import com.example.andy.connectutil.R;
 
 import java.util.List;
@@ -51,19 +54,19 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             @Override
             public void onClick(View v) {
                String DeviceName=viewHolder.tv_name.getText().toString();
+                MainActivity mainActivity=(MainActivity)mContext;
+                mainActivity.setBottomSheetOnOff();
+                FragmentHolder fragmentHolder=mainActivity.getHolder();
                 if(DeviceName.equals("风扇灯")){
-                    MainActivity mainActivity=(MainActivity)mContext;
-                    mainActivity.setBottomSheetOnOff();
-                    FragmentHolder fragmentHolder=mainActivity.getHolder();
                     fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment");
                 }else if(DeviceName.equals("灯")) {
-
+                    fragmentHolder.replaceFragment(new LightFragment(),"LightFragment");
                 }else  if(DeviceName.equals("LED灯"))
                 {
-
+                    fragmentHolder.replaceFragment(new LEDLightFragment(),"LEDLightFragment");
                 }else if(DeviceName.equals("浴霸"))
                 {
-
+                    fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment");
                 }
 
             }

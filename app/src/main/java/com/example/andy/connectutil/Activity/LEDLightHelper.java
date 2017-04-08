@@ -3,7 +3,6 @@ package com.example.andy.connectutil.Activity;
 import android.util.Log;
 
 import com.example.andy.connectutil.entity.Device.Device;
-import com.example.andy.connectutil.entity.Device.FanLinght;
 import com.example.andy.connectutil.entity.Device.LEDLight;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
@@ -54,7 +53,7 @@ public class LEDLightHelper {
         return device;
     }
 
-    public FanLinght update()
+    public LEDLight update()
     {
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
             @Override
@@ -110,7 +109,7 @@ public class LEDLightHelper {
     public void setDevice(Device device) {
         this.device = device;
     }
-    private void setDataPoint(final int index, int type, final Object value) {
+    public void setDataPoint(final int index, int type, final Object value) {
 
         List<DataPoint> list = new ArrayList<>();
         DataPoint dp=new DataPoint(index,type);
