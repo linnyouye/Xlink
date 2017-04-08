@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,16 +147,6 @@ public class CountDownFragment extends BaseFragment {
                                 holderListener.startWifiConnection("返回");
                             }
                         },3000);
-//                        timer.schedule(new TimerTask() {
-//
-//                            @Override
-//                            public void run() {
-//                                if(count==0){
-//                                    count++;
-//                                }
-//                            }
-//                        },1000,1000);
-
 
                     }
                 }
