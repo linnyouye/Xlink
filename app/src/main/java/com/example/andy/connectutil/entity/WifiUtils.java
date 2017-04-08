@@ -24,7 +24,7 @@ public class WifiUtils {
 
                 return ssid.replaceAll("\"","");
         }else {
-            Toast.makeText(context,"请链接WiFi设备",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"请连接WiFi设备",Toast.LENGTH_SHORT).show();
             return null;
         }
     }

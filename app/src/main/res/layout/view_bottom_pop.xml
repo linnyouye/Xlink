@@ -9,7 +9,7 @@
         android:layout_marginTop="8dp"
         android:id="@+id/pop_recycleview"
         android:layout_width="match_parent"
-        android:layout_height="312dp">
+        android:layout_height="280dp">
 
     </android.support.v7.widget.RecyclerView>
 

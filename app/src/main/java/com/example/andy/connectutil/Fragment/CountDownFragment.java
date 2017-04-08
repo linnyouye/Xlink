@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
@@ -100,19 +99,21 @@ public class CountDownFragment extends BaseFragment {
                 Glide.with(getActivity()).load(R.drawable.wifi).asGif().into(img_gif_wifi);
             }
         });
-        startCountDown();
+
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        scanDevice();
-        getExitDevice();
-        BindDevice();
-        MainActivity m = (MainActivity) getActivity();
-        m.getOnlinedevicelist();
-        m.notifyAdapter();
+//        scanDevice();
+//        getExitDevice();
+//        BindDevice();
+//
+//        mActivity.getOnlinedevicelist();
+//        mActivity.notifyAdapter();
+        startCountDown();
+      //  mActivity.getHolder().removeAllFragment();
         /*FragmentHolder fragmentHolder=m.getHolder();
         fragmentHolder.removeAllFragment();
         onDestroy();*/
@@ -130,6 +131,14 @@ public class CountDownFragment extends BaseFragment {
                 super.handleMessage(msg);
                 if (msg.what > 0) {
                     tv_countdown.setText(msg.what + "s");
+
+                    scanDevice();
+                    getExitDevice();
+                    BindDevice();
+                    mActivity.getOnlinedevicelist();
+                  //  mActivity.notifyAdapter();
+
+
                 } else {
                     if (msg.what == 0) {
                         tv_countdown.setText("0s");
@@ -154,7 +163,7 @@ public class CountDownFragment extends BaseFragment {
 
         timer = new Timer(true);
         TimerTask tt = new TimerTask() {
-            int countTime = 60;
+            int countTime = 30;
 
             @Override
             public void run() {

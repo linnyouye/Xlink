@@ -32,7 +32,7 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
 
     @Override
     public int getFragmentLayoutId() {
-        return R.layout.view_equitment_select;
+        return R.layout.fragment_equitment_select;
     }
 
     @Override

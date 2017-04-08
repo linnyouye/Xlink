@@ -1,6 +1,7 @@
 package com.example.andy.connectutil.Fragment;
 
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,9 +14,8 @@ import java.util.List;
 /**
  * Created by 95815 on 2017/3/10.
  * 该类用于管理Fragment,以及回调界面视图变化
- *
+ * <p>
  * 目前网上有更好的fragment管理实现方法，将可以考虑替换，
- *
  */
 
 public class FragmentHolder {
@@ -23,15 +23,17 @@ public class FragmentHolder {
     private String Fragment_State = "Main";
     HolderListener holderListener;
 
+    private Context context;
     private FragmentManager fragmentManager;
     private List<Fragment> fragmentList;
 
     public static int fragmentLayoutId = R.id.fragment_layout;
 
-    public FragmentHolder(HolderListener holderListener,FragmentManager fragmentManager) {
-        this.holderListener=holderListener;
+    public FragmentHolder(Context context,HolderListener holderListener, FragmentManager fragmentManager) {
+        this.holderListener = holderListener;
         this.fragmentManager = fragmentManager;
         fragmentList = new ArrayList<>();
+        this.context = context;
     }
 
     /**
@@ -51,17 +53,17 @@ public class FragmentHolder {
 
 
     /**
-     * @param fragment 要添加的fragment
-     * @param tag      fragment的tag
-     * @param isBackToStack  是否添加到回退栈中
+     * @param fragment      要添加的fragment
+     * @param tag           fragment的tag
+     * @param isBackToStack 是否添加到回退栈中
      */
     public void addFragment(Fragment fragment, String tag, boolean isBackToStack) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.animator_fragment_enter,R.anim.animator_fragment_exit,
-                R.anim.animator_fragment_enter,R.anim.animator_fragment_exit
-        ).add(fragmentLayoutId,fragment,tag);
-        if(isBackToStack){
+        transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
+                R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
+        ).add(fragmentLayoutId, fragment, tag);
+        if (isBackToStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
@@ -69,17 +71,17 @@ public class FragmentHolder {
     }
 
     /**
-     * @param fragment 要替换的fragment
+     * @param fragment      要替换的fragment
      * @param tag
-     * @param isBackToStack   是否添加到回退栈中
+     * @param isBackToStack 是否添加到回退栈中
      */
-    public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack){
+    public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.animator_fragment_enter,R.anim.animator_fragment_exit,
-                R.anim.animator_fragment_enter,R.anim.animator_fragment_exit
-        ).replace(fragmentLayoutId,fragment,tag);
-        if(isBackToStack){
+        transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
+                R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
+        ).replace(fragmentLayoutId, fragment, tag);
+        if (isBackToStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
@@ -90,11 +92,11 @@ public class FragmentHolder {
     /**
      * @param tag 根据tag值来删除fragment
      */
-    public void removeFragmentByTag(String tag){
+    public void removeFragmentByTag(String tag) {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if( fragment!= null && fragment.isAdded()){
+        if (fragment != null && fragment.isAdded()) {
             transaction.remove(fragment).commit();
         }
     }
@@ -102,16 +104,16 @@ public class FragmentHolder {
     /**
      * 删除所有的fragment，且事务不添加到回退栈
      */
-    public void removeAllFragment(){
-        fragmentList = fragmentManager.getFragments();
-        for(Fragment fragment:fragmentList){
-            if(fragment !=null){
-                fragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
-                //同时把栈清空
-               fragmentManager.popBackStackImmediate();
-            }
-        }
-
+    public void removeAllFragment() {
+  //      fragmentList = fragmentManager.getFragments();
+//        for (Fragment fragment : fragmentList) {
+//            if (fragment != null) {
+//                fragmentManager.beginTransaction().remove(fragment).commit();
+//                //同时把栈清空
+//              //  fragmentManager.popBackStackImmediate();
+//            }
+//        }
+fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     /**
@@ -122,29 +124,17 @@ public class FragmentHolder {
     }
 
 
+
+
+
+
+
     /**
      * @return 获取到fragmentManager
      */
     public FragmentManager getFragmentManager() {
         return fragmentManager;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    private HolderListener holderListener;
@@ -221,7 +211,6 @@ public class FragmentHolder {
 //            transaction.addToBackStack(null);
 //            transaction.commit();
 //    }
-
 
 
 }
