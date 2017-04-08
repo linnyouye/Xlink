@@ -21,6 +21,11 @@ public class BarActivity extends BasicActivity implements View.OnClickListener {
 
 
     @Override
+    protected void getOnlinedevicelist() {
+
+    }
+
+    @Override
     protected void setBefortLayout() {
 
     }

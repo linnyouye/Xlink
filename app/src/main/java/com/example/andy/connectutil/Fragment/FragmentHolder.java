@@ -8,13 +8,15 @@ import android.view.View;
 
 import com.example.andy.connectutil.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by 95815 on 2017/3/10.
  * 该类用于管理Fragment,以及回调界面视图变化
- *
+ * <p>
  * 目前网上有更好的fragment管理实现方法，将可以考虑替换，
- *
  */
 
 public class FragmentHolder {
@@ -23,9 +25,12 @@ public class FragmentHolder {
     private HolderListener holderListener;
     private FragmentManager manager;
 
+
+    private List<Fragment> fragmentList;
+
     private int state = 0;
     public static final int MAIN_PAGE = 0;
-    public  static final int SELECT_FRAGMENT = 1;
+    public static final int SELECT_FRAGMENT = 1;
     public static final int WIFI_CONNECTION_FRAGMENT = 2;
 
 
@@ -34,16 +39,17 @@ public class FragmentHolder {
      */
     public void setState(int state) {
         this.state = state;
-        if(state == MAIN_PAGE){
+        if (state == MAIN_PAGE) {
             holderListener.setMainPage("主界面", View.INVISIBLE);
-        }else if(state == SELECT_FRAGMENT){
+        } else if (state == SELECT_FRAGMENT) {
             holderListener.setMainPage("选择设备列表", View.VISIBLE);
-        }else if(state == WIFI_CONNECTION_FRAGMENT){
+        } else if (state == WIFI_CONNECTION_FRAGMENT) {
             holderListener.setMainPage("设备配网", View.VISIBLE);
         }
 
     }
-    public void onBackupStatus(){
+
+    public void onBackupStatus() {
 
 
     }
@@ -61,40 +67,63 @@ public class FragmentHolder {
         super();
         this.holderListener = holderListener;
         this.manager = manager;
+        fragmentList = new ArrayList<>();
     }
 
     /**
      * @param fragment 添加fragment
      */
-    public void addFragment(Fragment fragment,String tag) {
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.fragment_layout,fragment,tag);
-            transaction.commit();
+    public void addFragment(Fragment fragment, String tag) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragment_layout, fragment, tag);
+        transaction.commit();
     }
 
     /**
      * @param tag 移除fragment
      */
     public void removeFragment(String tag) {
-            FragmentTransaction transaction = manager.beginTransaction();
-            Fragment fragment = manager.findFragmentByTag(tag);
-        if(fragment != null){
+        FragmentTransaction transaction = manager.beginTransaction();
+        Fragment fragment = manager.findFragmentByTag(tag);
+        if (fragment != null) {
             transaction.remove(fragment);
             transaction.commit();
-            setState(0);}
+            setState(0);
+        }
     }
+
+
+    public void removeAllFragment() {
+
+
+        fragmentList = manager.getFragments();
+
+
+            for (Fragment fragment : fragmentList) {
+                if (fragment != null) {
+
+                    manager.beginTransaction().remove(fragment).commitAllowingStateLoss();
+                    manager.popBackStackImmediate();
+
+
+                }
+
+
+            }
+
+
+        }
 
     /**
      * @param frament 替换fragment
      */
-    public void replaceFragment(Fragment frament,String tag) {
+    public void replaceFragment(Fragment frament, String tag) {
 
         FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.fragment_layout, frament,tag);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        transaction.replace(R.id.fragment_layout, frament, tag);
+        transaction.addToBackStack(tag);
+        transaction.commit();
     }
-
 
 
 }

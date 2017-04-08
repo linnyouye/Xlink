@@ -21,6 +21,11 @@ public class SplashActivity extends BasicActivity {
 
 
     @Override
+    protected void getOnlinedevicelist() {
+
+    }
+
+    @Override
     protected void setBefortLayout() {
 
     }

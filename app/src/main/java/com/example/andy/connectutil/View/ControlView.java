@@ -140,6 +140,14 @@ public class ControlView extends View {
         void onClickEight();
 
         void onClickNine();
+
+        void onClickTopLeft();
+        void onClickTopRight();
+        void onClickBottomLeft();
+
+        void onClickBottomRight();
+
+
     }
 
     public void setOncontrolListener(OnControlListener listenr) {
@@ -468,6 +476,14 @@ public class ControlView extends View {
                         mlistener.onClickEight();
                     } else if (current_flag == NINE) {
                         mlistener.onClickNine();
+                    }else if (current_flag == RB_BTN) {
+                        mlistener.onClickBottomRight();
+                    }else if (current_flag == RT_BTN) {
+                        mlistener.onClickTopRight();
+                    }else if (current_flag == LB_BTN) {
+                        mlistener.onClickBottomLeft();
+                    }else if (current_flag == LT_BTN) {
+                        mlistener.onClickTopLeft();
                     }
                 }
                 touch_flag = current_flag = -1;

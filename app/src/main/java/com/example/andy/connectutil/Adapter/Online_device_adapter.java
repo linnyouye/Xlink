@@ -5,15 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Bean.Equitment;
+import com.example.andy.connectutil.Fragment.BathbullyFragment;
+import com.example.andy.connectutil.Fragment.ContFanLedFragment;
+import com.example.andy.connectutil.Fragment.FragmentHolder;
+import com.example.andy.connectutil.Fragment.LEDLightFragment;
+import com.example.andy.connectutil.Fragment.LightFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.BathBully;
 import com.example.andy.connectutil.entity.Device.Device;
-import com.example.andy.connectutil.entity.Device.FanLinght;
-import com.example.andy.connectutil.entity.Device.LEDLight;
-import com.example.andy.connectutil.entity.Device.Light;
 import com.example.andy.connectutil.entity.Net.Content;
 
 import java.util.List;
@@ -36,11 +40,11 @@ public class Online_device_adapter extends RecyclerView.Adapter<Online_device_ad
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=mInflater.inflate(R.layout.devicetextveiw,parent,false);
         MyHolder holder=new MyHolder(view);
-        return null;
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(MyHolder holder, final int position) {
         String DeviceName="";
         switch (OnlineList.get(position).getProduct_ID())
         {
@@ -57,7 +61,29 @@ public class Online_device_adapter extends RecyclerView.Adapter<Online_device_ad
                 DeviceName="浴霸";
                 break;
         }
-        holder.text.setText(DeviceName);
+        holder.btn.setText(DeviceName);
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity=(MainActivity) mContext;
+                FragmentHolder fragmentHolder=mainActivity.getHolder();
+                if(OnlineList.get(position).getxDevice().getProductId().equals(Content.FanLIght_ID)){
+                    ContFanLedFragment contFanLedFragment=new ContFanLedFragment();
+                    contFanLedFragment.setDevice(OnlineList.get(position));
+                    fragmentHolder.replaceFragment(contFanLedFragment,"ContFanLedFragment");
+                }else if(OnlineList.get(position).getxDevice().getProductId().equals(Content.Light_ID)) {
+
+                    fragmentHolder.replaceFragment(new LightFragment(),"LightFragment");
+
+                }else  if(OnlineList.get(position).getxDevice().getProductId().equals(Content.LEDLIght_ID))
+                {
+                    fragmentHolder.replaceFragment(new LEDLightFragment(),"LEDLightFragment");
+                }else if(OnlineList.get(position).getxDevice().getProductId().equals(Content.BathBully_ID))
+                {
+                    fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment");
+                }
+            }
+        });
     }
 
     @Override
@@ -67,10 +93,10 @@ public class Online_device_adapter extends RecyclerView.Adapter<Online_device_ad
 
     class MyHolder extends RecyclerView.ViewHolder
     {
-        public TextView text;
+        public Button btn;
         public MyHolder(View itemView) {
             super(itemView);
-            text=(TextView)itemView.findViewById(R.id.Basic_text);
+            btn=(Button)itemView.findViewById(R.id.Basic_text);
         }
     }
 }

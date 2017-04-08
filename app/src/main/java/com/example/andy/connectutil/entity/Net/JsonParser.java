@@ -55,6 +55,7 @@ public class JsonParser {
                 XlinkAgent.getInstance().initDevice(xDevice);
                 Device addDevice = new Device();
                 addDevice.setOnline(device.optBoolean(Key.IS_ONLINE));
+                addDevice.setProduct_ID(pid);
                 addDevice.setxDevice(xDevice);
                 switch (pid)
                 {

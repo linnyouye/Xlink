@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.WiFiConfig;
 
 
 /**
@@ -100,14 +101,14 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
          switch(v.getId()){
              case R.id.btn_next:
-               /* String password=et_wifi_password.getText().toString();
+                String password=et_wifi_password.getText().toString();
                  WiFiConfig wiFiConfig=new WiFiConfig(getActivity());
                  wiFiConfig.StartConfig(password);
-          holderListener.startCountdownFragment();*/
+                 holderListener.startCountdownFragment();
                  //获取FargmentHolder跳转到DeviceFargement
                  MainActivity mainActivity = (MainActivity)getActivity();
                  FragmentHolder holder = mainActivity.getHolder();
-                 DeviceFragement deviceFragement = DeviceFragement.newInstance(product_ID);
+                 CountDownFragment deviceFragement = new CountDownFragment();
                  holder.replaceFragment(deviceFragement,DeviceFragement.TAG);
                  break;
              case R.id.new_guide:

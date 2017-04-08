@@ -105,7 +105,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
 
-        getOnlinedevicelist();
         online_device_adapter=new Online_device_adapter(this,OnlinedeviceList);
         OnlineDeviceRecycleview.setAdapter(online_device_adapter);
 
@@ -161,7 +160,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         OnlineDeviceRecycleview=obtainView(R.id.Online_device);
         OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
-
         equitmentList = new ArrayList<>();
          Log.d("waiwen","initview");
        // recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -318,20 +316,28 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
    {
        return holder;
    }
-   public void getOnlinedevicelist()
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getOnlinedevicelist();
+    }
+
+    public void getOnlinedevicelist()
     {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
+                Toast.makeText(getApplicationContext(),"获取设备列表cg"+content,Toast.LENGTH_SHORT).show();
                 List<Device> list=new ArrayList<Device>();
                 list= JsonParser.parseDeviceList(content);
                 for(Device device:list)
                 {
-                    if(device.isOnline())
-                    {
+
                         OnlinedeviceList.add(device);
-                    }
+                   //
                 }
+                notifyAdapter();
             }
 
             @Override
@@ -339,5 +345,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 Toast.makeText(getApplicationContext(),"获取设备列表失败",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void notifyAdapter()
+    {
+        online_device_adapter.notifyDataSetChanged();
     }
 }
