@@ -40,27 +40,10 @@ public abstract class BaseFragment extends Fragment  {
     }
 
 protected void showLog(String str){
-    Log.d("waiwen",this.getTag()+": "+str);
+    Log.d("waiwen","----"+getClass().getName()+"-----"+str);
 
 }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        showLog("onCreate");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        showLog("onstart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        showLog("onResume");
-    }
 
     @Override
     public void onAttach(Context context) {

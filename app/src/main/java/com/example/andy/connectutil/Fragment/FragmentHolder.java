@@ -108,7 +108,7 @@ public class FragmentHolder {
             if(fragment !=null){
                 fragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
                 //同时把栈清空
-                fragmentManager.popBackStackImmediate();
+               fragmentManager.popBackStackImmediate();
             }
         }
 

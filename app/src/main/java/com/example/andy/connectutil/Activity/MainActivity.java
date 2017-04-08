@@ -205,17 +205,13 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.bottom_add_ibtn:
 
-                 //   holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-
                 holder.replaceFragment(EquitmentSelectFragment.newInstance(),
-                        EquitmentSelectFragment.Fragment_Tag_State,false);
-
-
+                        EquitmentSelectFragment.Fragment_Tag_State,true);
 
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-
+                  holder.removeAllFragment();
                 break;
 
         }
@@ -291,10 +287,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
 
-
-
-
-
     public void setBottomSheetOnOff() {
 
         int state = behavior.getState();
@@ -352,9 +344,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         }
 
     }
-<<<<<<< HEAD
-
-
 
    public FragmentHolder getHolder()
    {
@@ -382,9 +371,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             }
         });
 
-=======
-    public FragmentHolder getHolder() {
-        return holder;
->>>>>>> waiwen1
+
     }
 }
