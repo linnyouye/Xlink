@@ -70,17 +70,17 @@ public class Online_device_adapter extends RecyclerView.Adapter<Online_device_ad
                 if(OnlineList.get(position).getxDevice().getProductId().equals(Content.FanLIght_ID)){
                     ContFanLedFragment contFanLedFragment=new ContFanLedFragment();
                     contFanLedFragment.setDevice(OnlineList.get(position));
-                    fragmentHolder.replaceFragment(contFanLedFragment,"ContFanLedFragment");
+                    fragmentHolder.replaceFragment(contFanLedFragment,"ContFanLedFragment",true);
                 }else if(OnlineList.get(position).getxDevice().getProductId().equals(Content.Light_ID)) {
 
-                    fragmentHolder.replaceFragment(new LightFragment(),"LightFragment");
+                    fragmentHolder.replaceFragment(new LightFragment(),"LightFragment",true);
 
                 }else  if(OnlineList.get(position).getxDevice().getProductId().equals(Content.LEDLIght_ID))
                 {
-                    fragmentHolder.replaceFragment(new LEDLightFragment(),"LEDLightFragment");
+                    fragmentHolder.replaceFragment(new LEDLightFragment(),"LEDLightFragment",true);
                 }else if(OnlineList.get(position).getxDevice().getProductId().equals(Content.BathBully_ID))
                 {
-                    fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment");
+                    fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment",true);
                 }
             }
         });

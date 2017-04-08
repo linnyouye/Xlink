@@ -53,7 +53,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
         wifi_name = obtainView(view,R.id.tv_wifi_num);
         et_wifi_password = obtainView(view,R.id.et_wifi_password);
         btn_next = obtainView(view, R.id.btn_next);
-        linearLayout = obtainView(view,R.id.new_guide);
+        linearLayout = obtainView(view,R.id.view_new_guide);
 
 
     }
@@ -109,9 +109,9 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                  MainActivity mainActivity = (MainActivity)getActivity();
                  FragmentHolder holder = mainActivity.getHolder();
                  CountDownFragment deviceFragement = new CountDownFragment();
-                 holder.replaceFragment(deviceFragement,DeviceFragement.TAG);
+                 holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
                  break;
-             case R.id.new_guide:
+             case R.id.view_new_guide:
                  //点击即消失
                  linearLayout.setVisibility(View.INVISIBLE);
                  break;

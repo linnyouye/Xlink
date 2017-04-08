@@ -112,11 +112,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
          fragmentManager = getSupportFragmentManager();
          holder = new FragmentHolder(this,fragmentManager);
-         holder.setState(FragmentHolder.MAIN_PAGE);
 
 
         account=new Account(getApplicationContext());
-
+        getOnlinedevicelist();
     }
 
     @Override
@@ -186,24 +185,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.bottom_add_ibtn:
-                if(holder.getState() == FragmentHolder.MAIN_PAGE){
-                holder.addFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.fragment_tag);
-                holder.setState(FragmentHolder.SELECT_FRAGMENT);}
-                if(holder.getState() != FragmentHolder.SELECT_FRAGMENT){
-                    holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.fragment_tag);
-                    holder.setState(FragmentHolder.SELECT_FRAGMENT);
-                }
+                holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.Fragment_Tag_State,true);
 
 
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-                if(holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT){
-                             holder.removeFragment(WifiConnectionFragment.fragment_tag);
-                }
-                else if(holder.getState() == FragmentHolder.SELECT_FRAGMENT){
-                    holder.removeFragment(EquitmentSelectFragment.fragment_tag);
-                }
                 break;
 
         }
@@ -238,16 +225,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void add_Aquitment() {
-        if (holder.getState() == FragmentHolder.MAIN_PAGE) {
-            holder.addFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-            holder.setState(FragmentHolder.SELECT_FRAGMENT);
-        }
-        if (holder.getState() != FragmentHolder.SELECT_FRAGMENT) {
-            holder.replaceFragment(EquitmentSelectFragment.newInstance(), EquitmentSelectFragment.fragment_tag);
-            holder.setState(FragmentHolder.SELECT_FRAGMENT);
-        }
-
-
+        holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.Fragment_Tag_State,true);
     }
 
 
@@ -262,9 +240,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public void startCountdownFragment() {
-        if(holder.getState() == FragmentHolder.WIFI_CONNECTION_FRAGMENT){
-            holder.replaceFragment(CountDownFragment.newInstance(),CountDownFragment.fragment_tag);
-        }
+
+            holder.replaceFragment(CountDownFragment.newInstance(),CountDownFragment.fragment_tag,true);
+
 
     }
 
@@ -272,10 +250,14 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void startWifiConnection(String produt_id) {
 
-        if(holder.getState() == FragmentHolder.SELECT_FRAGMENT){
-           holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this),produt_id),WifiConnectionFragment.fragment_tag);
-           holder.setState(FragmentHolder.WIFI_CONNECTION_FRAGMENT);
-        }
+
+           holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this),produt_id),WifiConnectionFragment.fragment_tag,true);
+
+    }
+
+    @Override
+    public void setFraagment_State(String str) {
+
     }
 
     /**
@@ -320,7 +302,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     protected void onResume() {
         super.onResume();
-        getOnlinedevicelist();
+
     }
 
     public void getOnlinedevicelist()
