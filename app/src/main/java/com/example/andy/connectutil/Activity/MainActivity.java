@@ -57,7 +57,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
    public static final String TAG = "MainActivity";
 
 
-    private String fragment_state =null;
+    private String fragment_state ="MainActivity";
     private boolean isExit = false;
     private Timer tExit;
     private Account account;
@@ -119,7 +119,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         Log.d("waiwen", "setAdapter：");
 
         fragmentManager = getSupportFragmentManager();
-        holder = new FragmentHolder(this, fragmentManager);
+        holder = new FragmentHolder(this,this, fragmentManager);
 
 
         account = new Account(getApplicationContext());
@@ -188,11 +188,13 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 }
                 break;
             case R.id.rl_bottom_addequit:
-                showToast("点击了底部菜单");
+
                 setBottomSheetOnOff();
                 break;
             case R.id.bottom_add_ibtn:
-                holder.showAddEquitmentSelect();
+                if(getFragment_state()!= EquitmentSelectFragment.TAG){
+                    holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.TAG,false);
+                }
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
@@ -205,7 +207,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_addequitment) {
-           holder.showAddEquitmentSelect();
+            if(getFragment_state()!= EquitmentSelectFragment.TAG){
+                holder.replaceFragment(EquitmentSelectFragment.newInstance(),EquitmentSelectFragment.TAG,false);
+            }
             setDrawerOnOff();
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(this, ShareActivity.class));
@@ -242,8 +246,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void startWifiConnection(String produt_id) {
 
-      holder.showWifiConnectFragment(EquitmentSelectFragment.TAG, WifiConnectionFragment.newInstance(
-              WifiUtils.getWifiSSID(this),produt_id));
+     holder.addFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this),produt_id),WifiConnectionFragment.TAG,true);
     }
 
     @Override
@@ -351,17 +354,20 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表cg" + content, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取设备列表" + content, Toast.LENGTH_SHORT).show();
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {
                     OnlinedeviceList.add(device);
                 }
                 notifyAdapter();
+               
+
             }
             @Override
             public void onFailed(int code, String msg) {
                 Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

@@ -1,11 +1,11 @@
 package com.example.andy.connectutil.Fragment;
 
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.example.andy.connectutil.LogUtil;
 import com.example.andy.connectutil.R;
 
 import java.util.ArrayList;
@@ -23,15 +23,17 @@ public class FragmentHolder {
     private String Fragment_State = "Main";
     HolderListener holderListener;
 
+    private Context context;
     private FragmentManager fragmentManager;
     private List<Fragment> fragmentList;
 
     public static int fragmentLayoutId = R.id.fragment_layout;
 
-    public FragmentHolder(HolderListener holderListener, FragmentManager fragmentManager) {
+    public FragmentHolder(Context context,HolderListener holderListener, FragmentManager fragmentManager) {
         this.holderListener = holderListener;
         this.fragmentManager = fragmentManager;
         fragmentList = new ArrayList<>();
+        this.context = context;
     }
 
     /**
@@ -103,15 +105,15 @@ public class FragmentHolder {
      * 删除所有的fragment，且事务不添加到回退栈
      */
     public void removeAllFragment() {
-        fragmentList = fragmentManager.getFragments();
-        for (Fragment fragment : fragmentList) {
-            if (fragment != null) {
-                fragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
-                //同时把栈清空
-                fragmentManager.popBackStackImmediate();
-            }
-        }
-
+  //      fragmentList = fragmentManager.getFragments();
+//        for (Fragment fragment : fragmentList) {
+//            if (fragment != null) {
+//                fragmentManager.beginTransaction().remove(fragment).commit();
+//                //同时把栈清空
+//              //  fragmentManager.popBackStackImmediate();
+//            }
+//        }
+fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     /**
@@ -121,47 +123,11 @@ public class FragmentHolder {
         this.fragmentLayoutId = fragmentLayoutId;
     }
 
-    /**
-     * 维护有一个单例的EquitmentSelect,show和hidden
-     */
-    public void showAddEquitmentSelect() {
-
-        Fragment fragmentSelect = EquitmentSelectFragment.newInstance();
-        if (fragmentSelect.isAdded()) {
-            if (fragmentSelect.isHidden()) {
-                fragmentManager.beginTransaction().
-                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).show(fragmentSelect).commit();
-                LogUtil.showLog("选择设备页面被隐藏");
-            }
-        } else {
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).
-                    add(fragmentLayoutId, fragmentSelect, EquitmentSelectFragment.TAG).commit();
-        }
-
-    }
-
-    /**
-     * @param hidden_FragmentTag 隐藏
-     * @param show_Fragment      展现
-     */
-    public void showWifiConnectFragment(String hidden_FragmentTag, WifiConnectionFragment show_Fragment) {
-
-        Fragment fragment = fragmentManager.findFragmentByTag(hidden_FragmentTag);
-        if (!fragment.isAdded() || fragment.isVisible()) {
-            if (!show_Fragment.isAdded()) {
-                fragmentManager.beginTransaction().
-                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).add(fragmentLayoutId, show_Fragment, WifiConnectionFragment.TAG).
-                        addToBackStack(WifiConnectionFragment.TAG).commit();
-            } else {
-                fragmentManager.beginTransaction().
-                        setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit).remove(show_Fragment).add(fragmentLayoutId, show_Fragment, WifiConnectionFragment.TAG).
-                        addToBackStack(WifiConnectionFragment.TAG).commit();
-            }
-        }
 
 
-    }
+
+
+
 
     /**
      * @return 获取到fragmentManager
