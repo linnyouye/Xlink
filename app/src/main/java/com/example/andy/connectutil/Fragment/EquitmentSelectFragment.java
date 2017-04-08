@@ -88,4 +88,9 @@ public class EquitmentSelectFragment extends BaseFragment implements View.OnClic
         }
     }
 
+    private void testgithub(){
+
+        
+    }
+
 }
