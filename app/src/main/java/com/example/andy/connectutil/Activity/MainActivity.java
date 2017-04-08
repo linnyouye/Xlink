@@ -303,13 +303,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     public void backup() {
         if (isExit == false) {
-
             isExit = true; // 准备退出
-
             Toast.makeText(this, "双击退出程序", Toast.LENGTH_SHORT).show();
-
             tExit = new Timer();
-
             tExit.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -323,8 +319,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         }
 
     }
-
-
     public FragmentHolder getHolder() {
         return holder;
     }
