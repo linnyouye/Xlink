@@ -44,22 +44,7 @@ public class WiFiConfig {
     }
     public void OnCreateWifiCOnfig(OnSmartLinkListener listener) {
 
-            smartLinker.setOnSmartLinkListener(new OnSmartLinkListener() {
-                @Override
-                public void onLinked(SmartLinkedModule smartLinkedModule) {
-                    Toast.makeText(context, "配置成功", Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onCompleted() {
-                    Toast.makeText(context, "配网完成", Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onTimeOut() {
-                    Toast.makeText(context, "配网超时", Toast.LENGTH_LONG).show();
-                }
-            });
+            smartLinker.setOnSmartLinkListener(listener);
 
     }
     //配置Wifi信息
@@ -89,6 +74,7 @@ public class WiFiConfig {
         });
 
         if(DeviceNum<0){
+            listner.toString();
             showScanError(DeviceNum);
         }
     }
@@ -115,5 +101,6 @@ public class WiFiConfig {
     }
     public static interface OnBindDeviceListner{
         public void getDevice(XDevice device);
+        public void failed();
     }
 }

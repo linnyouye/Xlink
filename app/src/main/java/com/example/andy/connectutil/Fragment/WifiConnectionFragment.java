@@ -96,26 +96,10 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
          switch(v.getId()){
              case R.id.btn_next:
                 String password=et_wifi_password.getText().toString();
-                 WiFiConfig wiFiConfig=new WiFiConfig(getActivity(), new OnSmartLinkListener() {
-                     @Override
-                     public void onLinked(SmartLinkedModule smartLinkedModule) {
-                         Toast.makeText(getActivity(),"连接成功",Toast.LENGTH_SHORT).show();
-                     }
-
-                     @Override
-                     public void onCompleted() {
-                         FragmentHolder holder = mActivity.getHolder();
-                         CountDownFragment deviceFragement = new CountDownFragment();
-                         holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
-                     }
-
-                     @Override
-                     public void onTimeOut() {
-                         Toast.makeText(getActivity(),"配网失败",Toast.LENGTH_SHORT).show();
-                     }
-                 });
-                 wiFiConfig.StartConfig(password);
-                 holderListener.startCountdownFragment();
+                 FragmentHolder holder = mActivity.getHolder();
+                 CountDownFragment deviceFragement = new CountDownFragment();
+                 deviceFragement.setPassword(password);
+                 holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
                  //获取FargmentHolder跳转到DeviceFargement
 
                  break;

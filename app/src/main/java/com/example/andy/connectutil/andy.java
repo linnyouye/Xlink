@@ -78,7 +78,12 @@ public class andy extends AppCompatActivity implements View.OnClickListener{
                         list.add(device);
                         Log.d("getDevice", "getDevice: "+list.size());
                     }
-                });
+
+                   @Override
+                   public void failed() {
+
+                   }
+               });
                 //Toast.makeText(this,list.size()+"",Toast.LENGTH_LONG).show();*/
                 /*wiFiConfig.StartConfig("");*/
                 break;

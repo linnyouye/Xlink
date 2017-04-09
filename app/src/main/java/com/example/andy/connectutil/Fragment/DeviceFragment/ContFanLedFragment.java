@@ -4,6 +4,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,15 @@ import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;
 
 import com.example.andy.connectutil.View.ControlView;
+
+import java.util.List;
+
+import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
 import io.xlink.wifi.sdk.XlinkCode;
+import io.xlink.wifi.sdk.bean.DataPoint;
+import io.xlink.wifi.sdk.bean.EventNotify;
+import io.xlink.wifi.sdk.listener.XlinkNetListener;
 
 
 /**
@@ -82,8 +91,9 @@ public class ContFanLedFragment extends Fragment {
             if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
-                   fanLinght=fanLightHelper.update();
-                   initData();//初始化数据值
+
+                   updata();
+
                    setOnClike();
             }else
             {
@@ -92,6 +102,58 @@ public class ContFanLedFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void updata() {
+        XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
+            @Override
+            public void onStart(int i) {
+
+            }
+
+            @Override
+            public void onLogin(int i) {
+
+            }
+
+            @Override
+            public void onLocalDisconnect(int i) {
+
+            }
+
+            @Override
+            public void onDisconnect(int i) {
+
+            }
+
+            @Override
+            public void onRecvPipeData(short i, XDevice xDevice, byte[] bytes) {
+
+            }
+
+            @Override
+            public void onRecvPipeSyncData(short i, XDevice xDevice, byte[] bytes) {
+
+            }
+
+            @Override
+            public void onDeviceStateChanged(XDevice xDevice, int i) {
+
+            }
+
+            @Override
+            public void onDataPointUpdate(XDevice xDevice, List<DataPoint> list, int i) {
+                Log.d("FanLight", "onDataPointUpdate: "+list.toString());
+                FanLinght f=new FanLinght();
+                fanLinght=(FanLinght) f.parseFromDataPoints(list);
+                initData();//初始化数据值
+            }
+
+            @Override
+            public void onEventNotify(EventNotify eventNotify) {
+
+            }
+        });
     }
 
 

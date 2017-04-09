@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
@@ -141,7 +142,13 @@ public class DeviceFragement extends Fragment {
         w.ScanWifi(produt_id, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
+                Log.d(TAG, "getDevice: 扫描到设备"+device.toString());
                devicelist.add(device);
+            }
+
+            @Override
+            public void failed() {
+
             }
         });
     }

@@ -108,7 +108,7 @@ public class FanLightHelper {
             public void onDataPointUpdate(XDevice xDevice, List<DataPoint> list, int i) {
                 Log.d(TAG, "onDataPointUpdate: "+list.toString());
                 FanLinght f=new FanLinght();
-                /*data=(FanLinght) f.parseFromDataPoints(list);*/
+                data=(FanLinght) f.parseFromDataPoints(list);
             }
 
             @Override
