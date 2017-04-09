@@ -37,6 +37,12 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
 public class ContFanLedFragment extends Fragment {
     private boolean fanstate=false;
     private boolean lightstate=false;
+    private boolean powerstate=false;
+
+    private boolean imagebtn1state=false;
+    private boolean imagebtn2state=false;
+    private boolean imagebtn3state=false;
+    private boolean imagebtn4state=false;
 
     private byte lighting;
     private Device device;
@@ -52,7 +58,7 @@ public class ContFanLedFragment extends Fragment {
     private View popupLayout1,popupLayout2,popupLayout3,popupLayout4;
     private ImageButton imageButton;
 
-    FanLinght fanLinght;
+    FanLinght fanLinght=new FanLinght();
 
     public void setDevice(Device device) {
         this.device = device;
@@ -62,7 +68,7 @@ public class ContFanLedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
+          testdata();
 
           View view = inflater.inflate(R.layout.fragment_view_fanled,container,false);
           controlView = (ControlView) view.findViewById(R.id.controlView);
@@ -88,21 +94,24 @@ public class ContFanLedFragment extends Fragment {
          imageButton3 = (ImageButton)view.findViewById(R.id.ibtn_three_top);
 
          imageButton4 = (ImageButton)view.findViewById(R.id.ibtn_four_top);
-            if(device.isOnline())
+           /* if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
 
-                   updata();
+                   //updata();
 
                    setOnClike();
             }else
             {
                 Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
-            }
-
+            }*/
+        fanLightHelper=new FanLightHelper(device);
+           initData();
+        setOnClike();
 
         return view;
     }
+
 
     private void updata() {
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
@@ -161,9 +170,12 @@ public class ContFanLedFragment extends Fragment {
 
         fanstate=fanLinght.PowerOfFanc;
         lightstate=fanLinght.PowerOfLight;
+        powerstate=fanLinght.PowerOfFanc;
+        controlView.setPowerState(powerstate);
 
         lighting=fanLinght.brightness;
-
+        controlView.setLightNum(lighting);
+        controlView.setGeerNum(fanLinght.FanModel);
         controlView.setArcState((int) fanLinght.FanPosition);
 
 
@@ -217,7 +229,18 @@ public class ContFanLedFragment extends Fragment {
         controlView.setOncontrolListener(new ControlView.OnControlListener() {
             @Override
             public void onClickCenter() {
-                fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,true);
+                if(powerstate)
+                {
+                    fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,false);
+                    controlView.setPowerState(false);
+                    powerstate=false;
+                }else
+                {
+                    fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,true);
+                    controlView.setPowerState(true);
+                    powerstate=true;
+                }
+
             }
 
             @Override
@@ -227,57 +250,69 @@ public class ContFanLedFragment extends Fragment {
 
             @Override
             public void onClickOne() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                controlView.setArcState(1);
             }
 
             @Override
             public void onClickTwo() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)2);
+                controlView.setArcState(2);
+
             }
 
             @Override
             public void onClickThree() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)3);
+                controlView.setArcState(3);
             }
 
             @Override
             public void onClickFour() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)4);
+                controlView.setArcState(4);
             }
 
             @Override
             public void onClickFive() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,5);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)5);
+                controlView.setArcState(5);
             }
 
             @Override
             public void onClickSix() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,6);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)6);
+                controlView.setArcState(6);
             }
 
             @Override
             public void onClickSeven() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,7);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)7);
+                controlView.setArcState(7);
             }
 
             @Override
             public void onClickEight() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,8);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)8);
+                controlView.setArcState(8);
             }
 
             @Override
             public void onClickNine() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,9);
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)9);
+                controlView.setArcState(9);
             }
 
             @Override
             public void onClickTopLeft() {
                 fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
+                controlView.setLightNum(lighting);
             }
 
             @Override
             public void onClickTopRight() {
                 fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
+                controlView.setLightNum(lighting);
             }
 
             @Override
@@ -310,12 +345,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow1.setWidth(v.getMeasuredWidth());
+                if(!imagebtn1state) {popupWindow1.setWidth(v.getMeasuredWidth());
                     popupWindow1.showAsDropDown(v,0,15);
-                    state = true;}
+                    imagebtn1state = true;}
                 else {
                     popupWindow1.dismiss();
-                    state = false;
+                    imagebtn1state = false;
                 }
             }
         });
@@ -323,12 +358,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow2.setWidth(v.getMeasuredWidth());
+                if(!imagebtn2state) {popupWindow2.setWidth(v.getMeasuredWidth());
                     popupWindow2.showAsDropDown(v,0,15);
-                    state = true;}
+                    imagebtn2state = true;}
                 else {
                     popupWindow2.dismiss();
-                    state = false;
+                    imagebtn2state = false;
                 }
             }
         });
@@ -336,12 +371,12 @@ public class ContFanLedFragment extends Fragment {
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow3.setWidth(v.getMeasuredWidth());
+                if(!imagebtn3state) {popupWindow3.setWidth(v.getMeasuredWidth());
                     popupWindow3.showAsDropDown(v,0,15);
-                    state = true;}
+                    imagebtn3state = true;}
                 else {
                     popupWindow3.dismiss();
-                    state = false;
+                    imagebtn3state = false;
                 }
             }
         });
@@ -349,36 +384,40 @@ public class ContFanLedFragment extends Fragment {
         imageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!state) {popupWindow4.setWidth(v.getMeasuredWidth());
+                if(!imagebtn4state) {popupWindow4.setWidth(v.getMeasuredWidth());
                     popupWindow4.showAsDropDown(v,0,15);
-                    state = true;}
+                    imagebtn4state = true;}
                 else {
                     popupWindow4.dismiss();
-                    state = false;
+                    imagebtn4state = false;
                 }
             }
         });
 
 
 
-        ImageButton imageButton1_one;
-        ImageButton imageButton1_two;
+        final ImageButton imageButton1_one;
+        final ImageButton imageButton1_two;
 
         imageButton1_one=(ImageButton)popupLayout1.findViewById(R.id.ibtn_1_pop_one);
         imageButton1_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow1.dismiss();
                 fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                popupWindow1.dismiss();
+                imagebtn1state=false;
+                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_orange);
             }
         });
 
-        imageButton1_two=(ImageButton)popupLayout1.findViewById(R.id.ibtn_1_pop_one);
+        imageButton1_two=(ImageButton)popupLayout1.findViewById(R.id.ibt_1_pop_two);
         imageButton1_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow1.dismiss();
                 fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                popupWindow1.dismiss();
+                imagebtn1state=false;
+                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_orange);
             }
         });
 
@@ -390,17 +429,21 @@ public class ContFanLedFragment extends Fragment {
         imageButton2_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow2.dismiss();
+                imagebtn2state=false;
                 fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                popupWindow2.dismiss();
+                imageButton2.setImageResource(R.drawable.ibtn_2_natural_orange);
             }
         });
 
-        imageButton2_two=(ImageButton)popupLayout2.findViewById(R.id.ibt_2_pop_one);
+        imageButton2_two=(ImageButton)popupLayout2.findViewById(R.id.ibt_2_pop_two);
         imageButton2_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow2.dismiss();
+                imagebtn2state=false;
                 fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                popupWindow2.dismiss();
+                imageButton2.setImageResource(R.drawable.ibtn_2_fan_orange);
             }
         });
 
@@ -412,8 +455,10 @@ public class ContFanLedFragment extends Fragment {
         imageButton3_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow3.dismiss();
+                imagebtn3state=false;
                 fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                popupWindow3.dismiss();
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_one_orange);
             }
         });
 
@@ -421,8 +466,10 @@ public class ContFanLedFragment extends Fragment {
         imageButton3_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow3.dismiss();
+                imagebtn3state=false;
                 fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                popupWindow3.dismiss();
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_two_orange);
             }
         });
         imageButton3_three=(ImageButton)popupLayout3.findViewById(R.id.ibt_3_pop_three);
@@ -430,7 +477,9 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow3.dismiss();
+                imagebtn3state=false;
                 fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)2);
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
             }
         });
 
@@ -459,6 +508,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)1);
             }
         });
@@ -466,6 +516,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)2);
             }
         });
@@ -473,6 +524,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)3);
             }
         });
@@ -480,6 +532,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)4);
             }
         });
@@ -487,6 +540,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)5);
             }
         });
@@ -494,6 +548,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)6);
             }
         });
@@ -501,6 +556,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)7);
             }
         });
@@ -508,6 +564,7 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)8);
             }
         });
@@ -515,8 +572,31 @@ public class ContFanLedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 popupWindow4.dismiss();
+                imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)9);
             }
         });
+    }
+    private void testdata() {
+      /*  public boolean Power;//总开关
+        public boolean PowerOfFanc;
+        public boolean PowerOfLight;
+        public byte FanDirection;//风扇方向
+        public byte Model;//模式
+        public byte FanModel;//风扇档位模式
+        public byte FanPosition;//风扇档位
+        public byte Coolor_Tem;//色温
+        public byte brightness;//亮度
+        public byte Timing;*/
+        fanLinght.setPower(true);
+        fanLinght.setPowerOfFanc(true);
+        fanLinght.setPowerOfLight(true);
+        fanLinght.setFanDirection((byte)0);
+        fanLinght.setModel((byte) 0);
+        fanLinght.setFanModel((byte)9);
+        fanLinght.setFanPosition((byte)1);
+        fanLinght.setCoolor_Tem((byte)1);
+        fanLinght.setBrightness((byte)50);
+        fanLinght.setTiming((byte)9);
     }
 }

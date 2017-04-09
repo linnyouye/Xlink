@@ -22,6 +22,87 @@ public class FanLinght extends DeviceDate implements Serializable {
     public byte FanModel;//风扇档位模式
     public byte FanPosition;//风扇档位
     public byte Coolor_Tem;//色温
+
+    public boolean isPower() {
+        return Power;
+    }
+
+    public void setPower(boolean power) {
+        Power = power;
+    }
+
+    public boolean isPowerOfFanc() {
+        return PowerOfFanc;
+    }
+
+    public void setPowerOfFanc(boolean powerOfFanc) {
+        PowerOfFanc = powerOfFanc;
+    }
+
+    public boolean isPowerOfLight() {
+        return PowerOfLight;
+    }
+
+    public void setPowerOfLight(boolean powerOfLight) {
+        PowerOfLight = powerOfLight;
+    }
+
+    public byte getFanDirection() {
+        return FanDirection;
+    }
+
+    public void setFanDirection(byte fanDirection) {
+        FanDirection = fanDirection;
+    }
+
+    public byte getModel() {
+        return Model;
+    }
+
+    public void setModel(byte model) {
+        Model = model;
+    }
+
+    public byte getFanModel() {
+        return FanModel;
+    }
+
+    public void setFanModel(byte fanModel) {
+        FanModel = fanModel;
+    }
+
+    public byte getFanPosition() {
+        return FanPosition;
+    }
+
+    public void setFanPosition(byte fanPosition) {
+        FanPosition = fanPosition;
+    }
+
+    public byte getCoolor_Tem() {
+        return Coolor_Tem;
+    }
+
+    public void setCoolor_Tem(byte coolor_Tem) {
+        Coolor_Tem = coolor_Tem;
+    }
+
+    public byte getBrightness() {
+        return brightness;
+    }
+
+    public void setBrightness(byte brightness) {
+        this.brightness = brightness;
+    }
+
+    public byte getTiming() {
+        return Timing;
+    }
+
+    public void setTiming(byte timing) {
+        Timing = timing;
+    }
+
     public byte brightness;//亮度
     public byte Timing;
 

@@ -79,9 +79,6 @@ public class CountDownFragment extends BaseFragment {
         }
     };
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
     @Nullable
@@ -173,7 +170,6 @@ public class CountDownFragment extends BaseFragment {
         WiFiConfig wiFiConfig = new WiFiConfig(getActivity(), listner);
         if (password == null)
             password = "";
-        Toast.makeText(getActivity(),password,Toast.LENGTH_SHORT).show();
         wiFiConfig.StartConfig(password);
     }
 
