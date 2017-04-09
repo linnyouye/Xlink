@@ -320,8 +320,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
-            }else if(getFragment_state() == EquitmentSelectFragment.TAG){
-                fragmentManager.beginTransaction().remove(equitmentSelectFragment).commit();
             }
             else if (!fragmentManager.popBackStackImmediate()) {
                 backup();
@@ -355,7 +353,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             }, 1000); // 如果时间内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            finish();
+            this.onBackPressed();
             System.exit(0);
         }
 
