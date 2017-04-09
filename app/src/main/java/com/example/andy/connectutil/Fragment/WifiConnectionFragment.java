@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.andy.connectutil.R;
-import com.example.andy.connectutil.WiFiConfig;
-import com.example.andy.connectutil.andy;
 
 
 /**
@@ -86,8 +84,6 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
 //密码默认是隐藏的
         et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
     }
-
-
 
     @Override
     public void onClick(View v) {
