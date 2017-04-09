@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="10dp"
+    android:background="@drawable/shape_fragmentlayout"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <include layout="@layout/view_contrlbtn_top"/>
 
 <View
-    android:layout_marginTop="3dp"
-    android:background="@color/colorStrokeGray"
-    android:layout_height="3dp"
+    android:layout_marginLeft="-20dp"
+    android:layout_marginRight="-20dp"
+    android:layout_marginTop="2px"
+    android:background="@drawable/shape_divider"
+    android:layout_height="2px"
     android:layout_width="match_parent"
     />
 

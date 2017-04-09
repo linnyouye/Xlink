@@ -22,7 +22,7 @@
         android:text="标题"
         android:textColor="#fff" />
 
-    <View  android:layout_height="4px"
+    <View  android:layout_height="2px"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:background="@drawable/shape_divider"
