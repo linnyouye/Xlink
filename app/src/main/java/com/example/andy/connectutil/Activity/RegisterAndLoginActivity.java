@@ -13,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.XlinkConnect;
@@ -22,7 +21,6 @@ import com.example.andy.connectutil.entity.Net.LoginUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.xlink.wifi.sdk.XlinkAgent;
 
 
 public class RegisterAndLoginActivity extends Activity {
@@ -122,7 +120,7 @@ public class RegisterAndLoginActivity extends Activity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivityForResult(ResetPasswordActivity.class,RQ_RESET_PASSWORD);
+              //  startActivityForResult(ResetPasswordActivity.class,RQ_RESET_PASSWORD);
             }
         });
 

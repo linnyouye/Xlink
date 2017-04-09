@@ -53,6 +53,14 @@
         <item name="android:background">@drawable/bg_title_bar</item>
     </style>
 
+
+
+
+
+
+
+
+
     <style name="TitleBackBtn">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>

@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
-import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
@@ -43,10 +42,9 @@ import io.xlink.wifi.sdk.XlinkCode;
 
 public class CountDownFragment extends BaseFragment {
 
-    public static final String fragment_tag = "CountDownFragment";
 
 
-    public static final String TAG = "ChoseScanedDevice";
+    public static final String TAG = "CountDownFragment";
     private List<XDevice> devicelist;
     private List<Device> Exitslist;
     private List<String> MacList;
@@ -61,7 +59,25 @@ public class CountDownFragment extends BaseFragment {
     private int recLen = 60;
 
     private String password;
-    private OnSmartLinkListener listner;
+    private OnSmartLinkListener listner = new OnSmartLinkListener() {
+        @Override
+        public void onLinked(SmartLinkedModule smartLinkedModule) {
+            Toast.makeText(getActivity(), "连接成功", Toast.LENGTH_SHORT).show();
+            getExitDevice();
+        }
+
+        @Override
+        public void onCompleted() {
+            Toast.makeText(getActivity(), "配置成功", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onTimeOut() {
+            Toast.makeText(getActivity(), "配网失败", Toast.LENGTH_SHORT).show();
+            notifyMainActivity();
+        }
+    };
 
     public void setPassword(String password) {
         this.password = password;
@@ -78,9 +94,10 @@ public class CountDownFragment extends BaseFragment {
 
     }
 
-    public static CountDownFragment newInstance() {
+    public static CountDownFragment newInstance(String password) {
 
         Bundle args = new Bundle();
+        args.putString("WiFi密码",password);
         CountDownFragment fragment = new CountDownFragment();
         fragment.setArguments(args);
         return fragment;
@@ -105,6 +122,7 @@ public class CountDownFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        password =getArguments().getString("WiFi密码");
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -112,7 +130,6 @@ public class CountDownFragment extends BaseFragment {
             }
         });
         startCountDown();
-        configWiFi(password);
         timer.schedule(task, 1000, 1000);
     }
 
@@ -126,34 +143,16 @@ public class CountDownFragment extends BaseFragment {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
-                        if (recLen > 0) {
+                        if(recLen > 58){
+                            Toast.makeText(getActivity(),"大于58",Toast.LENGTH_SHORT).show();
+                            configWiFi(password);
+                        }  if (recLen > 0) {
                             tv_countdown.setText(String.valueOf(recLen) + "s");
                         } else if (recLen < 0) {
                             tv_countdown.setText("0s");
                             timer.cancel();
                             mActivity.getFragmentManger().popBackStackImmediate();
                         }
-
-                        listner = new OnSmartLinkListener() {
-                            @Override
-                            public void onLinked(SmartLinkedModule smartLinkedModule) {
-                                Toast.makeText(getActivity(), "连接成功", Toast.LENGTH_SHORT).show();
-                                getExitDevice();
-                            }
-
-                            @Override
-                            public void onCompleted() {
-                                Toast.makeText(getActivity(), "配置成功", Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            @Override
-                            public void onTimeOut() {
-                                Toast.makeText(getActivity(), "配网失败", Toast.LENGTH_SHORT).show();
-                                notifyMainActivity();
-                            }
-                        };
-
                 }
             }
         };
@@ -164,16 +163,17 @@ public class CountDownFragment extends BaseFragment {
                 Message message = new Message();
                 message.what = 1;
                 mHandler.sendMessage(message);
-
             }
         };
     }
 
 
     private void configWiFi(String password) {
+        Toast.makeText(getActivity(),"开始配网",Toast.LENGTH_SHORT).show();
         WiFiConfig wiFiConfig = new WiFiConfig(getActivity(), listner);
         if (password == null)
             password = "";
+        Toast.makeText(getActivity(),password,Toast.LENGTH_SHORT).show();
         wiFiConfig.StartConfig(password);
     }
 

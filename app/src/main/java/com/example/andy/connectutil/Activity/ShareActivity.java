@@ -16,7 +16,7 @@ public class ShareActivity extends BarActivity {
 
     @Override
     protected void initData() {
-//getTvTitle().setText("分享");
+        getTvTitle().setText("分享");
     }
 
 

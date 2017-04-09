@@ -359,7 +359,7 @@ public class ControlView extends View {
 
                 textPaint.setColor(mOutArcFocusColor);
                 if ( mArcState == 0 ) {
-                    canvas.drawText(a, -strwidth / 2, strheight , textPaint);
+                //    canvas.drawText(a, -strwidth / 2, strheight , textPaint);
                     canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
                 } else {
                     canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);

@@ -82,4 +82,7 @@ public abstract class BasicActivity extends AppCompatActivity {
     }
 
 
+
+
+
 }

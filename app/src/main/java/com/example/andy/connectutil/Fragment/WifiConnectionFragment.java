@@ -92,8 +92,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                 String password=et_wifi_password.getText().toString();
 
                  FragmentHolder holder = mActivity.getHolder();
-                 CountDownFragment deviceFragement = new CountDownFragment();
-                 deviceFragement.setPassword(password);
+                 CountDownFragment deviceFragement = CountDownFragment.newInstance(password);
                  holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
                  //获取FargmentHolder跳转到DeviceFargement
 

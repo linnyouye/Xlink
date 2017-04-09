@@ -6,8 +6,8 @@
        <!--android:angle="-90"-->
         <!--/>-->
     <corners android:radius="20dp" />
-<solid android:color="@color/colorInnerGray"/>
-    <stroke
+    <solid android:color="@color/colorInnerGray"/>
+      <stroke
         android:width="2px"
         android:color="@color/colorStrokeGray" />
         />

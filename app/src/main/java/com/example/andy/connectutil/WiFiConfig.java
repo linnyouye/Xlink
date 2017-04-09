@@ -1,20 +1,14 @@
 package com.example.andy.connectutil;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.entity.WifiUtils;
 import com.hiflying.smartlink.ISmartLinker;
 import com.hiflying.smartlink.OnSmartLinkListener;
-import com.hiflying.smartlink.SmartLinkedModule;
 import com.hiflying.smartlink.v7.MulticastSmartLinker;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
@@ -50,6 +44,7 @@ public class WiFiConfig {
     //配置Wifi信息
     public  void StartConfig(String password)
     {
+
         try {
             smartLinker.start(context,password,ssid);//假如是多个设备的话是发送给所有设备密码
             Log.d(TAG, "StartConfig: 开始配网");
