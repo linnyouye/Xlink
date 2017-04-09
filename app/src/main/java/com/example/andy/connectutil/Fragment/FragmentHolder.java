@@ -130,8 +130,19 @@ public class FragmentHolder {
     }
 
 
+//删除除了自己之外所有的fragment
+    public void removeOrhterFragment(){
+        fragmentList = fragmentManager.getFragments();
+        for(int i=0;i<fragmentList.size()-1;i++){
+            Fragment fragment=fragmentList.get(i);
+            if(fragment !=null){
+                fragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
+                //同时把栈清空
+                fragmentManager.popBackStackImmediate();
+            }
+        }
 
-
+    }
 
 
 

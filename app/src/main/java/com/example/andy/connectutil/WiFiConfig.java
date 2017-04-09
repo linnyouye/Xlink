@@ -35,14 +35,14 @@ public class WiFiConfig {
     private Context context;
     //使用WiFiconfig时先要就行实例化一些对象
 
-    public WiFiConfig(Context context)
+    public WiFiConfig(Context context,OnSmartLinkListener listener)
     {
         smartLinker = MulticastSmartLinker.getInstance();
         ssid = WifiUtils.getWifiSSID(context);
         this.context=context;
-        OnCreateWifiCOnfig();
+        OnCreateWifiCOnfig(listener);
     }
-    public void OnCreateWifiCOnfig() {
+    public void OnCreateWifiCOnfig(OnSmartLinkListener listener) {
 
             smartLinker.setOnSmartLinkListener(new OnSmartLinkListener() {
                 @Override

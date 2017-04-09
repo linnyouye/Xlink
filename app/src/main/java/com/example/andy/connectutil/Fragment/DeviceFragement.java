@@ -14,6 +14,8 @@ import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.entity.Net.Content;
+import com.hiflying.smartlink.OnSmartLinkListener;
+import com.hiflying.smartlink.SmartLinkedModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +122,22 @@ public class DeviceFragement extends Fragment {
 
     }
     private void scanDevice() {
-        WiFiConfig w=new WiFiConfig(getActivity());
+        WiFiConfig w=new WiFiConfig(getActivity(), new OnSmartLinkListener() {
+            @Override
+            public void onLinked(SmartLinkedModule smartLinkedModule) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onTimeOut() {
+
+            }
+        });
         w.ScanWifi(produt_id, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {

@@ -23,6 +23,8 @@ import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
+import com.hiflying.smartlink.OnSmartLinkListener;
+import com.hiflying.smartlink.SmartLinkedModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,16 +109,15 @@ public class CountDownFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        scanDevice();
+        /*scanDevice();
         getExitDevice();
-        BindDevice();
-        MainActivity m = (MainActivity) getActivity();
-        m.getOnlinedevicelist();
-        m.notifyAdapter();
+        BindDevice();*/
+
         /*FragmentHolder fragmentHolder=m.getHolder();
         fragmentHolder.removeAllFragment();
         onDestroy();*/
     }
+
 
     /**
      * 倒计时
@@ -128,6 +129,12 @@ public class CountDownFragment extends BaseFragment {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                if(msg.what==58)
+                {
+                    scanDevice();
+                    getExitDevice();
+                    BindDevice();
+                }
                 if (msg.what > 0) {
                     tv_countdown.setText(msg.what + "s");
                 } else {
@@ -142,9 +149,6 @@ public class CountDownFragment extends BaseFragment {
                             }
 
                         }, 3000);
-
-
-
                     }
                 }
             }
@@ -168,7 +172,6 @@ public class CountDownFragment extends BaseFragment {
             }
         };
         timer.schedule(tt, 1000, 1000);
-
     }
 
     private void getExitDevice() {
@@ -189,7 +192,22 @@ public class CountDownFragment extends BaseFragment {
     }
 
     public void scanDevice() {
-        WiFiConfig w = new WiFiConfig(getActivity());
+        WiFiConfig w = new WiFiConfig(getActivity(), new OnSmartLinkListener() {
+            @Override
+            public void onLinked(SmartLinkedModule smartLinkedModule) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onTimeOut() {
+
+            }
+        });
         w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
@@ -226,6 +244,7 @@ public class CountDownFragment extends BaseFragment {
                     public void bindDevice(XDevice device, int i) {
                         if (i == XlinkCode.SUCCEED) {
                             Log.d(TAG, "bindDevice:  绑定设备成功");
+                            ontifyMainActivity();
                         } else {
                             Log.d(TAG, "bindDevice: 绑定设备失败");
                         }
@@ -235,8 +254,17 @@ public class CountDownFragment extends BaseFragment {
             }
 
         }
-
+        ontifyMainActivity();
     }
+    //最后通知MainActivity
+    private void ontifyMainActivity() {
 
+        Toast.makeText(getActivity(),"绑定设备成功\n请返回",Toast.LENGTH_SHORT).show();
+        MainActivity m = (MainActivity) getActivity();
+        m.getOnlinedevicelist();
+        m.notifyAdapter();
+        mActivity.getHolder().removeAllFragment();
+      //  h.replaceFragment(new EquitmentSelectFragment(),"EquitmentSelectFragment",true);
+    }
 
 }

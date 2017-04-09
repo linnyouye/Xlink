@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.Helper.FanLightHelper;
 import com.example.andy.connectutil.R;
@@ -51,11 +52,8 @@ public class ContFanLedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       // return super.onCreateView(inflater, container, savedInstanceState);
 
-//          fanLightHelper=new FanLightHelper(device);
-//          fanLinght=fanLightHelper.update();
-         // initData();//初始化数据值
+
 
           View view = inflater.inflate(R.layout.fragment_view_fanled,container,false);
           controlView = (ControlView) view.findViewById(R.id.controlView);
@@ -73,149 +71,26 @@ public class ContFanLedFragment extends Fragment {
         popupLayout4=LayoutInflater.from(getContext()).inflate(R.layout.popview_itbn_four, null);
           popupWindow4 =getPopupWindow(popupLayout4);
 
-          controlView.setOncontrolListener(new ControlView.OnControlListener() {
-            @Override
-            public void onClickCenter() {
-                 fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,true);
-            }
 
-            @Override
-            public void onClickBottom() {
-
-            }
-
-            @Override
-            public void onClickOne() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
-            }
-
-            @Override
-            public void onClickTwo() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
-            }
-
-            @Override
-            public void onClickThree() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
-            }
-
-            @Override
-            public void onClickFour() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
-            }
-
-            @Override
-            public void onClickFive() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,5);
-            }
-
-            @Override
-            public void onClickSix() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,6);
-            }
-
-            @Override
-            public void onClickSeven() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,7);
-            }
-
-            @Override
-            public void onClickEight() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,8);
-            }
-
-            @Override
-            public void onClickNine() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,9);
-            }
-
-              @Override
-              public void onClickTopLeft() {
-                  fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
-              }
-
-              @Override
-              public void onClickTopRight() {
-                  fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
-              }
-
-              @Override
-              public void onClickBottomLeft() {
-                  if(fanstate)
-                  {
-                      fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,false);
-                  }else
-                  {
-                      fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
-                  }
-
-              }
-
-              @Override
-              public void onClickBottomRight() {
-                  if(lightstate)
-                  {
-                      fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
-                  }else
-                  {
-                      fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
-                  }
-              }
-          });
          imageButton1 = (ImageButton)view.findViewById(R.id.ibtn_one_top);
-      imageButton1.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-           if(!state) {popupWindow1.setWidth(v.getMeasuredWidth());
-              popupWindow1.showAsDropDown(v,0,15);
-           state = true;}
-              else {
-               popupWindow1.dismiss();
-               state = false;
-           }
-          }
-      });
-         imageButton2 = (ImageButton)view.findViewById(R.id.ibtn_two_top);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!state) {popupWindow2.setWidth(v.getMeasuredWidth());
-                    popupWindow2.showAsDropDown(v,0,15);
-                    state = true;}
-                else {
-                    popupWindow2.dismiss();
-                    state = false;
-                }
-            }
-        });
-         imageButton3 = (ImageButton)view.findViewById(R.id.ibtn_three_top);
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!state) {popupWindow3.setWidth(v.getMeasuredWidth());
-                    popupWindow3.showAsDropDown(v,0,15);
-                    state = true;}
-                else {
-                    popupWindow3.dismiss();
-                    state = false;
-                }
-            }
-        });
-         imageButton4 = (ImageButton)view.findViewById(R.id.ibtn_four_top);
-        imageButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!state) {popupWindow4.setWidth(v.getMeasuredWidth());
-                    popupWindow4.showAsDropDown(v,0,15);
-                    state = true;}
-                else {
-                    popupWindow4.dismiss();
-                    state = false;
-                }
-            }
-        });
 
-        setOnClike();
+         imageButton2 = (ImageButton)view.findViewById(R.id.ibtn_two_top);
+
+         imageButton3 = (ImageButton)view.findViewById(R.id.ibtn_three_top);
+
+         imageButton4 = (ImageButton)view.findViewById(R.id.ibtn_four_top);
+            if(device.isOnline())
+            {
+                   fanLightHelper=new FanLightHelper(device);
+                   fanLinght=fanLightHelper.update();
+                   initData();//初始化数据值
+                   setOnClike();
+            }else
+            {
+                Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
+            }
+
+
         return view;
     }
 
@@ -276,6 +151,154 @@ public class ContFanLedFragment extends Fragment {
 
     public void setOnClike()
     {
+        //主界面的点击事件
+        controlView.setOncontrolListener(new ControlView.OnControlListener() {
+            @Override
+            public void onClickCenter() {
+                fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,true);
+            }
+
+            @Override
+            public void onClickBottom() {
+
+            }
+
+            @Override
+            public void onClickOne() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+            }
+
+            @Override
+            public void onClickTwo() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+            }
+
+            @Override
+            public void onClickThree() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+            }
+
+            @Override
+            public void onClickFour() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,date);
+            }
+
+            @Override
+            public void onClickFive() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,5);
+            }
+
+            @Override
+            public void onClickSix() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,6);
+            }
+
+            @Override
+            public void onClickSeven() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,7);
+            }
+
+            @Override
+            public void onClickEight() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,8);
+            }
+
+            @Override
+            public void onClickNine() {
+                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,9);
+            }
+
+            @Override
+            public void onClickTopLeft() {
+                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
+            }
+
+            @Override
+            public void onClickTopRight() {
+                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
+            }
+
+            @Override
+            public void onClickBottomLeft() {
+                if(fanstate)
+                {
+                    fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,false);
+                }else
+                {
+                    fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
+                }
+
+            }
+
+            @Override
+            public void onClickBottomRight() {
+                if(lightstate)
+                {
+                    fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
+                }else
+                {
+                    fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
+                }
+            }
+        });
+
+
+
+        //上部第一个按钮的点击事件
+        imageButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!state) {popupWindow1.setWidth(v.getMeasuredWidth());
+                    popupWindow1.showAsDropDown(v,0,15);
+                    state = true;}
+                else {
+                    popupWindow1.dismiss();
+                    state = false;
+                }
+            }
+        });
+        //上部第二个按钮的点击事件
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!state) {popupWindow2.setWidth(v.getMeasuredWidth());
+                    popupWindow2.showAsDropDown(v,0,15);
+                    state = true;}
+                else {
+                    popupWindow2.dismiss();
+                    state = false;
+                }
+            }
+        });
+        //上部第三个按钮的点击事件
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!state) {popupWindow3.setWidth(v.getMeasuredWidth());
+                    popupWindow3.showAsDropDown(v,0,15);
+                    state = true;}
+                else {
+                    popupWindow3.dismiss();
+                    state = false;
+                }
+            }
+        });
+        //上部第四个按钮的点击事件
+        imageButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!state) {popupWindow4.setWidth(v.getMeasuredWidth());
+                    popupWindow4.showAsDropDown(v,0,15);
+                    state = true;}
+                else {
+                    popupWindow4.dismiss();
+                    state = false;
+                }
+            }
+        });
+
+
+
         ImageButton imageButton1_one;
         ImageButton imageButton1_two;
 

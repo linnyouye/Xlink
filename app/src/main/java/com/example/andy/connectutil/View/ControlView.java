@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.andy.connectutil.Helper.PaintHelper;
 import com.example.andy.connectutil.R;
@@ -422,7 +421,6 @@ public class ControlView extends View {
             btnState = true;
             paintHelper.drawBitmapTR(canvas,textPaint,btnState);
             btnState = false;
-            Toast.makeText(getContext(),"点击了右上角",Toast.LENGTH_SHORT).show();
         } else if (current_flag == LB_BTN) {
             canvas.drawPath(lb_Btn_p, mDeafultPaint);
         } else if (current_flag == LT_BTN) {
@@ -432,7 +430,6 @@ public class ControlView extends View {
             btnState = false;
         } else if (current_flag == CENTER) {
             canvas.drawPath(center_p, mCirclePaint);
-            Toast.makeText(getContext(),"点击了中间",Toast.LENGTH_SHORT).show();
         }
         //画顶部显示
         canvas.drawPath(top_Show_p, mDeafultPaint);

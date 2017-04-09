@@ -59,6 +59,7 @@
                 android:layout_marginRight="16dp"
                 android:background="@drawable/shape_fragmentlayout">
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/Online_device"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
