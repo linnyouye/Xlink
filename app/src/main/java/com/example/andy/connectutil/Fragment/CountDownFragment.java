@@ -17,11 +17,14 @@ import com.bumptech.glide.Glide;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
+import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
+import com.hiflying.smartlink.OnSmartLinkListener;
+import com.hiflying.smartlink.SmartLinkedModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,17 @@ public class CountDownFragment extends BaseFragment {
     private TimerTask task;
     private ImageView img_gif_wifi;
     private TextView tv_countdown;
-private int recLen = 60;
+
+    private int recLen = 60;
+
+    private String password;
+    private OnSmartLinkListener listner;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -99,46 +112,52 @@ private int recLen = 60;
             }
         });
         startCountDown();
-        timer.schedule(task,1000,1000);
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        scanDevice();
-        getExitDevice();
-        BindDevice();
-
-        mActivity.getOnlinedevicelist();
-        mActivity.notifyAdapter();
-      //  mActivity.getHolder().removeAllFragment();
-        /*FragmentHolder fragmentHolder=m.getHolder();
-        fragmentHolder.removeAllFragment();
-        onDestroy();*/
+        configWiFi(password);
+        timer.schedule(task, 1000, 1000);
     }
 
     /**
      * 倒计时
      */
     public void startCountDown() {
-            mHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case 1:
-                            if(recLen >0){
-                                tv_countdown.setText(String.valueOf(recLen)+"s");
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        if (recLen > 0) {
+                            tv_countdown.setText(String.valueOf(recLen) + "s");
+                        } else if (recLen < 0) {
+                            tv_countdown.setText("0s");
+                            timer.cancel();
+                            mActivity.getFragmentManger().popBackStackImmediate();
+                        }
+
+                        listner = new OnSmartLinkListener() {
+                            @Override
+                            public void onLinked(SmartLinkedModule smartLinkedModule) {
+                                Toast.makeText(getActivity(), "连接成功", Toast.LENGTH_SHORT).show();
+                                getExitDevice();
                             }
-                            else if (recLen < 0) {
-                                tv_countdown.setText("0s");
-                                timer.cancel();
-                    mActivity.getFragmentManger().popBackStackImmediate();
+
+                            @Override
+                            public void onCompleted() {
+                                Toast.makeText(getActivity(), "配置成功", Toast.LENGTH_SHORT).show();
+
                             }
-                    }
+
+                            @Override
+                            public void onTimeOut() {
+                                Toast.makeText(getActivity(), "配网失败", Toast.LENGTH_SHORT).show();
+                                notifyMainActivity();
+                            }
+                        };
+
                 }
-            };
-         task = new TimerTask() {
+            }
+        };
+        task = new TimerTask() {
             @Override
             public void run() {
                 recLen--;
@@ -148,55 +167,77 @@ private int recLen = 60;
 
             }
         };
-
     }
 
+
+    private void configWiFi(String password) {
+        WiFiConfig wiFiConfig = new WiFiConfig(getActivity(), listner);
+        if (password == null)
+            password = "";
+        wiFiConfig.StartConfig(password);
+    }
 
 
     private void getExitDevice() {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
+                Toast.makeText(getActivity(), "获取设备成功", Toast.LENGTH_SHORT).show();
                 Exitslist = JsonParser.parseDeviceList(content);
+                for (Device d : Exitslist) {
+                    MacList.add(d.getxDevice().getMacAddress());
+                }
+                scanDevice();
             }
 
             @Override
             public void onFailed(int code, String msg) {
+                Toast.makeText(getActivity(), "获取设备失败", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailed: 获取设备列表失败");
             }
         });
-        for (Device d : Exitslist) {
-            MacList.add(d.getxDevice().getMacAddress());
-        }
+
+
     }
 
     public void scanDevice() {
-        WiFiConfig w = new WiFiConfig(getActivity());
+        WiFiConfig w = new WiFiConfig(getActivity(), listner);
         w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
-                Toast.makeText(getActivity(), "you yige ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "扫描到设备", Toast.LENGTH_SHORT).show();
                 devicelist.add(device);
+                BindDevice();
+            }
+
+            @Override
+            public void failed() {
+                Toast.makeText(getActivity(), "扫描失败", Toast.LENGTH_SHORT).show();
+                notifyMainActivity();
             }
         });
-        w.ScanWifi(Content.LEDLIght_ID, new WiFiConfig.OnBindDeviceListner() {
+     /*   w.ScanWifi(Content.LEDLIght_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
                 devicelist.add(device);
+                BindDevice();
             }
         });
         w.ScanWifi(Content.Light_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
                 devicelist.add(device);
+                BindDevice();
             }
         });
         w.ScanWifi(Content.BathBully_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
                 devicelist.add(device);
+                BindDevice();
             }
-        });
+        });*/
+
     }
 
     public void BindDevice() {
@@ -208,6 +249,69 @@ private int recLen = 60;
                     public void bindDevice(XDevice device, int i) {
                         if (i == XlinkCode.SUCCEED) {
                             Log.d(TAG, "bindDevice:  绑定设备成功");
+                            Toast.makeText(getActivity(), "绑定设备成功", Toast.LENGTH_SHORT).show();
+                            notifyMainActivity();
+                        } else {
+                            Toast.makeText(getActivity(), "绑定设备失败", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "bindDevice: 绑定设备失败");
+                            notifyMainActivity();
+                        }
+
+                    }
+                });
+            }
+        }
+
+    }
+
+
+        public void firstget ()
+        {
+            LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    Exitslist = JsonParser.parseDeviceList(content);
+                    for (Device d : Exitslist) {
+                        MacList.add(d.getxDevice().getMacAddress());
+                    }
+                    firstScan();
+                }
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    Log.d(TAG, "onFailed: 获取设备列表失败");
+                }
+            });
+        }
+
+    public void firstScan() {
+        WiFiConfig w = new WiFiConfig(getActivity(), listner);
+        w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
+            @Override
+            public void getDevice(XDevice device) {
+                Toast.makeText(getActivity(), "扫描到设备", Toast.LENGTH_SHORT).show();
+                devicelist.add(device);
+                firstBindDivce();
+            }
+
+            @Override
+            public void failed() {
+                Toast.makeText(getActivity(), "扫描失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void firstBindDivce() {
+        XlinkConnect.init(getActivity());
+        for (int i = 0; i < devicelist.size(); i++) {
+            if (!MacList.contains(devicelist.get(i).getMacAddress())) {
+                XlinkConnect.bindDevice(devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
+                    @Override
+                    public void bindDevice(XDevice device, int i) {
+                        if (i == XlinkCode.SUCCEED) {
+                            Log.d(TAG, "bindDevice:  绑定设备成功");
+                            Toast.makeText(getActivity(), "绑定设备成功\n请返回", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d(TAG, "bindDevice: 绑定设备失败");
                         }
@@ -217,12 +321,14 @@ private int recLen = 60;
             }
 
         }
-
+    }
+    //最后通知MainActivity
+    private void notifyMainActivity() {
+       mActivity .getOnlinedevicelist();
+        mActivity.notifyAdapter();
+        mActivity.getHolder().removeAllFragment();
+        //  h.replaceFragment(new EquitmentSelectFragment(),"EquitmentSelectFragment",true);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
 
-    }
 }

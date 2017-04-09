@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
-import com.example.andy.connectutil.Adapter.Online_device_adapter;
+import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
 import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
@@ -33,6 +33,7 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
+import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
@@ -76,7 +77,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     RecyclerView recyclerView;
     AddEquitAdapter mAdapter;
     RecyclerView OnlineDeviceRecycleview;
-    Online_device_adapter online_device_adapter;
+    OnlineDeviceAdapter onlineDeviceAdapter;
 
     EditText et_tb_search;
     ImageView ibtn_tb_search;
@@ -116,8 +117,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
 
-        online_device_adapter = new Online_device_adapter(this, OnlinedeviceList);
-        OnlineDeviceRecycleview.setAdapter(online_device_adapter);
+        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
+        OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
         Log.d("waiwen", "setAdapter：");
 
@@ -321,12 +322,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         if (keyCode == event.KEYCODE_BACK) {
 
+
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             }
             else if (!fragmentManager.popBackStackImmediate()) {
                 backup();
+
             }
+
         }
         return false;  //super.onKeyDown(keyCode, event);
     }
@@ -385,11 +389,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表" + content, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取设备列表成功" + content, Toast.LENGTH_SHORT).show();
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {
-                    OnlinedeviceList.add(device);
+                    if(!OnlinedeviceList.contains(device))
+                        OnlinedeviceList.add(device);
                 }
                 notifyAdapter();
             }
@@ -402,6 +407,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void notifyAdapter() {
-        online_device_adapter.notifyDataSetChanged();
+        onlineDeviceAdapter.notifyDataSetChanged();
+    }
+    public void destoryOrtherFragment()
+    {
+        holder.removeAllFragment();
     }
 }

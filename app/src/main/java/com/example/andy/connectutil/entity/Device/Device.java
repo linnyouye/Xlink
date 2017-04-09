@@ -41,4 +41,13 @@ public class Device implements Serializable{
     public void setData(DeviceDate data) {
         this.data = data;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Device device=(Device)obj;
+        if(device.getxDevice().getMacAddress().equals(this.getxDevice().getMacAddress()))
+        return true;
+        else
+            return false;
+    }
 }

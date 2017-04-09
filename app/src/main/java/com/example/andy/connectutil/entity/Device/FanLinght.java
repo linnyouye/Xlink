@@ -32,13 +32,13 @@ public class FanLinght extends DeviceDate implements Serializable {
             Log.i(TAG, "parseFromDataPoints: "+dp.getIndex()+","+dp.getValue());
             switch (dp.getIndex()){
                 case 0:
-                    data.Power=(boolean)dp.getValue();
+                    data.Power=(byte)dp.getValue()>0;
                     break;
                 case 1:
-                    data.PowerOfFanc=(boolean)dp.getValue();
+                    data.PowerOfFanc=(byte)dp.getValue()>0;
                     break;
                 case 2:
-                    data.PowerOfLight=(boolean)dp.getValue();
+                    data.PowerOfLight=(byte)dp.getValue()>0;
                     break;
                 case 3:
                     data.FanDirection=(byte)dp.getValue();

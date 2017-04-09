@@ -10,9 +10,9 @@ import android.widget.Button;
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Fragment.DeviceFragment.BathbullyFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.ContFanLedFragment;
-import com.example.andy.connectutil.Fragment.FragmentHolder;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
+import com.example.andy.connectutil.Fragment.FragmentHolder;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
@@ -23,11 +23,11 @@ import java.util.List;
  * Created by andy on 2017/4/8.
  */
 
-public class Online_device_adapter extends RecyclerView.Adapter<Online_device_adapter.MyHolder>{
+public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapter.MyHolder>{
     private List<Device> OnlineList ;
     private Context mContext;
     private LayoutInflater mInflater;
-    public Online_device_adapter(Context context,List<Device> onlineList)
+    public OnlineDeviceAdapter(Context context, List<Device> onlineList)
     {
         this.mContext=context;
         this.OnlineList=onlineList;
@@ -62,6 +62,7 @@ public class Online_device_adapter extends RecyclerView.Adapter<Online_device_ad
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 MainActivity mainActivity=(MainActivity) mContext;
                 FragmentHolder fragmentHolder=mainActivity.getHolder();
                 if(OnlineList.get(position).getxDevice().getProductId().equals(Content.FanLIght_ID)){

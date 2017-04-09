@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/shape_fragmentlayout"
     android:layout_height="match_parent"
-  android:gravity="center"
+    android:gravity="center"
     android:orientation="vertical">
 
 

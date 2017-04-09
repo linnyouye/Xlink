@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
+import com.hiflying.smartlink.OnSmartLinkListener;
+import com.hiflying.smartlink.SmartLinkedModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,22 @@ public class andy extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_andy);
-        wiFiConfig=new WiFiConfig(this);
+        wiFiConfig=new WiFiConfig(this, new OnSmartLinkListener() {
+            @Override
+            public void onLinked(SmartLinkedModule smartLinkedModule) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onTimeOut() {
+
+            }
+        });
         list=new ArrayList<>();
         XlinkConnect.init(this);
         start=(Button)findViewById(R.id.Start);
@@ -61,7 +78,12 @@ public class andy extends AppCompatActivity implements View.OnClickListener{
                         list.add(device);
                         Log.d("getDevice", "getDevice: "+list.size());
                     }
-                });
+
+                   @Override
+                   public void failed() {
+
+                   }
+               });
                 //Toast.makeText(this,list.size()+"",Toast.LENGTH_LONG).show();*/
                 /*wiFiConfig.StartConfig("");*/
                 break;
