@@ -99,20 +99,20 @@ public class CountDownFragment extends BaseFragment {
                 Glide.with(getActivity()).load(R.drawable.wifi).asGif().into(img_gif_wifi);
             }
         });
-
+        startCountDown();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-//        scanDevice();
-//        getExitDevice();
-//        BindDevice();
-//
-//        mActivity.getOnlinedevicelist();
-//        mActivity.notifyAdapter();
-        startCountDown();
+
+        scanDevice();
+        getExitDevice();
+        BindDevice();
+
+        mActivity.getOnlinedevicelist();
+        mActivity.notifyAdapter();
       //  mActivity.getHolder().removeAllFragment();
         /*FragmentHolder fragmentHolder=m.getHolder();
         fragmentHolder.removeAllFragment();
@@ -131,13 +131,6 @@ public class CountDownFragment extends BaseFragment {
                 super.handleMessage(msg);
                 if (msg.what > 0) {
                     tv_countdown.setText(msg.what + "s");
-
-                    scanDevice();
-                    getExitDevice();
-                    BindDevice();
-                    mActivity.getOnlinedevicelist();
-                  //  mActivity.notifyAdapter();
-
 
                 } else {
                     if (msg.what == 0) {
@@ -170,10 +163,6 @@ public class CountDownFragment extends BaseFragment {
                 if (countTime > 0) {
                     countTime--;
                 }
-                Message msg = new Message();
-                msg.what = countTime;
-                mHandler.sendMessage(msg);
-
             }
         };
         timer.schedule(tt, 1000, 1000);
@@ -247,5 +236,9 @@ public class CountDownFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
+    }
 }
