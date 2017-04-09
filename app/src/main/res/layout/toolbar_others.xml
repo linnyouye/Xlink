@@ -22,10 +22,11 @@
         android:text="标题"
         android:textColor="#fff" />
 
-    <View android:layout_height="2px"
+    <View  android:layout_height="4px"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:background="@color/colorStrokeGray"
+        android:background="@drawable/shape_divider"
+
         />
 
 </FrameLayout>

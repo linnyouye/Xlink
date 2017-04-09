@@ -367,11 +367,16 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         if (getFragment_state() != EquitmentSelectFragment.TAG) {
             if (getFragment_state() == WifiConnectionFragment.TAG) {
                 fragmentManager.popBackStackImmediate();
-            }else {
-                holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
             }
+            else if(getFragment_state() == CountDownFragment.TAG){
+                return;
+            }
+            else {
+                holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
+            }{
 
 
+            }
         }
 
     }
@@ -387,9 +392,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                     OnlinedeviceList.add(device);
                 }
                 notifyAdapter();
-
             }
-
             @Override
             public void onFailed(int code, String msg) {
                 Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();

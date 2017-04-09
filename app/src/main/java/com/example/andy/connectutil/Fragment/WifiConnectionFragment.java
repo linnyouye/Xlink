@@ -99,7 +99,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                  //获取FargmentHolder跳转到DeviceFargement
                  FragmentHolder holder = mActivity.getHolder();
                  CountDownFragment deviceFragement = new CountDownFragment();
-                 holder.addFragment(deviceFragement,DeviceFragement.TAG,true);
+                 holder.replaceFragment(deviceFragement,DeviceFragement.TAG,true);
                  break;
              case R.id.view_new_guide:
                  //点击即消失

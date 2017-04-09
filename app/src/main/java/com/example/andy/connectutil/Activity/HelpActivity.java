@@ -1,15 +1,13 @@
 package com.example.andy.connectutil.Activity;
 
 
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.andy.connectutil.Adapter.HelpAdapter;
 import com.example.andy.connectutil.Bean.HelpItem;
 import com.example.andy.connectutil.R;
-import com.example.andy.connectutil.View.SpaceItemDecoration;
+import com.example.andy.connectutil.View.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +46,8 @@ public class HelpActivity extends BarActivity {
 // 实现RecyclerView实现竖向列表展示模式
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerHelp.setLayoutManager(layoutManager);
-        recyclerHelp.addItemDecoration(new SpaceItemDecoration(this, OrientationHelper.VERTICAL,2, Color.BLACK));
+        recyclerHelp.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.VERTICAL,3,R.drawable.shape_recycleview_divider));
+
         recyclerHelp.setAdapter(helpAdapter);
 
     }

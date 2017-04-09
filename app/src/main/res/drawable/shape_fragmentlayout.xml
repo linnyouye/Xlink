@@ -6,4 +6,12 @@
         android:width="3dp"
         android:color="@color/colorStrokeGray" />
 
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorItemGray"
+
+
+        />
+
+
 </shape>

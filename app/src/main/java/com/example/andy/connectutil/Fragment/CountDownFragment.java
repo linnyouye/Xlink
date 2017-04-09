@@ -48,13 +48,13 @@ public class CountDownFragment extends BaseFragment {
     private List<Device> Exitslist;
     private List<String> MacList;
 
-    private int count = 0;
+
     private Handler mHandler;
-    private Handler mHandler1;
-    private Timer timer;
+    private Timer timer = new Timer();
+    private TimerTask task;
     private ImageView img_gif_wifi;
     private TextView tv_countdown;
-
+private int recLen = 60;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,21 +92,20 @@ public class CountDownFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        mHandler1 = new Handler();
-        mHandler1.post(new Runnable() {
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 Glide.with(getActivity()).load(R.drawable.wifi).asGif().into(img_gif_wifi);
             }
         });
         startCountDown();
+        timer.schedule(task,1000,1000);
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-
         scanDevice();
         getExitDevice();
         BindDevice();
@@ -123,51 +122,36 @@ public class CountDownFragment extends BaseFragment {
      * 倒计时
      */
     public void startCountDown() {
-
-        mHandler = new Handler() {
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg.what > 0) {
-                    tv_countdown.setText(msg.what + "s");
-
-                } else {
-                    if (msg.what == 0) {
-                        tv_countdown.setText("0s");
-                        timer.cancel();
-                        holderListener.setMainPage("设备连接失败", View.VISIBLE);
-                        mHandler1.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                           mActivity.getFragmentManger().popBackStackImmediate();
+            mHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case 1:
+                            if(recLen >0){
+                                tv_countdown.setText(String.valueOf(recLen)+"s");
                             }
-
-                        }, 3000);
-
-
-
+                            else if (recLen < 0) {
+                                tv_countdown.setText("0s");
+                                timer.cancel();
+                    mActivity.getFragmentManger().popBackStackImmediate();
+                            }
                     }
                 }
-            }
-
-        };
-
-
-        timer = new Timer(true);
-        TimerTask tt = new TimerTask() {
-            int countTime = 30;
-
+            };
+         task = new TimerTask() {
             @Override
             public void run() {
-                if (countTime > 0) {
-                    countTime--;
-                }
+                recLen--;
+                Message message = new Message();
+                message.what = 1;
+                mHandler.sendMessage(message);
+
             }
         };
-        timer.schedule(tt, 1000, 1000);
 
     }
+
+
 
     private void getExitDevice() {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
