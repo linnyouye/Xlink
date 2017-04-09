@@ -106,12 +106,12 @@ public class CountDownFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        scanDevice();
-//        getExitDevice();
-//        BindDevice();
-//
-//        mActivity.getOnlinedevicelist();
-//        mActivity.notifyAdapter();
+        scanDevice();
+        getExitDevice();
+        BindDevice();
+
+        mActivity.getOnlinedevicelist();
+        mActivity.notifyAdapter();
         startCountDown();
       //  mActivity.getHolder().removeAllFragment();
         /*FragmentHolder fragmentHolder=m.getHolder();
@@ -168,10 +168,6 @@ public class CountDownFragment extends BaseFragment {
                 if (countTime > 0) {
                     countTime--;
                 }
-                Message msg = new Message();
-                msg.what = countTime;
-                mHandler.sendMessage(msg);
-
             }
         };
         timer.schedule(tt, 1000, 1000);
@@ -245,5 +241,9 @@ public class CountDownFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
+    }
 }
