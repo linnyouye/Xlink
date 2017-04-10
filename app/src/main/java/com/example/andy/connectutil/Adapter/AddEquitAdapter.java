@@ -1,12 +1,15 @@
 package com.example.andy.connectutil.Adapter;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Bean.Equitment;
@@ -18,8 +21,14 @@ import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
 
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Net.Content;
 
 import java.util.List;
+
+import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.listener.SubscribeDeviceListener;
 
 
 /**
@@ -31,11 +40,15 @@ import java.util.List;
 
 public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyViewHolder> {
 
-    private List<Equitment> equitmentList ;
+
+    private List<XDevice> devices;
+    private int  authorcode=0;
+    private List<Device> equitmentList ;
     private Context mContext;
     private LayoutInflater mInflater;
 
-    public AddEquitAdapter(Context context,List<Equitment> list) {
+    public AddEquitAdapter(Context context, List<Device> list, int authorcode) {
+        this.authorcode=authorcode;
         this.mContext = context;
         this.equitmentList = list;
         this.mInflater= LayoutInflater.from(mContext);
@@ -47,10 +60,12 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
      * @return
      */
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
        View itemView = mInflater.inflate(R.layout.recycleview_itemview,parent,false);
        final MyViewHolder viewHolder = new MyViewHolder(itemView);
-        viewHolder.tv_name.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tv_name.setFocusableInTouchMode(false);
+        viewHolder.tv_name.setFocusable(false);
+/*        viewHolder.tv_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                String DeviceName=viewHolder.tv_name.getText().toString();
@@ -72,15 +87,64 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                 }
 
             }
-        });
+        });*/
+        viewHolder.img_equitment.setClickable(false);
+
         return  viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Equitment equitment = equitmentList.get(position);
-        holder.tv_name.setText(equitment.getEquit_name());
-        holder.img_equitment.setImageResource(equitment.getEquit_resId());
+    public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
+        String DeviceName = "";
+        int resource=0;
+        switch (equitmentList.get(position).getProduct_ID())
+        {
+
+                case Content.FanLIght_ID:
+                    DeviceName="风扇灯";
+                    resource=R.drawable.buttom_menu_fan_light;
+                    break;
+                case Content.Light_ID:
+                    DeviceName="灯";
+                    resource=R.drawable.button_menu_led;
+                    break;
+                case Content.LEDLIght_ID:
+                    DeviceName="LED灯";
+                    resource= R.drawable.button_menu_fanc;
+                    break;
+                case Content.BathBully_ID:
+                    DeviceName="浴霸";
+                    resource=R.drawable.buttom_menu_bathbully;
+                    break;
+        }
+        if(!DeviceName.equals("")&&!(resource==0))
+        {
+            viewHolder.tv_name.setText(DeviceName);
+            viewHolder.img_equitment.setImageResource(resource);
+        }
+
+        viewHolder.tv_name.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                viewHolder.tv_name.setFocusableInTouchMode(true);
+                viewHolder.tv_name.setFocusable(true);
+                viewHolder.img_equitment.setImageResource(R.drawable.buttom_pop_menu_suberdivice);
+                viewHolder.img_equitment.setClickable(true);
+                return true;
+            }
+        });
+        viewHolder.img_equitment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XlinkAgent.getInstance().subscribeDevice(equitmentList.get(position).getxDevice(), authorcode, new SubscribeDeviceListener() {
+                    @Override
+                    public void onSubscribeDevice(XDevice xDevice, int i) {
+                        Toast.makeText(mContext,"删除设备成功",Toast.LENGTH_SHORT).show();
+                        XlinkAgent.getInstance().removeDevice(xDevice);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -88,14 +152,13 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
         return equitmentList.size();
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView tv_name;
+        public EditText tv_name;
         public ImageView img_equitment;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tv_name = (TextView)itemView.findViewById(R.id.item_tv_equitname);
+            tv_name = (EditText)itemView.findViewById(R.id.item_tv_equitname);
             img_equitment= (ImageView)itemView.findViewById(R.id.item_img_equitment);
-
         }
     }
 

@@ -282,8 +282,8 @@ public class RegisterAndLoginActivity extends Activity {
 
                 mAccount.setAccount(account,password);
 
-                XlinkConnect.getLoginResult(content);
                 XlinkConnect.init(getApplicationContext());
+                XlinkConnect.getLoginResult(content);
                 Intent intent=new Intent(RegisterAndLoginActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();

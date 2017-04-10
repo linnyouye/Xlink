@@ -33,6 +33,7 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
+import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
@@ -110,11 +111,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
         //测试数据
-        equitmentList.add(new Equitment("风扇灯", R.drawable.buttom_menu_fan_light));
-        equitmentList.add(new Equitment("LED灯", R.drawable.button_menu_led));
-        equitmentList.add(new Equitment("灯", R.drawable.button_menu_fanc));
-        equitmentList.add(new Equitment("浴霸", R.drawable.buttom_menu_bathbully));
-        mAdapter = new AddEquitAdapter(this, equitmentList);
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, Integer.valueOf(XlinkConnect.authorize));
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
@@ -410,6 +407,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void notifyAdapter() {
+        mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
     }
     public void destoryOrtherFragment()

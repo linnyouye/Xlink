@@ -1,5 +1,7 @@
 package com.example.andy.connectutil.Bean;
 
+import io.xlink.wifi.sdk.XDevice;
+
 /**
  * Created by 95815 .
  * Date:2017/3/30.
@@ -12,6 +14,15 @@ public class Equitment {
     private String equit_name;
     private int equit_kind;
     private int equit_resId;
+    private XDevice device;
+
+    public XDevice getDevice() {
+        return device;
+    }
+
+    public void setDevice(XDevice device) {
+        this.device = device;
+    }
 
     public Equitment(String name, int Id) {
         this.equit_name = name;
