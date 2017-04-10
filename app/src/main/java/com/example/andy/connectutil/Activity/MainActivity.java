@@ -111,7 +111,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
         //测试数据
-        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, Integer.valueOf(XlinkConnect.authorize));
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);

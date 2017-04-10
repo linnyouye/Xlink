@@ -3,6 +3,7 @@ package com.example.andy.connectutil.Adapter;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.XlinkCode;
 import io.xlink.wifi.sdk.listener.SubscribeDeviceListener;
 
 
@@ -42,14 +44,16 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
 
     private List<XDevice> devices;
-    private int  authorcode=0;
+    private String  authorcode;
     private List<Device> equitmentList ;
     private Context mContext;
     private LayoutInflater mInflater;
+    private MainActivity mainActivity;
 
-    public AddEquitAdapter(Context context, List<Device> list, int authorcode) {
+    public AddEquitAdapter(Context context, List<Device> list, String authorcode) {
         this.authorcode=authorcode;
         this.mContext = context;
+        mainActivity=(MainActivity)mContext;
         this.equitmentList = list;
         this.mInflater= LayoutInflater.from(mContext);
     }
@@ -136,13 +140,22 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
         viewHolder.img_equitment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XlinkAgent.getInstance().subscribeDevice(equitmentList.get(position).getxDevice(), authorcode, new SubscribeDeviceListener() {
+                Toast.makeText(mContext,"删除设备开始",Toast.LENGTH_SHORT).show();
+                Log.d("popWindow", "onClick: "+authorcode+"解绑");
+                int ret=XlinkAgent.getInstance().unsubscribeDevice(equitmentList.get(position).getxDevice(), authorcode, new SubscribeDeviceListener() {
                     @Override
                     public void onSubscribeDevice(XDevice xDevice, int i) {
-                        Toast.makeText(mContext,"删除设备成功",Toast.LENGTH_SHORT).show();
                         XlinkAgent.getInstance().removeDevice(xDevice);
+                        mainActivity.getOnlinedevicelist();
                     }
                 });
+                if(ret==0)
+                {
+                    Toast.makeText(mContext,"删除设备成功",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    Toast.makeText(mContext,""+ret,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

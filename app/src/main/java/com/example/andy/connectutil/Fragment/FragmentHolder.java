@@ -134,8 +134,11 @@ fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUS
     }
     public boolean removeOne()
     {
-        fragmentstack.pop();
-        Fragment_State=fragmentstack.peek();
+        if(!fragmentstack.isEmpty())
+        {
+            fragmentstack.pop();
+            Fragment_State=fragmentstack.peek();
+        }
         mainActivity.notifybackup();
         return fragmentManager.popBackStackImmediate();
     }
