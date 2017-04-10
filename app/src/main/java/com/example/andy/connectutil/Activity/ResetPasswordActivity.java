@@ -164,13 +164,10 @@ public class ResetPasswordActivity extends BarActivity {
         LoginUtil.resetPassword(account, code, password, new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-
-
             }
 
             @Override
             public void onFailed(int code, String msg) {
-
                 showToast(msg);
             }
         });

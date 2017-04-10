@@ -12,6 +12,7 @@
         android:gravity="center"
         android:orientation="vertical"
         >
+
         <RelativeLayout
 
             android:layout_width="match_parent"
@@ -43,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_wifi_btn"
+            android:background="@drawable/shape_top_tvshow"
             android:divider="@drawable/shape_divider"
             android:orientation="horizontal"
             android:showDividers="middle">
@@ -57,27 +58,31 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/lock_gray" />
-
-
+            <View android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorInnerGray"
+                />
             <EditText
-                android:inputType="number"
                 android:id="@+id/et_wifi_password"
+                android:background="@null"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="10" />
+                android:layout_weight="9"
+                android:inputType="number" />
+
 
             <ImageButton
-               android:background="@color/colorItemGray"
-                android:scaleType="fitCenter"
-                android:src="@drawable/password_eye_white"
                 android:id="@+id/ibtn_password_see"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1" />
+
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/password_eye_white" />
 
 
         </LinearLayout>
@@ -87,13 +92,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_wifi_btn"
+            android:background="@drawable/shape_top_tvshow"
             android:text="NEXT"
             android:textColor="#fff"
             android:textSize="18sp" />
     </LinearLayout>
 
-    <include layout="@layout/view_firstguide" />
+    <!--<include layout="@layout/view_firstguide" />-->
 
 
 </FrameLayout>

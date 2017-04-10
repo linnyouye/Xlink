@@ -120,6 +120,7 @@ public class RegisterAndLoginActivity extends Activity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+         //   Intent intent = new Intent(this,ResetPasswordActivity.class);
               //  startActivityForResult(ResetPasswordActivity.class,RQ_RESET_PASSWORD);
             }
         });
