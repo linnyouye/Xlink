@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,7 +35,7 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
  * Created by 95815 on 2017/3/25.
  */
 
-public class ContFanLedFragment extends Fragment {
+public class ContFanLedFragment extends Fragment implements View.OnTouchListener{
     private boolean fanstate=false;
     private boolean lightstate=false;
     private boolean powerstate=false;
@@ -71,6 +72,7 @@ public class ContFanLedFragment extends Fragment {
           testdata();
 
           View view = inflater.inflate(R.layout.fragment_view_fanled,container,false);
+          view.setOnTouchListener(this);
           controlView = (ControlView) view.findViewById(R.id.controlView);
           controlView.setGeerNum(4);
           controlView.setBottomAngle(50f);
@@ -175,7 +177,7 @@ public class ContFanLedFragment extends Fragment {
 
         lighting=fanLinght.brightness;
         controlView.setLightNum(lighting);
-        controlView.setGeerNum(fanLinght.FanModel);
+        controlView.setGeerNum(fanLinght.FanModel+1);
         controlView.setArcState((int) fanLinght.FanPosition);
 
 
@@ -234,11 +236,13 @@ public class ContFanLedFragment extends Fragment {
                     fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,false);
                     controlView.setPowerState(false);
                     powerstate=false;
+                    fanLinght.setPower(false);
                 }else
                 {
                     fanLightHelper.setDataPoint(0, XlinkCode.DP_TYPE_BOOL,true);
                     controlView.setPowerState(true);
                     powerstate=true;
+                    fanLinght.setPower(true);
                 }
 
             }
@@ -250,69 +254,157 @@ public class ContFanLedFragment extends Fragment {
 
             @Override
             public void onClickOne() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)1);
-                controlView.setArcState(1);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                    controlView.setArcState(1);
+                    fanLinght.setFanPosition((byte)1);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickTwo() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)2);
-                controlView.setArcState(2);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)2);
+                    controlView.setArcState(2);
+                    fanLinght.setFanPosition((byte)2);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
             @Override
             public void onClickThree() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)3);
-                controlView.setArcState(3);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)3);
+                    controlView.setArcState(3);
+                    fanLinght.setFanPosition((byte)3);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickFour() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)4);
-                controlView.setArcState(4);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)4);
+                    controlView.setArcState(4);
+                    fanLinght.setFanPosition((byte)4);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickFive() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)5);
-                controlView.setArcState(5);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)5);
+                    controlView.setArcState(5);
+                    fanLinght.setFanPosition((byte)5);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickSix() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)6);
-                controlView.setArcState(6);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)6);
+                    controlView.setArcState(6);
+                    fanLinght.setFanPosition((byte)6);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickSeven() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)7);
-                controlView.setArcState(7);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)7);
+                    controlView.setArcState(7);
+                    fanLinght.setFanPosition((byte)7);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickEight() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)8);
-                controlView.setArcState(8);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)8);
+                    controlView.setArcState(8);
+                    fanLinght.setFanPosition((byte)8);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickNine() {
-                fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)9);
-                controlView.setArcState(9);
+                if(fanLinght.Power)
+                {
+                    fanLightHelper.setDataPoint(6, XlinkCode.DP_TYPE_BYTE,(byte)9);
+                    controlView.setArcState(9);
+                    fanLinght.setFanPosition((byte)9);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickTopLeft() {
-                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
-                controlView.setLightNum(lighting);
+                if(lightstate)
+                {
+                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
+                    controlView.setLightNum(lighting);
+                    fanLinght.setBrightness(lighting);
+                }else
+                {
+                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onClickTopRight() {
-                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
-                controlView.setLightNum(lighting);
+                if(lightstate)
+                {
+                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
+                    controlView.setLightNum(lighting);
+                    fanLinght.setBrightness(lighting);
+                }else
+                {
+                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -320,9 +412,13 @@ public class ContFanLedFragment extends Fragment {
                 if(fanstate)
                 {
                     fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,false);
+                    fanstate=false;
+                    fanLinght.setPowerOfFanc(false);
                 }else
                 {
                     fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
+                    fanstate=true;
+                    fanLinght.setPowerOfFanc(true);
                 }
 
             }
@@ -332,9 +428,13 @@ public class ContFanLedFragment extends Fragment {
                 if(lightstate)
                 {
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
+                    lightstate=false;
+                    fanLinght.setPowerOfLight(false);
                 }else
                 {
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
+                    lightstate=true;
+                    fanLinght.setPowerOfLight(true);
                 }
             }
         });
@@ -403,10 +503,18 @@ public class ContFanLedFragment extends Fragment {
         imageButton1_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)0);
-                popupWindow1.dismiss();
-                imagebtn1state=false;
-                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_orange);
+                if(fanstate)
+                {
+                    fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                    popupWindow1.dismiss();
+                    imagebtn1state=false;
+                    imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_orange);
+                    fanLinght.setFanDirection((byte)0);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -414,10 +522,18 @@ public class ContFanLedFragment extends Fragment {
         imageButton1_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)1);
-                popupWindow1.dismiss();
-                imagebtn1state=false;
-                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_orange);
+                if(fanstate)
+                {
+                    fanLightHelper.setDataPoint(3, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                    popupWindow1.dismiss();
+                    imagebtn1state=false;
+                    imageButton1.setImageResource(R.drawable.ibtn_1_cloud_orange);
+                    fanLinght.setFanDirection((byte)1);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -429,10 +545,18 @@ public class ContFanLedFragment extends Fragment {
         imageButton2_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagebtn2state=false;
-                fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)0);
-                popupWindow2.dismiss();
-                imageButton2.setImageResource(R.drawable.ibtn_2_natural_orange);
+                if(fanstate)
+                {
+                    imagebtn2state=false;
+                    fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                    popupWindow2.dismiss();
+                    imageButton2.setImageResource(R.drawable.ibtn_2_natural_orange);
+                    fanLinght.setFanModel((byte)0);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -440,10 +564,18 @@ public class ContFanLedFragment extends Fragment {
         imageButton2_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagebtn2state=false;
-                fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)1);
-                popupWindow2.dismiss();
-                imageButton2.setImageResource(R.drawable.ibtn_2_fan_orange);
+                if(fanstate)
+                {
+                    imagebtn2state=false;
+                    fanLightHelper.setDataPoint(4, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                    popupWindow2.dismiss();
+                    imageButton2.setImageResource(R.drawable.ibtn_2_fan_orange);
+                    fanLinght.setFanModel((byte)1);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -455,10 +587,19 @@ public class ContFanLedFragment extends Fragment {
         imageButton3_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagebtn3state=false;
-                fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)0);
-                popupWindow3.dismiss();
-                imageButton3.setImageResource(R.drawable.ibtn_3_light_one_orange);
+                if(lightstate)
+                {
+                    imagebtn3state=false;
+                    fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)0);
+                    popupWindow3.dismiss();
+                    imageButton3.setImageResource(R.drawable.ibtn_3_light_one_orange);
+                    fanLinght.setCoolor_Tem((byte)0);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -466,20 +607,36 @@ public class ContFanLedFragment extends Fragment {
         imageButton3_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagebtn3state=false;
-                fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)1);
-                popupWindow3.dismiss();
-                imageButton3.setImageResource(R.drawable.ibtn_3_light_two_orange);
+                if(lightstate)
+                {
+                    imagebtn3state=false;
+                    fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                    popupWindow3.dismiss();
+                    imageButton3.setImageResource(R.drawable.ibtn_3_light_two_orange);
+                    fanLinght.setCoolor_Tem((byte)1);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         imageButton3_three=(ImageButton)popupLayout3.findViewById(R.id.ibt_3_pop_three);
         imageButton3_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow3.dismiss();
-                imagebtn3state=false;
-                fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)2);
-                imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
+                if(lightstate)
+                {
+                    popupWindow3.dismiss();
+                    imagebtn3state=false;
+                    fanLightHelper.setDataPoint(7, XlinkCode.DP_TYPE_BYTE,(byte)2);
+                    imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
+                    fanLinght.setCoolor_Tem((byte)2);
+                }else
+                {
+                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -510,6 +667,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)1);
+                fanLinght.setTiming((byte)1);
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -518,6 +676,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)2);
+                fanLinght.setTiming((byte)2);
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
@@ -526,6 +685,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)3);
+                fanLinght.setTiming((byte)3);
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
@@ -534,6 +694,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)4);
+                fanLinght.setTiming((byte)4);
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
@@ -542,6 +703,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)5);
+                fanLinght.setTiming((byte)5);
             }
         });
         btn6.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +712,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)6);
+                fanLinght.setTiming((byte)6);
             }
         });
         btn7.setOnClickListener(new View.OnClickListener() {
@@ -558,6 +721,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)7);
+                fanLinght.setTiming((byte)7);
             }
         });
         btn8.setOnClickListener(new View.OnClickListener() {
@@ -566,6 +730,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)8);
+                fanLinght.setTiming((byte)8);
             }
         });
         btn9.setOnClickListener(new View.OnClickListener() {
@@ -574,6 +739,7 @@ public class ContFanLedFragment extends Fragment {
                 popupWindow4.dismiss();
                 imagebtn4state=false;
                 fanLightHelper.setDataPoint(9, XlinkCode.DP_TYPE_BYTE,(byte)9);
+                fanLinght.setTiming((byte)9);
             }
         });
     }
@@ -598,5 +764,16 @@ public class ContFanLedFragment extends Fragment {
         fanLinght.setCoolor_Tem((byte)1);
         fanLinght.setBrightness((byte)50);
         fanLinght.setTiming((byte)9);
+    }
+
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(!device.isOnline())
+        {
+            Toast.makeText(getActivity(),"设备未连接",Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 }
