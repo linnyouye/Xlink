@@ -5,12 +5,15 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.FrameStats;
 
+import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.andy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by 95815 on 2017/3/10.
@@ -20,10 +23,11 @@ import java.util.List;
  */
 
 public class FragmentHolder {
-
+    public Stack<String> fragmentstack;
     private String Fragment_State = "Main";
     HolderListener holderListener;
 
+    MainActivity mainActivity;
     private Context context;
     private FragmentManager fragmentManager;
     private List<Fragment> fragmentList;
@@ -35,6 +39,10 @@ public class FragmentHolder {
         this.fragmentManager = fragmentManager;
         fragmentList = new ArrayList<>();
         this.context = context;
+        mainActivity=(MainActivity)context;
+        fragmentstack=new Stack<>();
+        fragmentstack.push("Main");
+        Fragment_State=fragmentstack.peek();
     }
 
     /**
@@ -59,13 +67,15 @@ public class FragmentHolder {
      * @param isBackToStack 是否添加到回退栈中
      */
     public void addFragment(Fragment fragment, String tag, boolean isBackToStack) {
-
+        fragmentstack.push(tag);
+        Fragment_State=tag;
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
                 R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
         ).add(fragmentLayoutId, fragment, tag);
         if (isBackToStack) {
             transaction.addToBackStack(tag);
+            mainActivity.notifybackup();
         }
         transaction.commit();
 
@@ -77,7 +87,8 @@ public class FragmentHolder {
      * @param isBackToStack 是否添加到回退栈中
      */
     public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack) {
-
+        fragmentstack.push(tag);
+        Fragment_State=fragmentstack.peek();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.animator_fragment_enter, R.anim.animator_fragment_exit,
                 R.anim.animator_fragment_enter, R.anim.animator_fragment_exit
@@ -86,7 +97,7 @@ public class FragmentHolder {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
-
+        mainActivity.notifybackup();
     }
 
 
@@ -115,6 +126,18 @@ public class FragmentHolder {
 //            }
 //        }
 fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        while (!fragmentstack.peek().equals("Main"))
+            fragmentstack.pop();
+        Fragment_State="Main";
+        mainActivity.notifybackup();
+
+    }
+    public boolean removeOne()
+    {
+        fragmentstack.pop();
+        Fragment_State=fragmentstack.peek();
+        mainActivity.notifybackup();
+        return fragmentManager.popBackStackImmediate();
     }
 
     /**

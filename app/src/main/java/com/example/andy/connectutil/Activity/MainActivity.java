@@ -106,6 +106,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     protected void initData() {
+        fragmentManager = getSupportFragmentManager();
+        holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
         //测试数据
         equitmentList.add(new Equitment("风扇灯", R.drawable.buttom_menu_fan_light));
@@ -122,9 +124,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         Log.d("waiwen", "setAdapter：");
 
-        fragmentManager = getSupportFragmentManager();
-
-        holder = new FragmentHolder(this, this, fragmentManager);
 
 
 
@@ -133,7 +132,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         if(equitmentSelectFragment == null){
             equitmentSelectFragment = EquitmentSelectFragment.newInstance();
         }
-
+        notifybackup();
     }
 
     @Override
@@ -153,6 +152,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     protected void initView() {
+
+
         toolbar_search = obtainView(R.id.toolbar_ibtn_search);
         toolbar_menu = obtainView(R.id.toolbar_menu);
 
@@ -180,7 +181,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         equitmentList = new ArrayList<>();
         Log.d("waiwen", "initview");
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
-
     }
 
     @Override
@@ -205,8 +205,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-                fragmentManager.popBackStackImmediate();
-
+               // fragmentManager.popBackStackImmediate();
+                    holder.removeAllFragment();
                 break;
         }
     }
@@ -298,13 +298,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
 
     public void setBottomSheetOnOff() {
-        int state = behavior.getState();
-        if (state == BottomSheetBehavior.STATE_EXPANDED) {
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
+        {
+            int state = behavior.getState();
+            if (state == BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-        } else {
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            } else {
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
         }
+
 
     }
 
@@ -322,11 +326,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         if (keyCode == event.KEYCODE_BACK) {
 
-
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             }
-            else if (!fragmentManager.popBackStackImmediate()) {
+            else if (!holder.removeOne()) {
                 backup();
 
             }
@@ -412,5 +415,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public void destoryOrtherFragment()
     {
         holder.removeAllFragment();
+    }
+    public void notifybackup()
+    {
+        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
+        {
+        img_backup.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            img_backup.setVisibility(View.VISIBLE);
+        }
+
     }
 }
