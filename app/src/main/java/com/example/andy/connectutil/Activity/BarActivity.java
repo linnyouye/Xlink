@@ -1,10 +1,12 @@
+
+
 package com.example.andy.connectutil.Activity;
 
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
+        import android.view.View;
+        import android.widget.ImageButton;
+        import android.widget.TextView;
 
-import com.example.andy.connectutil.R;
+        import com.example.andy.connectutil.R;
 
 
 /**
@@ -16,8 +18,8 @@ import com.example.andy.connectutil.R;
 
 public class BarActivity extends BasicActivity implements View.OnClickListener {
 
-   private TextView tv_title;
-   private ImageButton ibtn_backup;
+    private TextView tv_title;
+    private ImageButton ibtn_backup;
 
 
     @Override
@@ -65,10 +67,10 @@ public class BarActivity extends BasicActivity implements View.OnClickListener {
         }
     }
 
-  public TextView getTvTitle(){
+    public TextView getTvTitle(){
         return tv_title;
     }
-   public ImageButton getIbtn_backup(){
+    public ImageButton getIbtn_backup(){
         return ibtn_backup;
     }
 

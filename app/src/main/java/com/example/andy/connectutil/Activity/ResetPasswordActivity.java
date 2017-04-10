@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.Key;
@@ -26,8 +28,9 @@ import butterknife.OnClick;
  * E-mail:iwaiwen@163.com .
  */
 
-public class ResetPasswordActivity extends BarActivity {
+public class ResetPasswordActivity extends RegisBasicActivity {
 
+    private Account mAccount;
     private static final int REGISTER_MODE_PHONE=0;
     private static final int REGISTER_MODE_MAIL=1;
     @Bind(R.id.radio_group)
@@ -47,9 +50,24 @@ public class ResetPasswordActivity extends BarActivity {
     @Bind(R.id.btn_reset_password)
     Button btnResetPassword;
 
+
     @Override
-    protected void initView() {
-        changeRegisterMode(REGISTER_MODE_PHONE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        setContentView(R.layout.activity_reset_password);
+        ButterKnife.bind(this);
+
+        mAccount=new Account(this);
+        String user=mAccount.getUser();
+        etAccount.setText(user);
+        if(user.contains("@")){
+            changeRegisterMode(REGISTER_MODE_MAIL);
+        }else{
+            changeRegisterMode(REGISTER_MODE_PHONE);
+        }
+
+
         radioGroup.setItems(getResources().getStringArray(R.array.register_tab));
         radioGroup.setSelection(0);
         radioGroup.setOnItemSelectedListener(new HorizontalRadioGroup.OnItemSelectedListener() {
@@ -58,30 +76,6 @@ public class ResetPasswordActivity extends BarActivity {
                 changeRegisterMode(index);
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-         getTvTitle().setText("找回密码");
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_reset_password;
-    }
-
-    @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-
-
     }
 
     @OnClick({R.id.btn_get_code, R.id.btn_reset_password})
@@ -126,9 +120,8 @@ public class ResetPasswordActivity extends BarActivity {
             public void onSuccess(String content) {
 
                 if(radioGroup.getSelection()==REGISTER_MODE_MAIL){
-
+                    finish();
                 }else{
-
                 }
             }
 
@@ -139,47 +132,37 @@ public class ResetPasswordActivity extends BarActivity {
             }
         });
     }
-    //忘记密码
-    public static void forgetPassword(String account, HttpUtils.HttpUtilsListner listener){
-        try{
-            JSONObject data=new JSONObject();
-            data.put(Key.CORP_ID, Content.CORP_ID);
-            if(account.contains("@")){
-                data.put(Key.EMAIL,account);
-            }else{
-                data.put(Key.PHONE,account);
-            }
 
-            HttpUtils.postJson(Url.FORGET_PASSWORD, data.toString(),null, listener);
-        }catch (Exception e ){
-            e.printStackTrace();
+    private void resetPassword() {
+        final String account = etAccount.getText().toString();
+        String code = etCode.getText().toString();
+        final String password = etPassword.getText().toString();
+        if (password.equals("")) {
+            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+        } else if (account.equals("")) {
+            Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
+        } else if (code.equals("")) {
+            Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+        } else {
+            LoginUtil.resetPassword(account, code, password, new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    Toast.makeText(getApplicationContext(), "重置密码成功", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    mAccount.setAccount(account,password);
+                    finish();
+                }
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    Toast.makeText(getApplicationContext(), "重置密码失败"+msg, Toast.LENGTH_SHORT).show();
+                    showToast(msg);
+                }
+            });
         }
+
+
     }
-    private void resetPassword(){
-        String account=etAccount.getText().toString();
-        String code=etCode.getText().toString();
-        String password=etPassword.getText().toString();
-
-
-        LoginUtil.resetPassword(account, code, password, new HttpUtils.HttpUtilsListner() {
-            @Override
-            public void onSuccess(String content) {
-
-
-            }
-
-            @Override
-            public void onFailed(int code, String msg) {
-
-                showToast(msg);
-            }
-        });
-    }
-
-
-
-
-
 
 
 }

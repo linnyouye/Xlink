@@ -120,7 +120,8 @@ public class RegisterAndLoginActivity extends Activity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  startActivityForResult(ResetPasswordActivity.class,RQ_RESET_PASSWORD);
+              Intent intent=new Intent(RegisterAndLoginActivity.this,ResetPasswordActivity.class);
+                startActivityForResult(intent,0);
             }
         });
 
@@ -323,8 +324,28 @@ public class RegisterAndLoginActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode!=RESULT_OK){
+        if(resultCode==RESULT_OK){
+            if(!mAccount.getUser().isEmpty()&&!mAccount.getPassword().isEmpty())
+            LoginUtil.login(mAccount.getUser(), mAccount.getPassword(), new HttpUtils.HttpUtilsListner()  {
+                @Override
+                public void onSuccess(String content) {
+                    //   cancelProgressDialog();
+                    XlinkConnect.getLoginResult(content);
+                    XlinkConnect.init(getApplicationContext());
+                    Intent intent=new Intent(RegisterAndLoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
+                @Override
+                public void onFailed(int code, String msg) {
+                    // cancelProgressDialog();
+                    // showToast(msg);
+                    if(launchView.getVisibility()== View.VISIBLE){
+                        hideLauncherView();
+                    }
+                }
+            });
         }
     }
 }

@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             ></activity>
-
+<activity android:name=".Activity.ResetPasswordActivity"></activity>
         <!-- XLINK 内网服务 -->
         <service android:name="io.xlink.wifi.sdk.XlinkUdpService" />
         <!-- XLINK 公网服务 -->
