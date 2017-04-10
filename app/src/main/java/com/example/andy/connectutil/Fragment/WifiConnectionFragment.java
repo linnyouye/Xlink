@@ -37,9 +37,10 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
         
         Bundle args = new Bundle();
         args.putString("wifi名称",str);
+        args.putString("produt_id",produt_id);
         WifiConnectionFragment fragment = new WifiConnectionFragment();
         fragment.setArguments(args);
-        product_ID = produt_id;
+
         return fragment;
     }
 
@@ -53,14 +54,12 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
         wifi_name = obtainView(view,R.id.tv_wifi_num);
         et_wifi_password = obtainView(view,R.id.et_wifi_password);
         btn_next = obtainView(view, R.id.btn_next);
-        linearLayout_firstguide = obtainView(view,R.id.view_new_guide);
+       linearLayout_firstguide = obtainView(view,R.id.view_new_guide);
         tv_firstguide = obtainView(view, R.id.tv_first_guide);
         ibtn_password_see = obtainView(view, R.id.ibtn_password_see);
         et_wifi_password = obtainView(view, R.id.et_wifi_password);
 
     }
-
-
 
     @Override
     public void setListener() {
@@ -76,6 +75,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     public void initData() {
         Bundle args = getArguments();
         String str = args.getString("wifi名称"); //拿到传送过来的数据
+        product_ID = args.getString("produt_id");
         wifi_name.setText(str);
 
         tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
@@ -86,9 +86,15 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public String setState() {
+        return this.TAG;
+    }
+
+    @Override
     public void onClick(View v) {
          switch(v.getId()){
              case R.id.btn_next:
+
                 String password=et_wifi_password.getText().toString();
 
                  FragmentHolder holder = mActivity.getHolder();
@@ -99,7 +105,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                  break;
              case R.id.view_new_guide:
                  //点击即消失
-                 linearLayout_firstguide.setVisibility(View.INVISIBLE);
+                linearLayout_firstguide.setVisibility(View.INVISIBLE);
                  break;
              case R.id.ibtn_password_see:
                  if (password_status) {

@@ -43,7 +43,6 @@ import io.xlink.wifi.sdk.XlinkCode;
 public class CountDownFragment extends BaseFragment {
 
 
-
     public static final String TAG = "CountDownFragment";
     private List<XDevice> devicelist;
     private List<Device> Exitslist;
@@ -79,10 +78,6 @@ public class CountDownFragment extends BaseFragment {
         }
     };
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     @Nullable
     @Override
@@ -92,6 +87,11 @@ public class CountDownFragment extends BaseFragment {
         MacList = new ArrayList<>();
         return super.onCreateView(inflater, container, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public static CountDownFragment newInstance(String password) {
@@ -131,6 +131,11 @@ public class CountDownFragment extends BaseFragment {
         });
         startCountDown();
         timer.schedule(task, 1000, 1000);
+    }
+
+    @Override
+    public String setState() {
+        return this.TAG;
     }
 
     /**

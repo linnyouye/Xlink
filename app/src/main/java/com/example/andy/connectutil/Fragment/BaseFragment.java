@@ -21,7 +21,7 @@ import com.example.andy.connectutil.Activity.MainActivity;
 public abstract class BaseFragment extends Fragment {
 
 
-
+    public static final String TAG = "BaseFragment";
     protected MainActivity mActivity = null;
     private View rootview;
     protected HolderListener holderListener;
@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
     public abstract void setListener();
 
     public abstract void initData();
-
+    public abstract String  setState();
 
     /**
      * 作用：获取控件 Id (避免类型转换的繁琐，抽取 findViewById() )
@@ -106,8 +106,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        showLog(":   onResume"+getTag());
-        holderListener.setFraagment_State(getTag());
+        showLog(":   onResume"+setState());
+        holderListener.setFraagment_State(setState());
     }
 
     @Override

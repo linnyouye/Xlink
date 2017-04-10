@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <include android:layout="@layout/view_contrlbtn_top" />
+    <include layout="@layout/view_contrlbtn_top" />
 
     <FrameLayout
 android:layout_marginTop="20sp"

@@ -259,11 +259,16 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void setFraagment_State(String str) {
         fragment_state = str;
-
+        if(fragment_state == MainActivity.TAG){
+            img_backup.setVisibility(View.INVISIBLE);
+        }else {
+            img_backup.setVisibility(View.VISIBLE);
+        }
         switch (fragment_state) {
 
             case MainActivity.TAG:
-                main_title.setText("主界面");
+                main_title.setText("设备");
+
                 break;
 
             case EquitmentSelectFragment.TAG:
@@ -284,16 +289,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     }
 
-    /**
-     * @param fragment_title 页面标题
-     * @param view_status    后退键的状态
-     */
-    @Override
-    public void setMainPage(String fragment_title, int view_status) {
-        img_backup.setVisibility(view_status);
-        main_title.setText(fragment_title);
 
-    }
 
 
     public void setBottomSheetOnOff() {

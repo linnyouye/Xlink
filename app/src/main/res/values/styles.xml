@@ -88,6 +88,7 @@
     <!--选择设备列表的按钮样式-->
 
     <style name="btn_selectequitment_stytle">
+        <item name="android:textColor">@color/colorControlText</item>
         <item name="android:background">@drawable/selector_select_ibtn</item>
         <item name="android:textSize">18sp</item>
         <item name="android:layout_width">match_parent</item>
