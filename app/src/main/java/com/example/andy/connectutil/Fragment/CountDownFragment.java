@@ -68,7 +68,6 @@ public class CountDownFragment extends BaseFragment {
 
         @Override
         public void onCompleted() {
-            Toast.makeText(getActivity(), "配置成功", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -240,7 +239,7 @@ public class CountDownFragment extends BaseFragment {
         XlinkConnect.init(getActivity());
         for (int i = 0; i < devicelist.size(); i++) {
             if (!MacList.contains(devicelist.get(i).getMacAddress())) {
-                XlinkConnect.bindDevice(devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
+                XlinkConnect.bindDevice(mActivity,devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
                     @Override
                     public void bindDevice(XDevice device, int i) {
                         if (i == XlinkCode.SUCCEED) {
@@ -248,7 +247,7 @@ public class CountDownFragment extends BaseFragment {
                             Toast.makeText(getActivity(), "绑定设备成功", Toast.LENGTH_SHORT).show();
                             notifyMainActivity();
                         } else {
-                            Toast.makeText(getActivity(), "绑定设备失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "绑定设备失败"+i, Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "bindDevice: 绑定设备失败");
                             notifyMainActivity();
                         }
@@ -302,7 +301,7 @@ public class CountDownFragment extends BaseFragment {
         XlinkConnect.init(getActivity());
         for (int i = 0; i < devicelist.size(); i++) {
             if (!MacList.contains(devicelist.get(i).getMacAddress())) {
-                XlinkConnect.bindDevice(devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
+                XlinkConnect.bindDevice(mActivity,devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
                     @Override
                     public void bindDevice(XDevice device, int i) {
                         if (i == XlinkCode.SUCCEED) {

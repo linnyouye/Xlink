@@ -5,7 +5,7 @@ package com.example.andy.connectutil.entity.Net;
  */
 
 public class Key {
-
+    public static final String Device_id="device_id";
     public static final String corp_id="corp_id";
     public static final String phone="phone";
     public static final String verifycode = "verifycode";//验证码

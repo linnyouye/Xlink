@@ -33,6 +33,8 @@ public class Url {
     //获取设备列表
     public static final String GET_DEVICE_LIST= XLINK_SERVER +"/v2/user/%s/subscribe/devices";
 
+    //取消订阅
+    public static final String UNSBCRIB_DEVICE=XLINK_SERVER+"/v2/user/%s/unsubscribe";
     //获取设备地理位置
     public static final String GET_DEVICE_LOCATION= XLINK_SERVER +"/v2/product/%s/device/%d/geography";
 }

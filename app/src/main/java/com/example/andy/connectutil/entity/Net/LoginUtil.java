@@ -1,5 +1,7 @@
 package com.example.andy.connectutil.entity.Net;
 
+import android.util.Log;
+
 import com.example.andy.connectutil.XlinkConnect;
 
 import org.json.JSONException;
@@ -127,6 +129,22 @@ public class LoginUtil {
         }
     }
 
+
+    //取消订阅设备
+    public static void unsubDevice(HttpUtils.HttpUtilsListner listener,int Device_id){
+        try{
+            JSONObject data=new JSONObject();
+            data.put(Key.Device_id,Device_id);
+            Map<String,String> header=new HashMap<>();
+            header.put("Access-Token", XlinkConnect.accessToken);
+
+            String url=String.format(Url.UNSBCRIB_DEVICE,XlinkConnect.userId);
+            Log.d("UnSBdevice", "unsubDevice: "+XlinkConnect.accessToken);
+            HttpUtils.postJson(url,data.toString(),header,listener);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+    }
     //获取设备地理位置
     public static void getDeviceLocation(String pid,int deviceId,HttpUtils.HttpUtilsListner listener){
         try{

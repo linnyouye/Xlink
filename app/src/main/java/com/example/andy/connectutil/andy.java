@@ -89,7 +89,7 @@ public class andy extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.num:
                 Toast.makeText(this,"This list have"+list.size()+"",Toast.LENGTH_LONG).show();
-               XlinkConnect.bindDevice(list.get(0), new XlinkConnect.BinderDeviceListner() {
+               XlinkConnect.bindDevice(getApplicationContext(),list.get(0), new XlinkConnect.BinderDeviceListner() {
                    @Override
                    public void bindDevice(XDevice device, int i) {
                        if(i==XlinkCode.SUCCEED)

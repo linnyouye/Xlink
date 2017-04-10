@@ -24,6 +24,8 @@ import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
+import com.example.andy.connectutil.entity.Net.HttpUtils;
+import com.example.andy.connectutil.entity.Net.LoginUtil;
 
 import java.util.List;
 
@@ -141,21 +143,18 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext,"删除设备开始",Toast.LENGTH_SHORT).show();
-                Log.d("popWindow", "onClick: "+authorcode+"解绑");
-                int ret=XlinkAgent.getInstance().unsubscribeDevice(equitmentList.get(position).getxDevice(), authorcode, new SubscribeDeviceListener() {
+                LoginUtil.unsubDevice(new HttpUtils.HttpUtilsListner() {
                     @Override
-                    public void onSubscribeDevice(XDevice xDevice, int i) {
-                        XlinkAgent.getInstance().removeDevice(xDevice);
+                    public void onSuccess(String content) {
+                    Toast.makeText(mContext,"取消订阅成功",Toast.LENGTH_SHORT).show();
                         mainActivity.getOnlinedevicelist();
                     }
-                });
-                if(ret==0)
-                {
-                    Toast.makeText(mContext,"删除设备成功",Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    Toast.makeText(mContext,""+ret,Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailed(int code, String msg) {
+                        Toast.makeText(mContext,"取消订阅失败"+msg,Toast.LENGTH_SHORT).show();
+                    }
+                },equitmentList.get(position).getxDevice().getDeviceId());
             }
         });
     }

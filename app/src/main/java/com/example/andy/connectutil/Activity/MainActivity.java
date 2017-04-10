@@ -42,6 +42,7 @@ import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -73,7 +74,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     private EquitmentSelectFragment equitmentSelectFragment = null;
-    List<Equitment> equitmentList;
     List<Device> OnlinedeviceList;
     RecyclerView recyclerView;
     AddEquitAdapter mAdapter;
@@ -175,7 +175,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         OnlineDeviceRecycleview = obtainView(R.id.Online_device);
         OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
-        equitmentList = new ArrayList<>();
         Log.d("waiwen", "initview");
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -386,6 +385,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void getOnlinedevicelist() {
+        for(int i=0;i<OnlinedeviceList.size();i++)
+        OnlinedeviceList.remove(i);
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
