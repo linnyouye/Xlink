@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.andy;
 
 /**
  * Created by 95815 .
@@ -22,9 +23,11 @@ public abstract class BaseFragment extends Fragment {
 
 
     public static final String TAG = "BaseFragment";
-    protected MainActivity mActivity = null;
-    public  View rootview;
-    protected HolderListener holderListener;
+
+    public MainActivity mActivity = null;
+    public View rootview;
+    public HolderListener holderListener;
+
 
     @Nullable
     @Override

@@ -128,7 +128,7 @@ public class FragmentHolder {
 fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
         while (!fragmentstack.peek().equals("Main"))
             fragmentstack.pop();
-        Fragment_State="Main";
+        Fragment_State=fragmentstack.peek();
         mainActivity.notifybackup();
 
     }
