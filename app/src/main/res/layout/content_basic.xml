@@ -9,20 +9,7 @@
     >
 
 
-    <android.support.v4.widget.NestedScrollView
-        android:background="@drawable/shape_bottombar"
-        android:id="@+id/bottomsheet_view"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <include layout="@layout/view_bottom_pop"/>
-
-    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,8 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="0.7">
 
             <ImageButton
@@ -119,9 +105,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/shape_refresh_ibtn"
-                android:padding="5dp"
+                android:padding="0dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/m_refresh_gray" />
+                android:src="@drawable/icon_refresh" />
 
 
         </RelativeLayout>
@@ -130,42 +116,67 @@
             android:id="@+id/rl_bottom_addequit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@drawable/shape_bottombar">
 
             <ImageButton
-
+android:padding="12dp"
                 style="@style/ibtn_icon_size_stytle"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:src="@drawable/bottombar_up_gray"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/icon_up_black"
                 android:id="@+id/imageButton" />
 
             <TextView
+                android:textSize="18sp"
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Add equitment"
+                android:text="Add equipment"
                 android:textColor="#fff" />
 
 
             <ImageButton
+                android:padding="12dp"
                 style="@style/ibtn_icon_size_stytle"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
-                android:src="@drawable/bottombar_up_gray"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_up_black"
                 android:layout_alignTop="@+id/imageButton" />
 
 
         </RelativeLayout>
 
     </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:background="@drawable/shape_bottombar"
+        android:id="@+id/bottomsheet_view"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <include layout="@layout/view_bottom_pop"/>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+
+
+
+
 </android.support.design.widget.CoordinatorLayout>
