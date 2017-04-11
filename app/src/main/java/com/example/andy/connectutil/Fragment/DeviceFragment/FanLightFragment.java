@@ -111,7 +111,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             {
                    fanLightHelper=new FanLightHelper(device);
 
-                   //updata();
+                   updata();
 
                    setOnClike();
             }else
@@ -191,6 +191,21 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
         brightnss.setText(lighting+"");
         controlView.setGeerNum(fanLinght.FanModel+1);
         controlView.setArcState((int) fanLinght.FanPosition);
+        if(fanstate)
+        {
+            imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_orange);
+        }else
+        {
+            imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_white);
+        }
+
+        if(lightstate)
+        {
+            imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_orange);
+        }else
+        {
+            imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_white);
+        }
 
 
         if(fanLinght.FanDirection==0)
@@ -389,67 +404,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
                 }
 
-            }
-
-          /*  @Override
-            public void onClickTopLeft() {
-                if(lightstate)
-                {
-                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
-                    controlView.setLightNum(lighting);
-                    fanLinght.setBrightness(lighting);
-                }else
-                {
-                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onClickTopRight() {
-                if(lightstate)
-                {
-                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
-                    controlView.setLightNum(lighting);
-                    fanLinght.setBrightness(lighting);
-                }else
-                {
-                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onClickBottomLeft() {
-                if(fanstate)
-                {
-                    fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,false);
-                    fanstate=false;
-                    fanLinght.setPowerOfFanc(false);
-                }else
-                {
-                    fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
-                    fanstate=true;
-                    fanLinght.setPowerOfFanc(true);
-                }
-
-            }
-
-            @Override
-            public void onClickBottomRight() {
-                if(lightstate)
-                {
-                    fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
-                    lightstate=false;
-                    fanLinght.setPowerOfLight(false);
-                }else
-                {
-                    fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
-                    lightstate=true;
-                    fanLinght.setPowerOfLight(true);
-                }
-            }
-        */});
+            }});
 
 
         imageButtonToplef.setOnClickListener(new View.OnClickListener() {
@@ -491,11 +446,13 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,false);
                     fanstate=false;
                     fanLinght.setPowerOfFanc(false);
+                    imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_white);
                 }else
                 {
                     fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
                     fanstate=true;
                     fanLinght.setPowerOfFanc(true);
+                    imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_orange);
                 }
             }
         });
@@ -508,11 +465,13 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
                     lightstate=false;
                     fanLinght.setPowerOfLight(false);
+                    imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_white);
                 }else
                 {
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
                     lightstate=true;
                     fanLinght.setPowerOfLight(true);
+                    imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_orange);
                 }
             }
         });
@@ -847,7 +806,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
     public boolean onTouch(View v, MotionEvent event) {
         if(!device.isOnline())
         {
-            Toast.makeText(getActivity(),"设备未连接",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
         }
         return true;
     }

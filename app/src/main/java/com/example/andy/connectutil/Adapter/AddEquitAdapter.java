@@ -4,6 +4,7 @@ import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
-import com.example.andy.connectutil.Bean.Equitment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.BathbullyFragment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.ContFanLedFragment;
-import com.example.andy.connectutil.Fragment.FragmentHolder;
 
-import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
+
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
@@ -71,29 +67,6 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
        final MyViewHolder viewHolder = new MyViewHolder(itemView);
         viewHolder.tv_name.setFocusableInTouchMode(false);
         viewHolder.tv_name.setFocusable(false);
-/*        viewHolder.tv_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               String DeviceName=viewHolder.tv_name.getText().toString();
-
-                MainActivity mainActivity=(MainActivity)mContext;
-                mainActivity.setBottomSheetOnOff();
-                FragmentHolder fragmentHolder=mainActivity.getHolder();
-                if(DeviceName.equals("风扇灯")){
-                    fragmentHolder.replaceFragment(new ContFanLedFragment(),"ContFanLedFragment",true);
-                }else if(DeviceName.equals("灯")) {
-                    fragmentHolder.replaceFragment(new LightFragment(),"LightFragment",true);
-                }else  if(DeviceName.equals("LED灯"))
-                {
-                    fragmentHolder.replaceFragment(new LEDLightFragment(),"LEDLightFragment",true);
-                }else if(DeviceName.equals("浴霸"))
-                {
-                    fragmentHolder.replaceFragment(new BathbullyFragment(),"BathbullyFragment",true);
-
-                }
-
-            }
-        });*/
         viewHolder.img_equitment.setClickable(false);
 
         return  viewHolder;
@@ -157,6 +130,18 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                 },equitmentList.get(position).getxDevice().getDeviceId());
             }
         });
+
+       /* viewHolder.tv_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    Toast.makeText(mContext,"处于编辑状态",Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+        });*/
+
     }
 
     @Override

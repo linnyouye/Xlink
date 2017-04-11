@@ -9,20 +9,7 @@
     >
 
 
-    <android.support.v4.widget.NestedScrollView
-        android:background="@drawable/shape_bottombar"
-        android:id="@+id/bottomsheet_view"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <include layout="@layout/view_bottom_pop"/>
-
-    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -168,4 +155,18 @@
         </RelativeLayout>
 
     </LinearLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:background="@drawable/shape_bottombar"
+        android:id="@+id/bottomsheet_view"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <include layout="@layout/view_bottom_pop"/>
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
