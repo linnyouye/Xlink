@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Fragment.DeviceFragment.BathbullyFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.ContFanLedFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
@@ -66,9 +67,9 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
                 MainActivity mainActivity=(MainActivity) mContext;
                 FragmentHolder fragmentHolder=mainActivity.getHolder();
                 if(OnlineList.get(position).getxDevice().getProductId().equals(Content.FanLIght_ID)){
-                    ContFanLedFragment contFanLedFragment=new ContFanLedFragment();
-                    contFanLedFragment.setDevice(OnlineList.get(position));
-                    fragmentHolder.replaceFragment(contFanLedFragment,"ContFanLedFragment",true);
+                    FanLightFragment fanLedFragment=new FanLightFragment();
+                    fanLedFragment.setDevice(OnlineList.get(position));
+                    fragmentHolder.replaceFragment(fanLedFragment,"fanLightFragment",true);
                 }else if(OnlineList.get(position).getxDevice().getProductId().equals(Content.Light_ID)) {
 
                     fragmentHolder.replaceFragment(new LightFragment(),"LightFragment",true);

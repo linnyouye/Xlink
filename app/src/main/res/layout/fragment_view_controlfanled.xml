@@ -11,7 +11,7 @@
     <include layout="@layout/view_contrlbtn_top" />
 
     <FrameLayout
-android:layout_marginTop="20sp"
+        android:layout_marginTop="20sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
@@ -112,7 +112,7 @@ android:layout_marginTop="20sp"
         </LinearLayout>
 
         <com.example.andy.connectutil.View.ControFanLedlView
-
+            android:id="@+id/controlfanledview"
            android:layout_margin="20sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

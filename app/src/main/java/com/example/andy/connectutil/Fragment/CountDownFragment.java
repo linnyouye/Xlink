@@ -78,11 +78,6 @@ public class CountDownFragment extends BaseFragment {
         }
     };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 15de0ae878e9cf287ac646a54dd79140a93abd39
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

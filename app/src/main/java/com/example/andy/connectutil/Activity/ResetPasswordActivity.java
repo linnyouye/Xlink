@@ -132,7 +132,7 @@ public class ResetPasswordActivity extends RegisBasicActivity {
             }
         });
     }
-<<<<<<< HEAD
+
 
     private void resetPassword() {
         final String account = etAccount.getText().toString();
@@ -162,41 +162,6 @@ public class ResetPasswordActivity extends RegisBasicActivity {
             });
         }
 
-
-=======
-    //忘记密码
-    public static void forgetPassword(String account, HttpUtils.HttpUtilsListner listener){
-        try{
-            JSONObject data=new JSONObject();
-            data.put(Key.CORP_ID, Content.CORP_ID);
-            if(account.contains("@")){
-                data.put(Key.EMAIL,account);
-            }else{
-                data.put(Key.PHONE,account);
-            }
-
-            HttpUtils.postJson(Url.FORGET_PASSWORD, data.toString(),null, listener);
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
-    }
-    private void resetPassword(){
-        String account=etAccount.getText().toString();
-        String code=etCode.getText().toString();
-        String password=etPassword.getText().toString();
-
-
-        LoginUtil.resetPassword(account, code, password, new HttpUtils.HttpUtilsListner() {
-            @Override
-            public void onSuccess(String content) {
-            }
-
-            @Override
-            public void onFailed(int code, String msg) {
-                showToast(msg);
-            }
-        });
->>>>>>> 15de0ae878e9cf287ac646a54dd79140a93abd39
     }
 
 

@@ -5,9 +5,10 @@
     android:background="@drawable/shape_fragmentlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <include layout="@layout/view_contrlbtn_top"/>
 
-<View
+    <View
     android:layout_marginLeft="-20dp"
     android:layout_marginRight="-20dp"
     android:layout_marginTop="2px"
@@ -20,7 +21,5 @@
         android:id="@+id/controlView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
 
 </LinearLayout>

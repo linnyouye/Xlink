@@ -38,12 +38,12 @@
             android:layout_weight="1"
             android:src="@drawable/selector_ibtn_4_timer" />
     </LinearLayout>
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorStrokeGray"
         />
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/colorBottomPopViewStart"

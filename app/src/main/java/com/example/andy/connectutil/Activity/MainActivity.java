@@ -34,11 +34,9 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
-<<<<<<< HEAD
+
 import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.andy;
-=======
->>>>>>> 15de0ae878e9cf287ac646a54dd79140a93abd39
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
