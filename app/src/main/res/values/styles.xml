@@ -99,7 +99,6 @@
     </style>
 <!---->
     <style name="ibtn_icon_size_stytle">
-
         <item name="android:padding">5dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_width">40dp</item>
