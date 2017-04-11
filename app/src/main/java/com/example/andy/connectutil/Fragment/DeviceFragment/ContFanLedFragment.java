@@ -100,7 +100,7 @@ public class ContFanLedFragment extends Fragment implements View.OnTouchListener
             {
                    fanLightHelper=new FanLightHelper(device);
 
-                   //updata();
+                   updata();
 
                    setOnClike();
             }else
