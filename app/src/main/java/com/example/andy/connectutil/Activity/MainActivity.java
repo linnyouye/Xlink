@@ -198,7 +198,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.bottom_add_ibtn:
                 addEquitment();
-                setBottomSheetOnOff();
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 break;
             case R.id.img_backup:
                // fragmentManager.popBackStackImmediate();
@@ -290,8 +290,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public void setBottomSheetOnOff() {
         if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
         {
-            int state = behavior.getState();
-            if (state == BottomSheetBehavior.STATE_EXPANDED) {
+            int state=behavior.getState();
+            if (state==BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             } else {
@@ -314,17 +314,24 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == event.KEYCODE_BACK) {
+        int state=behavior.getState();
+        if (state==BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }else
+        {
+            if (keyCode == event.KEYCODE_BACK) {
 
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                } else if (!holder.removeOne()) {
+                    backup();
+
+                }
+
             }
-            else if (!holder.removeOne()) {
-                backup();
-
-            }
-
         }
+
+
         return false;  //super.onKeyDown(keyCode, event);
     }
 
@@ -411,7 +418,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
     public void notifybackup()
     {
-        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
+        if(holder.getFragment_State().equals("Main"))
         {
         img_backup.setVisibility(View.INVISIBLE);
         }

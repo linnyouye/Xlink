@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.Fragment.DeviceFragment.BathbullyFragment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.ContFanLedFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LEDLightFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.LightFragment;

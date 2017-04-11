@@ -172,11 +172,4 @@ android:padding="12dp"
 
     </android.support.v4.widget.NestedScrollView>
 
-
-
-
-
-
-
-
 </android.support.design.widget.CoordinatorLayout>
