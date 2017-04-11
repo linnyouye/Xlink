@@ -248,15 +248,20 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     }
 
+    /**
+     * @param str  每个fragment产生时都会回调这个方法
+     */
     @Override
     public void setFraagment_State(String str) {
         fragment_state = str;
         if(fragment_state == MainActivity.TAG){
             img_backup.setVisibility(View.INVISIBLE);
             refresh_ibtn.setVisibility(View.VISIBLE);
+            rl_bottom.setClickable(true);
         }else {
             img_backup.setVisibility(View.VISIBLE);
             refresh_ibtn.setVisibility(View.INVISIBLE);
+            rl_bottom.setClickable(false);
         }
         switch (fragment_state) {
 
@@ -288,8 +293,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
 
     public void setBottomSheetOnOff() {
-        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
-        {
+//        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
+//        {
             int state=behavior.getState();
             if (state==BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -297,7 +302,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             } else {
                 behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
-        }
+     //   }
 
 
     }
@@ -323,14 +328,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
-                } else if (!holder.removeOne()) {
+                } else if (!fragmentManager.popBackStackImmediate()) {
                     backup();
-
                 }
 
             }
         }
-
 
         return false;  //super.onKeyDown(keyCode, event);
     }

@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.Helper.PaintHelper;
 import com.example.andy.connectutil.R;
@@ -39,8 +40,6 @@ public class ControFanLedlView extends View {
     private int My_oldw;
 
 
-
-
     private Context context;
 
     private Region globalRegion;
@@ -63,7 +62,7 @@ public class ControFanLedlView extends View {
     private boolean mPowerOpen = false;   //默认电源开关状态
     private Bitmap mPowerWhite = BitmapFactory.decodeResource(getResources(), R.drawable.power_white);
     private Bitmap mPowerOrange = BitmapFactory.decodeResource(getResources(), R.drawable.power_orange);
-    private Bitmap mBottomIcon = BitmapFactory.decodeResource(getResources(),R.drawable.control_bottom_icon);
+    private Bitmap mBottomIcon = BitmapFactory.decodeResource(getResources(), R.drawable.control_bottom_icon);
 
     private Paint mDeafultPaint;   //默认画笔
     private Paint mCirclePaint;    //中心圆画笔
@@ -73,10 +72,10 @@ public class ControFanLedlView extends View {
 
     private PaintHelper paintHelper;
     int mStrokeColor = getResources().getColor(R.color.colorStrokeGray);
-    int mDefaultColor =getResources().getColor(R.color.colorControlCenterBtn) ;
-    int mTouchedColor = Color.parseColor("#cdcdcd");
+    int mDefaultColor = getResources().getColor(R.color.colorControlCenterBtn);
+    int mTouchedColor = getResources().getColor(R.color.colorControlBtnStart);
     int mCircleColor = getResources().getColor(R.color.colorCenterBtnGreen);
-    int mOutArcDefaultColor =getResources().getColor(R.color.colorMainGray);
+    int mOutArcDefaultColor = getResources().getColor(R.color.colorMainGray);
     int mOutArcFocusColor = Color.parseColor("#FF9F1C");
 
     int center_x;  //视图的x原点
@@ -98,7 +97,7 @@ public class ControFanLedlView extends View {
     int touch_flag = -1;
     int current_flag = -1;
 
-    private int mArcState = 2;  //标记当前的档位
+    private int mArcState = -1;  //标记当前的档位
 
     OnControlListener mlistener = null;
 
@@ -147,9 +146,6 @@ public class ControFanLedlView extends View {
 
     public ControFanLedlView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-
-
 
 
         this.context = context;
@@ -201,12 +197,12 @@ public class ControFanLedlView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        this.My_h=h;
-        this.My_w=w;
+        this.My_h = h;
+        this.My_w = w;
         this.My_oldh = oldh;
         this.My_oldw = oldw;
 
-        paintHelper = new PaintHelper(context,w, h);
+        paintHelper = new PaintHelper(context, w, h);
 //        center_x = w / 2;  //绘图中心
 //        center_y = h / 2;
 //
@@ -255,7 +251,7 @@ public class ControFanLedlView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        initPath(My_w,My_h,My_oldw,My_oldh);
+        initPath(My_w, My_h, My_oldw, My_oldh);
 
 
 //画圆
@@ -263,15 +259,15 @@ public class ControFanLedlView extends View {
         canvas.drawPath(center_p, mLinePaint);
 
 //画圆外围的线框
-        canvas.drawPath(outCir_p,mOutArcPaint);
+        canvas.drawPath(outCir_p, mOutArcPaint);
 
-        if (mOutArcList.size() > 0) {
-            for (Path path : mOutArcList) {
-                canvas.drawPath(path, mOutArcPaint);
-            }
-        }
+//        if (mOutArcList.size() > 0) {
+//            for (Path path : mOutArcList) {
+//                canvas.drawPath(path, mOutArcPaint);
+//            }
+//        }
         mOutArcPaint.setColor(mOutArcFocusColor);
-        if (mArcState >= 0) {
+        if (mArcState > 0) {
             canvas.drawPath(mOutArcList.get(mArcState), mOutArcPaint);
         }
 
@@ -290,50 +286,44 @@ public class ControFanLedlView extends View {
             String a = String.valueOf(i);
             float strwidth = textPaint.measureText(a);  // 获取到文字的宽度
             Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();  //获取到文字的高度
-            float strheight = Math.abs(-fontMetrics.descent+(fontMetrics.bottom-fontMetrics.top)/2);
+            float strheight = Math.abs(-fontMetrics.descent + (fontMetrics.bottom - fontMetrics.top) / 2);
 
             float xx = (float) (innerWidth * 0.75 * 0.5 * Math.cos((firstAngle + currentSweepAngle * (i - 1)) / 180 * Math.PI));
             float yy = (float) (innerWidth * 0.75 * 0.5 * Math.sin((firstAngle + currentSweepAngle * (i - 1)) / 180 * Math.PI));
             if (mArcState >= 0 && i == mArcState) {
 
                 textPaint.setColor(mOutArcFocusColor);
-                if ( mArcState == 0 ) {
-          //          canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
+                if (mArcState == 0) {
+                    //          canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
                 } else {
                     canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
                 }
-                textPaint.setColor(Color.parseColor("#ffffff"));
 
-            } else if (i == 0) {
-       //         if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
+                textPaint.setColor(Color.parseColor("#cdcdcd"));
+           } else if (i == 0) {
+                //         if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
 
-                canvas.save();
-                canvas.translate(center_x,center_y+innerWidth/3+20);
-              Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
-                canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
-               canvas.restore();
+//                canvas.save();
+//                canvas.translate(center_x,center_y+innerWidth/3+20);
+//              Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
+//                canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
+//               canvas.restore();
 
-            } else {
+      } else {
+
                 canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
-            }
+           }
 
         }
-
-        canvas.save();
-        canvas.translate(center_x,center_y+innerWidth/3+20);
-        Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
-        canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
-        canvas.restore();
-
 
         mDeafultPaint.setColor(mTouchedColor);
         mCirclePaint.setColor(mTouchedColor);
 
-
         if (current_flag > 0 && current_flag < mPathList.size()) {
             canvas.drawPath(mPathList.get(current_flag), mDeafultPaint);
-        }
-         else if (current_flag == CENTER) {
+
+        } else if (current_flag == CENTER) {
+            Toast.makeText(getContext(),"画",Toast.LENGTH_SHORT).show();
             canvas.drawPath(center_p, mCirclePaint);
         }
 
@@ -341,70 +331,67 @@ public class ControFanLedlView extends View {
         mDeafultPaint.setColor(mDefaultColor);
         mCirclePaint.setColor(mCircleColor);
         mOutArcPaint.setColor(getResources().getColor(R.color.colorInnerGray));
-        Rect rect1 = new Rect(center_x-innerWidth/9,center_y-innerWidth/9,center_x+innerWidth/9,center_y+innerWidth/9);
-        if(mPowerOpen){
-            canvas.drawBitmap(mPowerOrange,null,rect1,mLinePaint);
-        }else {
-            canvas.drawBitmap(mPowerWhite,null,rect1,mLinePaint);
+        Rect rect1 = new Rect(center_x - innerWidth / 9, center_y - innerWidth / 9, center_x + innerWidth / 9, center_y + innerWidth / 9);
+        if (mPowerOpen) {
+            canvas.drawBitmap(mPowerOrange, null, rect1, mLinePaint);
+        } else {
+            canvas.drawBitmap(mPowerWhite, null, rect1, mLinePaint);
+        }
+
+        canvas.save();
+        canvas.translate(center_x, center_y + innerWidth / 3 + 20);
+        Rect rect = new Rect(-innerWidth / 15, -innerWidth / 24, innerWidth / 15, innerWidth / 24);
+        canvas.drawBitmap(mBottomIcon, null, rect, textPaint);
+        canvas.restore();
+
+    }
+
+    private void initPath(int w, int h, int oldw, int oldh) {
+
+
+        center_x = w / 2;  //绘图中心
+        center_y = h / 2;
+
+
+        globalRegion = new Region(-w, -h, w, h);
+        int minwidth = w > h ? h : w;
+        minwidth *= 0.95;
+
+        //内围的圆的宽度，中心圆的宽度是内围圆的一半
+        innerWidth = minwidth;
+        int circleWidth = innerWidth - 25;
+        int br = circleWidth / 2;   //中心圆的半径
+        int sr = circleWidth / 4;   //内圆的半径
+
+
+        mOutArcPaint.setStrokeWidth(br / 13);
+
+        currentSweepAngle = (360 - bottomAngle) / (geerNum - 1);  //获得每个扇形扫过的角度
+        firstAngle = -270 + bottomAngle / 2 + currentSweepAngle / 2;      //第一档位开始的中心角度
+        float firstOutArcAngle = -270 + bottomAngle / 2;  //第一档位外围框开始的角度
+
+        outCir_p.addCircle(center_x, center_y, innerWidth / 2, Path.Direction.CW);
+        //画圆
+        center_p.addCircle(center_x, center_y, sr, Path.Direction.CW);
+        center_re.setPath(center_p, globalRegion);
+
+        //根据传进来的档位个数画档位扇形
+        for (int i = 0; i < geerNum; i++) {
+            if (i == 0) {
+                mPathList.add(paintHelper.getNumPath(bottomAngle, 90, br, sr, mRegionList.get(i)));
+                mOutArcList.add(paintHelper.getOutArcPath(bottomAngle, 90 - bottomAngle / 2, br));
+
+            } else {
+                Path path = paintHelper.getNumPath(currentSweepAngle, firstAngle + currentSweepAngle * (i - 1), br, sr, mRegionList.get(i));
+                mPathList.add(path);
+                Path path1 = paintHelper.getOutArcPath(currentSweepAngle, firstOutArcAngle + currentSweepAngle * (i - 1), br);
+                mOutArcList.add(path1);
+            }
+
         }
 
 
-
-
-
     }
-
-   private void initPath(int w,int h, int oldw,int oldh){
-
-
-       center_x = w / 2;  //绘图中心
-       center_y = h / 2;
-
-
-       globalRegion = new Region(-w, -h, w, h);
-       int minwidth = w > h ? h : w;
-       minwidth *= 0.95;
-
-       //内围的圆的宽度，中心圆的宽度是内围圆的一半
-       innerWidth = minwidth;
-       int circleWidth = innerWidth-25;
-       int br = circleWidth / 2;   //中心圆的半径
-       int sr = circleWidth / 4;   //内圆的半径
-
-
-       mOutArcPaint.setStrokeWidth(br / 13);
-
-       currentSweepAngle = (360 - bottomAngle) / (geerNum - 1);  //获得每个扇形扫过的角度
-       firstAngle = -270 + bottomAngle / 2 + currentSweepAngle / 2;      //第一档位开始的中心角度
-       float firstOutArcAngle = -270 + bottomAngle / 2;  //第一档位外围框开始的角度
-
-       outCir_p.addCircle(center_x, center_y, innerWidth/2, Path.Direction.CW);
-       //画圆
-       center_p.addCircle(center_x, center_y, sr, Path.Direction.CW);
-       center_re.setPath(center_p, globalRegion);
-
-       //根据传进来的档位个数画档位扇形
-       for (int i = 0; i < geerNum; i++) {
-           if (i == 0) {
-               mPathList.add(paintHelper.getNumPath(bottomAngle, 90, br, sr, mRegionList.get(i)));
-               mOutArcList.add(paintHelper.getOutArcPath(bottomAngle, 90 - bottomAngle / 2, br));
-
-           } else {
-               Path path = paintHelper.getNumPath(currentSweepAngle, firstAngle + currentSweepAngle * (i - 1), br, sr, mRegionList.get(i));
-               mPathList.add(path);
-               Path path1 = paintHelper.getOutArcPath(currentSweepAngle, firstOutArcAngle + currentSweepAngle * (i - 1), br);
-               mOutArcList.add(path1);
-           }
-
-       }
-
-
-
-
-    }
-
-
-
 
 
     @Override
@@ -413,50 +400,50 @@ public class ControFanLedlView extends View {
         int x = (int) event.getX();
         int y = (int) event.getY();
 
-        double distance = Math.sqrt(Math.pow(x-getWidth()/2,2)+ Math.pow(y-getHeight()/2,2));
-              if(distance>innerWidth/2){
-                  current_flag = touch_flag = -1;
-                  invalidate();
-           return false;
-                   }else{
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
-                touch_flag = getTouchPath(x, y);
-                current_flag = touch_flag;
-                break;
-            case MotionEvent.ACTION_UP:
-                if (current_flag == touch_flag && current_flag != -1 && mlistener != null) {
-                    if (current_flag == CENTER) {
-                        mlistener.onClickCenter();
-                    }  else if (current_flag == ONE) {
-                        mlistener.onClickOne();
-                    } else if (current_flag == TWO) {
-                        mlistener.onClickTwo();
-                    } else if (current_flag == THREE) {
-                        mlistener.onClickThree();
-                    } else if (current_flag == FOUR) {
-                        mlistener.onClickFour();
-                    } else if (current_flag == FIVE) {
-                        mlistener.onClickFive();
-                    } else if (current_flag == SIX) {
-                        mlistener.onClickSix();
-                    } else if (current_flag == SEVEN) {
-                        mlistener.onClickSeven();
-                    } else if (current_flag == EIGHT) {
-                        mlistener.onClickEight();
-                    } else if (current_flag == NINE) {
-                        mlistener.onClickNine();
+        double distance = Math.sqrt(Math.pow(x - getWidth() / 2, 2) + Math.pow(y - getHeight() / 2, 2));
+        if (distance > innerWidth / 2) {
+            current_flag = touch_flag = -1;
+            invalidate();
+            return false;
+        } else {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    touch_flag = getTouchPath(x, y);
+                    current_flag = touch_flag;
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (current_flag == touch_flag && current_flag != -1 && mlistener != null) {
+                        if (current_flag == CENTER) {
+                            mlistener.onClickCenter();
+                        } else if (current_flag == ONE) {
+                            mlistener.onClickOne();
+                        } else if (current_flag == TWO) {
+                            mlistener.onClickTwo();
+                        } else if (current_flag == THREE) {
+                            mlistener.onClickThree();
+                        } else if (current_flag == FOUR) {
+                            mlistener.onClickFour();
+                        } else if (current_flag == FIVE) {
+                            mlistener.onClickFive();
+                        } else if (current_flag == SIX) {
+                            mlistener.onClickSix();
+                        } else if (current_flag == SEVEN) {
+                            mlistener.onClickSeven();
+                        } else if (current_flag == EIGHT) {
+                            mlistener.onClickEight();
+                        } else if (current_flag == NINE) {
+                            mlistener.onClickNine();
+                        }
                     }
-                }
-                touch_flag = current_flag = -1;
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                touch_flag = current_flag = -1;
-                break;
+                    touch_flag = current_flag = -1;
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    touch_flag = current_flag = -1;
+                    break;
+            }
+            invalidate();
+            return true;
         }
-        invalidate();
-          return true;
-                   }
 
     }
 
@@ -464,10 +451,10 @@ public class ControFanLedlView extends View {
     private int getTouchPath(int x, int y) {
         if (center_re.contains(x, y)) {
             return CENTER;
-        }  else {
+        } else {
             for (int i = 0; i < mRegionList.size(); i++) {
 
-                if (mRegionList.get(i).contains(x, y)) return i;
+               if (mRegionList.get(i).contains(x, y)) {return i;}
             }
         }
         return -1;
@@ -489,7 +476,7 @@ public class ControFanLedlView extends View {
     }
 
     public void setGeerNum(int Num) {
-        if (Num <= 10 && Num >=4) {
+        if (Num <= 10 && Num >= 4) {
             this.geerNum = Num;
         } else {
             this.geerNum = 4;
