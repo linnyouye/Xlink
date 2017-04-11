@@ -80,7 +80,7 @@ public class DeviceFragement extends Fragment {
                 @Override
                 public void onClick(View v) {
                     XlinkConnect.init(getActivity());
-                    XlinkConnect.bindDevice(devicelist.get(finalI),new  XlinkConnect.BinderDeviceListner()
+                    XlinkConnect.bindDevice(getActivity(),devicelist.get(finalI),new  XlinkConnect.BinderDeviceListner()
                     {
                         @Override
                         public void bindDevice(XDevice device, int i) {

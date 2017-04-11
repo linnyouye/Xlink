@@ -9,14 +9,8 @@ package com.example.andy.connectutil.Fragment;
 
 public interface HolderListener {
 
-    /**
-     * 主页面界面视图,当启动该fragment时就会回调该接口，进而显示相应标题。
-     */
-    void setMainPage(String fragment_title, int view_status);
-
     void startWifiConnection(String str);
 
      void setFraagment_State(String str);
-
 
 }

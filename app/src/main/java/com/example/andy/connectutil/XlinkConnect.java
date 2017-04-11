@@ -119,9 +119,9 @@ public class XlinkConnect {
 
 
     //订阅（绑定）局域网扫描到的设备
-    public static void bindDevice(XDevice device,BinderDeviceListner listener){
+    public static void bindDevice(Context context,XDevice device,BinderDeviceListner listener){
         Log.i(TAG, "bindDevice: "+XlinkAgent.deviceToJson(device));
-
+        init(context);
         if(device.getAccessKey()>0&&device.getSubKey()>0){
             subscribeDevice(device,listener);
         }else if(device.getAccessKey()<0){

@@ -6,7 +6,7 @@
         <item android:drawable="@drawable/shape_select_btn_pressed" android:state_pressed="true"/>
         <item android:drawable="@drawable/shape_select_btn_pressed" android:state_selected="true"/>
         <!-- 设置默认时颜色背景 -->
-        <item android:drawable="@drawable/shape_select_btn"/>
+        <item android:drawable="@drawable/shape_top_tvshow"/>
 
 
 </selector>

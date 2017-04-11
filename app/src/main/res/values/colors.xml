@@ -4,14 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="colorMainGray">#343F45</color>
-    <color name="colorInnerGray">#2B3036</color>
-
-    <color name="colorStrokeGray">#262C2D</color>
-    <color name="colorItemGray">#6d7476</color>
-    <color name="colorIconGray">#cdcdcd</color>
-    <color name="colorIconAdddGray">#515151</color>
-
     <color name="title_text">#eeeeff</color>
     <color name="activity_bg">#eee</color>
     <color name="linear_item_edge">#c5c5c5</color>
@@ -47,6 +39,34 @@
 
     <color name="colorOrange">#FF680D</color>
 
+    <color name="colorStrokeGray">#24282b</color>
+    <color name="colorItemGray">#6d7476</color>
+    <color name="colorIconGray">#cdcdcd</color>
+    <color name="colorIconAdddGray">#515151</color>
 
+    <color name="colorMainGray">#354046</color>
+    <color name="colorInnerGray">#2b3036</color>
+
+    <color name="colorBottomPopViewEnd">#354044</color>
+    <color name="colorBottomPopViewStart">#8c9197</color>
+
+    <color name="colorPopUpView">#8b9096</color>
+
+    <color name="colorBottomBtnEnd">#303d43</color>
+    <color name="colorBottomBtnStart">#4f585f</color>
+
+    <color name="colorCenterBtnGreen">#008744</color>
+
+    <color name="colorControlBtnStart">#404a4c</color>
+    <color name="colorControlBtnEnd">#283033</color>
+
+    <color name="colorControlCenterBtn">#2a3235</color>
+
+    <color name="colorControlText">#e1e2dd</color>
+
+    <color name ="colorBtnFoucs">#404a4c</color>
+
+    <color name="colorHalfNone">#11000000</color>
+   <color name="colorNone">#01000000</color>
 
 </resources>

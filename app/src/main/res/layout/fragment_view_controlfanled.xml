@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:andorid="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+      android:clickable="true"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_fragmentlayout"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_contrlbtn_top" />
+
+
+
+
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            app:layout_heightPercent="95%"
+            app:layout_widthPercent="95%"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/fanled_ibtn_tl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/selector_fanled_ibtn_tl"
+                    android:gravity="top"
+                    android:paddingBottom="100dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="90dp"
+                    android:paddingTop="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/selector_fanled_ibtn_src_tl" />
+
+                <TextView
+
+                    android:id="@+id/fanled_tv_topshow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_top_tvshow"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp"
+                    android:text="100"
+                    android:textColor="@color/colorOrange" />
+
+                <ImageButton
+
+                    android:id="@+id/fanled_ibtn_tr"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/selector_fanled_ibtn_tr"
+                    android:paddingBottom="100dp"
+                    android:paddingLeft="90dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/selector_fanled_ibtn_src_tr" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/fanled_ibtn_bl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_fanled_ibtn_bl"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="100dp"
+                    android:paddingTop="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/selector_fanled_ibtn_src_bl" />
+
+                <ImageButton
+                    android:id="@+id/fanled_ibtn_br"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_fanled_ibtn_br"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="100dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/selector_fanled_ibtn_src_br" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.example.andy.connectutil.View.ControFanLedlView
+
+            android:id="@+id/controlfanledview"
+            android:layout_height="0dp"
+            app:layout_heightPercent="80%"
+            app:layout_widthPercent="80%"
+            android:layout_gravity="center" />
+
+    </android.support.percent.PercentFrameLayout>
+
+</LinearLayout>

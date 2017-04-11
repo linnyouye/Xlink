@@ -26,6 +26,7 @@ import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
 import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.ControlFanLedFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
 import com.example.andy.connectutil.Fragment.HolderListener;
@@ -33,6 +34,7 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
+
 import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
@@ -42,6 +44,7 @@ import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -73,7 +76,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     private EquitmentSelectFragment equitmentSelectFragment = null;
-    List<Equitment> equitmentList;
     List<Device> OnlinedeviceList;
     RecyclerView recyclerView;
     AddEquitAdapter mAdapter;
@@ -120,8 +122,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
         Log.d("waiwen", "setAdapter：");
-
-
 
 
         account = new Account(getApplicationContext());
@@ -175,7 +175,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         OnlineDeviceRecycleview = obtainView(R.id.Online_device);
         OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
-        equitmentList = new ArrayList<>();
         Log.d("waiwen", "initview");
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -212,9 +211,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_addequitment) {
-
             addEquitment();
-
             setDrawerOnOff();
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(this, ShareActivity.class));
@@ -226,7 +223,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             startActivity(new Intent(this, HelpActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
-            startActivity(new Intent(this, LanguageActivity.class));
+           // startActivity(new Intent(this, LanguageActivity.class));
+            holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
             setDrawerOnOff();
         } else if (id == R.id.nav_backup) {
             account.setAccount(account.getUser(), "");
@@ -249,19 +247,23 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void startWifiConnection(String produt_id) {
 
-
-        holder.addFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.TAG, true);
+        holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.TAG, true);
 
     }
 
     @Override
     public void setFraagment_State(String str) {
         fragment_state = str;
-
+        if(fragment_state == MainActivity.TAG){
+            img_backup.setVisibility(View.INVISIBLE);
+        }else {
+            img_backup.setVisibility(View.VISIBLE);
+        }
         switch (fragment_state) {
 
             case MainActivity.TAG:
-                main_title.setText("主界面");
+                main_title.setText("设备");
+
                 break;
 
             case EquitmentSelectFragment.TAG:
@@ -282,16 +284,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     }
 
-    /**
-     * @param fragment_title 页面标题
-     * @param view_status    后退键的状态
-     */
-    @Override
-    public void setMainPage(String fragment_title, int view_status) {
-        img_backup.setVisibility(view_status);
-        main_title.setText(fragment_title);
 
-    }
 
 
     public void setBottomSheetOnOff() {
@@ -386,6 +379,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void getOnlinedevicelist() {
+        for(int i=0;i<OnlinedeviceList.size();i++)
+        OnlinedeviceList.remove(i);
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {

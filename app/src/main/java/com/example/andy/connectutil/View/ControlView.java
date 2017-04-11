@@ -434,8 +434,8 @@ public class ControlView extends View {
 
         if(lightNum>=0&&lightNum<=100) {
             String str = String.valueOf(lightNum);
-            textPaint.setTextSize(40f);
-            canvas.drawText(str, center_x - paintHelper.getTextWidth(textPaint, str) / 2, center_y-outBtnr-paintHelper.getTexHeight(textPaint)*2, textPaint);
+            textPaint.setTextSize(50f);
+            canvas.drawText(str, center_x - paintHelper.getTextWidth(textPaint, str) / 2, center_y-outBtnr-paintHelper.getTexHeight(textPaint)*2+5, textPaint);
         }
 
 

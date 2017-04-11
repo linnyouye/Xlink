@@ -19,8 +19,8 @@
 
         <ImageButton
             android:id="@+id/bottom_add_ibtn"
-            style="@style/ibtn_size_stytle"
-            android:background="@drawable/add_normal"
+            style="@style/ibtn_icon_size_stytle"
+            android:src="@drawable/add_normal"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
@@ -28,8 +28,8 @@
 
         <ImageButton
             android:id="@+id/bottom_setting"
-            android:background="@drawable/setting"
-            style="@style/ibtn_size_stytle"
+            android:src="@drawable/setting"
+            style="@style/ibtn_icon_size_stytle"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="50dp"

@@ -69,7 +69,7 @@ public class ContFanLedFragment extends Fragment implements View.OnTouchListener
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-          testdata();
+       //   testdata();
 
           View view = inflater.inflate(R.layout.fragment_view_fanled,container,false);
           view.setOnTouchListener(this);
@@ -96,21 +96,21 @@ public class ContFanLedFragment extends Fragment implements View.OnTouchListener
          imageButton3 = (ImageButton)view.findViewById(R.id.ibtn_three_top);
 
          imageButton4 = (ImageButton)view.findViewById(R.id.ibtn_four_top);
-           /* if(device.isOnline())
+           if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
 
-                   //updata();
+                   updata();
 
                    setOnClike();
             }else
             {
                 Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
-            }*/
-        fanLightHelper=new FanLightHelper(device);
+            }
+       /* fanLightHelper=new FanLightHelper(device);
            initData();
           setOnClike();
-
+*/
         return view;
     }
 
