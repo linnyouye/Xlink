@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:background="@drawable/shape_fragmentlayout"
+        android:background="@drawable/shape_top_tvshow"
         android:gravity="center_vertical"
         android:padding="10dp"
         android:text="wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后
