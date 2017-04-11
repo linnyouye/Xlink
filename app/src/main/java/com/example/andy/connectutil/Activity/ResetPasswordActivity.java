@@ -133,6 +133,7 @@ public class ResetPasswordActivity extends RegisBasicActivity {
         });
     }
 
+
     private void resetPassword() {
         final String account = etAccount.getText().toString();
         String code = etCode.getText().toString();
@@ -160,7 +161,6 @@ public class ResetPasswordActivity extends RegisBasicActivity {
                 }
             });
         }
-
 
     }
 

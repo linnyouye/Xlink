@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners
-        android:radius="10dp"/>
+<corners
+android:topLeftRadius="30dp"
+    android:bottomLeftRadius="10dp"
+    android:topRightRadius="5dp"
+    />
 
     <gradient
         android:startColor="@color/colorControlBtnStart"
         android:endColor="@color/colorControlBtnEnd"
+
         android:angle="-90"
         />
-
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorStrokeGray"
+        />
 </shape>

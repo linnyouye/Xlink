@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-       android:layout_margin="5dp"
+       android:layout_margin="15dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,6 +38,17 @@
             android:layout_weight="1"
             android:src="@drawable/selector_ibtn_4_timer" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorStrokeGray"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorBottomPopViewStart"
+        />
+
 
 
 </LinearLayout>
