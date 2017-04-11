@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Adapter;
 
+import android.app.Notification;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

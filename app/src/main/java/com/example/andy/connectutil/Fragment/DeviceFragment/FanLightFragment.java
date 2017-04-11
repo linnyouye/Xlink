@@ -72,7 +72,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        testdata();
+       /* testdata();*/
 
         View view = inflater.inflate(R.layout.fragment_view_controlfanled,container,false);
         view.setOnTouchListener(this);
@@ -107,7 +107,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
         brightnss=(TextView)view.findViewById(R.id.fanled_tv_topshow);
 
-           /* if(device.isOnline())
+            if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
 
@@ -117,10 +117,10 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             }else
             {
                 Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
-            }*/
-        fanLightHelper=new FanLightHelper(device);
+            }
+      /*  fanLightHelper=new FanLightHelper(device);
         initData();
-        setOnClike();
+        setOnClike();*/
 
         return view;
     }
