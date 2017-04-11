@@ -16,8 +16,8 @@
 
     <Button
         android:id="@+id/select_btn_open"
-        android:text="@string/btn_light"
-        style="@style/btn_selectequitment_stytle" />
+        style="@style/btn_selectequitment_stytle"
+        android:text="@string/btn_light" />
 
     <Button
         android:id="@+id/select_btn_led"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:andorid="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
       android:clickable="true"
     android:layout_height="match_parent"
@@ -10,16 +11,19 @@
 
     <include layout="@layout/view_contrlbtn_top" />
 
-    <FrameLayout
-android:layout_marginTop="20sp"
+
+
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            app:layout_heightPercent="95%"
+            app:layout_widthPercent="95%"
             android:layout_gravity="center"
             android:orientation="vertical">
 
@@ -37,7 +41,7 @@ android:layout_marginTop="20sp"
                     android:layout_weight="4"
                     android:background="@drawable/selector_fanled_ibtn_tl"
                     android:gravity="top"
-                    android:paddingBottom="110dp"
+                    android:paddingBottom="100dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="90dp"
                     android:paddingTop="20dp"
@@ -52,7 +56,7 @@ android:layout_marginTop="20sp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_top_tvshow"
                     android:gravity="center_horizontal"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:text="100"
                     android:textColor="@color/colorOrange" />
 
@@ -63,7 +67,7 @@ android:layout_marginTop="20sp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:background="@drawable/selector_fanled_ibtn_tr"
-                    android:paddingBottom="110dp"
+                    android:paddingBottom="100dp"
                     android:paddingLeft="90dp"
                     android:paddingRight="20dp"
                     android:paddingTop="20dp"
@@ -88,8 +92,8 @@ android:layout_marginTop="20sp"
                     android:background="@drawable/selector_fanled_ibtn_bl"
                     android:paddingBottom="20dp"
                     android:paddingLeft="20dp"
-                    android:paddingRight="120dp"
-                    android:paddingTop="120dp"
+                    android:paddingRight="100dp"
+                    android:paddingTop="100dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/selector_fanled_ibtn_src_bl" />
 
@@ -101,9 +105,9 @@ android:layout_marginTop="20sp"
                     android:layout_weight="1"
                     android:background="@drawable/selector_fanled_ibtn_br"
                     android:paddingBottom="20dp"
-                    android:paddingLeft="120dp"
+                    android:paddingLeft="100dp"
                     android:paddingRight="20dp"
-                    android:paddingTop="120dp"
+                    android:paddingTop="100dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/selector_fanled_ibtn_src_br" />
 
@@ -113,12 +117,11 @@ android:layout_marginTop="20sp"
 
         <com.example.andy.connectutil.View.ControFanLedlView
 
-           android:layout_margin="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_heightPercent="80%"
+            app:layout_widthPercent="80%"
             android:layout_gravity="center" />
 
-
-    </FrameLayout>
+    </android.support.percent.PercentFrameLayout>
 
 </LinearLayout>

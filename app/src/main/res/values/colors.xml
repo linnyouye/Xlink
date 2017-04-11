@@ -66,6 +66,7 @@
 
     <color name ="colorBtnFoucs">#404a4c</color>
 
-
+    <color name="colorHalfNone">#11000000</color>
+   <color name="colorNone">#01000000</color>
 
 </resources>

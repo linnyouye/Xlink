@@ -31,7 +31,7 @@ public class ControFanLedlView extends View {
     boolean btnState = false;
     int lightNum;
     int outBtnr;
-    private int a;
+
     private Context context;
 
     private Region globalRegion;
