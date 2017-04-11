@@ -37,7 +37,7 @@
         <item name="android:id">@id/title_bar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:background">@drawable/bg_title_bar</item>
+        <item name="android:background">@color/colorControlBtnEnd</item>
     </style>
     <style name="TitleTextView">
         <item name="android:layout_width">match_parent</item>
@@ -50,7 +50,7 @@
         <item name="android:textColor">#eeeeff</item>
         <item name="android:gravity">center</item>
         <item name="android:id">@id/title_text</item>
-        <item name="android:background">@drawable/bg_title_bar</item>
+        <item name="android:background">@color/colorControlBtnEnd</item>
     </style>
 
 

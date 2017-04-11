@@ -13,6 +13,7 @@
             android:text="登录" />
 
         <Button
+
             android:id="@+id/to_register"
             style="@style/TitleActionButton"
             android:text="去注册" />

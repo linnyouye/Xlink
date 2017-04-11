@@ -13,7 +13,10 @@
             style="@style/TitleTextView"
             android:text="注册" />
 
-        <Button style="@style/TitleBackBtn" />
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            style="@style/TitleBackBtn" />
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Fragment.DeviceFragment;
 
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.Fragment.HolderListener;
 import com.example.andy.connectutil.Helper.FanLightHelper;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.View.ControFanLedlView;
@@ -37,7 +40,8 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
 
 public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
-
+   public static final String TAG = "FanLightFragment";
+    private HolderListener holderListener;
     private boolean fanstate=false;
     private boolean lightstate=false;
     private boolean powerstate=false;
@@ -127,6 +131,24 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        holderListener.setFraagment_State(FanLightFragment.TAG);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try{
+            holderListener =(HolderListener) activity;
+        }catch (Exception e){
+
+
+        }
+
+    }
 
     private void updata() {
         XlinkAgent.getInstance().addXlinkListener(new XlinkNetListener() {
@@ -253,6 +275,11 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
     }
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        holderListener.setFraagment_State(MainActivity.TAG);
+    }
 
     public void setOnClike()
     {

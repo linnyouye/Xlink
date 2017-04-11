@@ -24,9 +24,8 @@ import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
-import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.ControlFanLedFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
 import com.example.andy.connectutil.Fragment.HolderListener;
@@ -34,9 +33,7 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
-
 import com.example.andy.connectutil.XlinkConnect;
-import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
@@ -44,7 +41,6 @@ import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,7 +58,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     public static final String TAG = "MainActivity";
 
-
+        private ImageButton refresh_ibtn;
     private String fragment_state = "MainActivity";
 
     private boolean isExit = false;
@@ -154,6 +150,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         toolbar_search = obtainView(R.id.toolbar_ibtn_search);
         toolbar_menu = obtainView(R.id.toolbar_menu);
 
+        refresh_ibtn = obtainView(R.id.main_refresh_ibtn);
         img_backup = obtainView(R.id.img_backup);
         main_title = obtainView(R.id.main_tv_title);
 
@@ -223,8 +220,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             startActivity(new Intent(this, HelpActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
-           // startActivity(new Intent(this, LanguageActivity.class));
-            holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
+            startActivity(new Intent(this, LanguageActivity.class));
+           // holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
             setDrawerOnOff();
         } else if (id == R.id.nav_backup) {
             account.setAccount(account.getUser(), "");
@@ -256,13 +253,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         fragment_state = str;
         if(fragment_state == MainActivity.TAG){
             img_backup.setVisibility(View.INVISIBLE);
+            refresh_ibtn.setVisibility(View.VISIBLE);
         }else {
             img_backup.setVisibility(View.VISIBLE);
+            refresh_ibtn.setVisibility(View.INVISIBLE);
         }
         switch (fragment_state) {
 
             case MainActivity.TAG:
-                main_title.setText("设备");
+                main_title.setText("设备列表");
 
                 break;
 
@@ -277,8 +276,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             case CountDownFragment.TAG:
                 main_title.setText("正在连接");
                 break;
-
-
+            case FanLightFragment.TAG:
+                main_title.setText("风扇灯");
+             break;
         }
 
 
@@ -391,7 +391,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表成功" + content, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取设备列表成功" , Toast.LENGTH_SHORT).show();
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {

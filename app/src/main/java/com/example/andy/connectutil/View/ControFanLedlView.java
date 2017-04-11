@@ -63,6 +63,7 @@ public class ControFanLedlView extends View {
     private boolean mPowerOpen = false;   //默认电源开关状态
     private Bitmap mPowerWhite = BitmapFactory.decodeResource(getResources(), R.drawable.power_white);
     private Bitmap mPowerOrange = BitmapFactory.decodeResource(getResources(), R.drawable.power_orange);
+    private Bitmap mBottomIcon = BitmapFactory.decodeResource(getResources(),R.drawable.control_bottom_icon);
 
     private Paint mDeafultPaint;   //默认画笔
     private Paint mCirclePaint;    //中心圆画笔
@@ -306,15 +307,11 @@ public class ControFanLedlView extends View {
             } else if (i == 0) {
        //         if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
 
-                
-
-
-
-
-
-
-
-
+                canvas.save();
+                canvas.translate(center_x,center_y+innerWidth/3+20);
+             Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
+                canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
+               canvas.restore();
 
             } else {
                 canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);

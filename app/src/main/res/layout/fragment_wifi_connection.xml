@@ -64,8 +64,11 @@
                 android:background="@color/colorInnerGray" />
 
             <EditText
+                android:textColorHint="#cdcdcd"
+                android:hint="请输入密码"
                 android:id="@+id/et_wifi_password"
                 android:layout_width="0dp"
+                android:background="@color/colorNone"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="9"

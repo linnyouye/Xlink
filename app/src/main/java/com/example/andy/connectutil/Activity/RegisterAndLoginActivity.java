@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
@@ -137,7 +138,8 @@ public class RegisterAndLoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showProgressDialog();
+                //shwProgressDialog();
+
                 login();
             }
         });
@@ -281,7 +283,7 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onSuccess(String content) {
              //   cancelProgressDialog();
-
+                Toast.makeText(RegisterAndLoginActivity.this, "正在登陆。。", Toast.LENGTH_SHORT).show();
                 mAccount.setAccount(account,password);
                 XlinkConnect.getLoginResult(content);
                 XlinkConnect.init(getApplicationContext());
@@ -294,6 +296,7 @@ public class RegisterAndLoginActivity extends Activity {
             public void onFailed(int code, String msg) {
                // cancelProgressDialog();
                // showToast(msg);
+                Toast.makeText(RegisterAndLoginActivity.this, "登陆失败。。。", Toast.LENGTH_SHORT).show();
                 if(launchView.getVisibility()== View.VISIBLE){
                     hideLauncherView();
                 }

@@ -147,7 +147,6 @@ public class CountDownFragment extends BaseFragment {
                 switch (msg.what) {
                     case 1:
                         if(recLen > 58){
-                            Toast.makeText(getActivity(),"大于58",Toast.LENGTH_SHORT).show();
                             configWiFi(password);
                         }  if (recLen > 0) {
                             tv_countdown.setText(String.valueOf(recLen) + "s");
@@ -172,7 +171,7 @@ public class CountDownFragment extends BaseFragment {
 
 
     private void configWiFi(String password) {
-        Toast.makeText(getActivity(),"开始配网",Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "开始配网", Toast.LENGTH_SHORT).show();
         WiFiConfig wiFiConfig = new WiFiConfig(getActivity(), listner);
         if (password == null)
             password = "";
