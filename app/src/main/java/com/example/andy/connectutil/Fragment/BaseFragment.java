@@ -23,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
 
     public static final String TAG = "BaseFragment";
     protected MainActivity mActivity = null;
-    private View rootview;
+    public  View rootview;
     protected HolderListener holderListener;
 
     @Nullable

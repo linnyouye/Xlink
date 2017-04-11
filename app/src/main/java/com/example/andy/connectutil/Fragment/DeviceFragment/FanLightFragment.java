@@ -36,6 +36,8 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
  */
 
 public class FanLightFragment extends Fragment implements View.OnTouchListener{
+
+
     private boolean fanstate=false;
     private boolean lightstate=false;
     private boolean powerstate=false;

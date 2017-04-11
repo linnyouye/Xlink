@@ -38,7 +38,7 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
  * E-mail:iwaiwen@163.com .
  */
 
-public class ControlFanLedFragment extends BaseFragment {
+public class ControlFanLedFragment extends BaseFragment implements View.OnTouchListener{
 
    public static final String TAG = "ControlFanLedFragment";
     private boolean fanstate=false;
@@ -92,6 +92,8 @@ public class ControlFanLedFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
+        testdata();
+        view.setOnTouchListener(this);
         controlView = (ControFanLedlView)view.findViewById(R.id.controlfanledview);
         controlView.setGeerNum(4);
         controlView.setBottomAngle(50f);
@@ -126,8 +128,7 @@ public class ControlFanLedFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-          setOnClike();
-          testdata();
+
     }
 
     @Override
@@ -173,7 +174,7 @@ public class ControlFanLedFragment extends BaseFragment {
         {
             imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
         }
-
+        setOnClike();
     }
 
     @Override
