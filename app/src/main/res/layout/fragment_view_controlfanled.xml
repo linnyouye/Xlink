@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:andorid="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="@color/colorInnerGray"
+    android:background="@drawable/shape_fragmentlayout"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -35,7 +35,7 @@ android:layout_marginTop="20sp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:background="@drawable/shape_ibtn_tl"
+                    android:background="@drawable/selector_fanled_ibtn_tl"
                     android:gravity="top"
                     android:paddingBottom="110dp"
                     android:paddingLeft="20dp"

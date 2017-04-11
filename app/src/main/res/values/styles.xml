@@ -30,7 +30,7 @@
         <item name="android:background" >@drawable/shape_top_tvshow</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">45dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
     </style>
 
     <style name="TitleBar">
@@ -97,10 +97,13 @@
         <item name="android:layout_marginRight">30dp</item>
         <item name="android:layout_marginTop">20dp</item>
     </style>
+<!---->
+    <style name="ibtn_icon_size_stytle">
 
-    <style name="ibtn_size_stytle">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">20dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
     </style>
     <!--顶层四个imagebutton样式-->
     <style name="popview_ibtn_style">

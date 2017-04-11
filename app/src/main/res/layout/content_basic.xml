@@ -9,12 +9,26 @@
     >
 
 
+    <android.support.v4.widget.NestedScrollView
+        android:background="@drawable/shape_bottombar"
+        android:id="@+id/bottomsheet_view"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <include layout="@layout/view_bottom_pop"/>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
-        android:layout_marginTop="0dp"
-        android:background="@color/colorMainGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorMainGray"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -26,7 +40,9 @@
 
             <ImageButton
                 android:id="@+id/img_backup"
-                style="@style/ibtn_size_stytle"
+                style="@style/ibtn_icon_size_stytle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/main_tv_title"
@@ -58,12 +74,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/shape_fragmentlayout">
+
                 <android.support.v7.widget.RecyclerView
-                    android:layout_marginTop="5dp"
                     android:id="@+id/Online_device"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"></android.support.v7.widget.RecyclerView>
 
             </FrameLayout>
         </LinearLayout>
@@ -78,83 +94,78 @@
             <ImageButton
 
                 android:id="@+id/main_up_ibtn"
-                style="@style/ibtn_size_stytle"
-                android:background="@drawable/m_up_gray"
-                android:layout_alignTop="@+id/main_refresh_ibtn"
+                android:padding="8dp"
+                style="@style/ibtn_icon_size_stytle"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/main_refresh_ibtn"
+                android:src="@drawable/m_up_gray" />
 
             <ImageButton
                 android:id="@+id/main_down_ibtn"
-                android:layout_alignParentEnd="true"
+                android:padding="8dp"
+                style="@style/ibtn_icon_size_stytle"
+                android:src="@drawable/m_down_gray"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/m_down_gray"
-                style="@style/ibtn_size_stytle" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/main_refresh_ibtn" />
 
             <ImageView
                 android:id="@+id/main_refresh_ibtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignTop="@+id/main_down_ibtn"
+
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/m_refresh_gray" />
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_refresh_ibtn"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/m_refresh_gray" />
 
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_bottom_addequit"
-            android:background="@drawable/shape_bottombar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@drawable/shape_bottombar">
+
             <ImageButton
-                style="@style/ibtn_size_stytle"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/bottombar_up_gray"
-                android:layout_centerVertical="true"
+
+                style="@style/ibtn_icon_size_stytle"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="30dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/bottombar_up_gray"
+                android:id="@+id/imageButton" />
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Add equitment"
-                android:textColor="#fff"
-                android:id="@+id/textView2" />
+                android:textColor="#fff" />
 
 
             <ImageButton
-                style="@style/ibtn_size_stytle"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/bottombar_up_gray"
-                android:layout_alignTop="@+id/textView2"
-                android:layout_alignParentRight="true"
+                style="@style/ibtn_icon_size_stytle"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="30dp" />
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/bottombar_up_gray"
+                android:layout_alignTop="@+id/imageButton" />
 
 
         </RelativeLayout>
 
     </LinearLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:background="@drawable/shape_bottombar"
-        android:id="@+id/bottomsheet_view"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <include layout="@layout/view_bottom_pop"/>
-
-    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
