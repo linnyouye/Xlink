@@ -297,14 +297,16 @@ public class ControFanLedlView extends View {
 
                 textPaint.setColor(mOutArcFocusColor);
                 if ( mArcState == 0 ) {
-                    canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
+          //          canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
                 } else {
                     canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
                 }
                 textPaint.setColor(Color.parseColor("#ffffff"));
 
             } else if (i == 0) {
-                if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
+       //         if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
+
+
             } else {
                 canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
             }
@@ -315,7 +317,7 @@ public class ControFanLedlView extends View {
         mCirclePaint.setColor(mTouchedColor);
 
 
-        if (current_flag >= 0 && current_flag < mPathList.size()) {
+        if (current_flag > 0 && current_flag < mPathList.size()) {
             canvas.drawPath(mPathList.get(current_flag), mDeafultPaint);
         }
          else if (current_flag == CENTER) {
@@ -386,14 +388,6 @@ public class ControFanLedlView extends View {
 
 
 
-
-
-
-
-
-
-
-
     }
 
 
@@ -421,10 +415,7 @@ public class ControFanLedlView extends View {
                 if (current_flag == touch_flag && current_flag != -1 && mlistener != null) {
                     if (current_flag == CENTER) {
                         mlistener.onClickCenter();
-                    } else if (current_flag == BOTTOM) {
-                        mlistener.onClickBottom();
-                        return true;
-                    } else if (current_flag == ONE) {
+                    }  else if (current_flag == ONE) {
                         mlistener.onClickOne();
                     } else if (current_flag == TWO) {
                         mlistener.onClickTwo();
@@ -462,6 +453,7 @@ public class ControFanLedlView extends View {
             return CENTER;
         }  else {
             for (int i = 0; i < mRegionList.size(); i++) {
+
                 if (mRegionList.get(i).contains(x, y)) return i;
             }
         }
