@@ -309,7 +309,7 @@ public class ControFanLedlView extends View {
 
                 canvas.save();
                 canvas.translate(center_x,center_y+innerWidth/3+20);
-             Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
+              Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
                 canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
                canvas.restore();
 
@@ -318,6 +318,13 @@ public class ControFanLedlView extends View {
             }
 
         }
+
+        canvas.save();
+        canvas.translate(center_x,center_y+innerWidth/3+20);
+        Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
+        canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
+        canvas.restore();
+
 
         mDeafultPaint.setColor(mTouchedColor);
         mCirclePaint.setColor(mTouchedColor);
@@ -334,11 +341,11 @@ public class ControFanLedlView extends View {
         mDeafultPaint.setColor(mDefaultColor);
         mCirclePaint.setColor(mCircleColor);
         mOutArcPaint.setColor(getResources().getColor(R.color.colorInnerGray));
-        Rect rect = new Rect(center_x-innerWidth/9,center_y-innerWidth/9,center_x+innerWidth/9,center_y+innerWidth/9);
+        Rect rect1 = new Rect(center_x-innerWidth/9,center_y-innerWidth/9,center_x+innerWidth/9,center_y+innerWidth/9);
         if(mPowerOpen){
-            canvas.drawBitmap(mPowerOrange,null,rect,mLinePaint);
+            canvas.drawBitmap(mPowerOrange,null,rect1,mLinePaint);
         }else {
-            canvas.drawBitmap(mPowerWhite,null,rect,mLinePaint);
+            canvas.drawBitmap(mPowerWhite,null,rect1,mLinePaint);
         }
 
 

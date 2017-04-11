@@ -16,12 +16,12 @@ public class LanguageActivity extends BarActivity {
     @Override
     protected void initData() {
         super.initData();
-        getTvTitle().setText("LED");
+        getTvTitle().setText("语言");
     }
 
     @Override
     protected int getLayoutId() {
        // return super.getLayoutId();
-        return R.layout.fragment_view_led;
+        return R.layout.activity_about;
     }
 }

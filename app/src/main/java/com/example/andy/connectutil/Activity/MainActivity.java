@@ -379,7 +379,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
             }{
 
-
             }
         }
 

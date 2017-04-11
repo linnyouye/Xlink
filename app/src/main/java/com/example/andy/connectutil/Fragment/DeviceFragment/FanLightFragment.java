@@ -113,6 +113,8 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
         brightnss=(TextView)view.findViewById(R.id.fanled_tv_topshow);
 
+        controlView.setArcState(-1);
+        brightnss.setTextColor(this.getResources().getColor(R.color.linear_item_bg_normal));
             if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
@@ -214,7 +216,14 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
        // controlView.setLightNum(lighting);
         brightnss.setText(lighting+"");
         controlView.setGeerNum(fanLinght.FanModel+1);
-        controlView.setArcState((int) fanLinght.FanPosition);
+        if(fanLinght.FanPosition<1)
+        {
+            controlView.setArcState((int)1);
+        }else
+        {
+            controlView.setArcState((int) fanLinght.FanPosition);
+        }
+
         if(fanstate)
         {
             imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_orange);
@@ -226,38 +235,61 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
         if(lightstate)
         {
             imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_orange);
+            brightnss.setTextColor(this.getResources().getColor(R.color.colorOrange));
         }else
         {
             imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_white);
+            brightnss.setTextColor(this.getResources().getColor(R.color.linear_item_bg_normal));
         }
 
 
         if(fanLinght.FanDirection==0)
         {
+            if(fanstate)
             imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_orange);
+            else
+                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_white);
         }else
         {
+            if(fanstate)
             imageButton1.setImageResource(R.drawable.ibtn_1_cloud_orange);
+            else
+                imageButton1.setImageResource(R.drawable.ibtn_1_cloud_white);
         }
 
 
         if(fanLinght.Model==0)
         {
+            if(fanstate)
             imageButton2.setImageResource(R.drawable.ibtn_2_natural_orange);
+            else
+                imageButton2.setImageResource(R.drawable.ibtn_2_natural_white);
         }else
         {
+            if (fanstate)
             imageButton2.setImageResource(R.drawable.ibtn_2_fan_orange);
+            else
+                imageButton2.setImageResource(R.drawable.ibtn_2_fan_white);
         }
 
         if(fanLinght.Coolor_Tem==0)
         {
+            if(lightstate)
             imageButton3.setImageResource(R.drawable.ibtn_3_light_two_orange);
+            else
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_two_white);
         }else if(fanLinght.Coolor_Tem==10)
         {
+            if (lightstate)
             imageButton3.setImageResource(R.drawable.ibtn_3_light_one_orange);
+            else
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_one_white);
         }else
         {
+            if (lightstate)
             imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
+            else
+                imageButton3.setImageResource(R.drawable.ibtn_3_light_three_white);
         }
 
     }
@@ -476,12 +508,35 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanstate=false;
                     fanLinght.setPowerOfFanc(false);
                     imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_white);
+
+
+
+                    if(fanLinght.FanDirection==0)
+                    imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_white);
+                    else
+                        imageButton1.setImageResource(R.drawable.ibtn_1_cloud_white);
+                    if(fanLinght.FanModel==0)
+                    imageButton2.setImageResource(R.drawable.ibtn_2_natural_white);
+                    else
+                        imageButton2.setImageResource(R.drawable.ibtn_2_fan_white);
+
+
                 }else
                 {
                     fanLightHelper.setDataPoint(1, XlinkCode.DP_TYPE_BOOL,true);
                     fanstate=true;
                     fanLinght.setPowerOfFanc(true);
                     imageButtonButtomLeft.setImageResource(R.drawable.icon_fanled_bl_orange);
+
+
+                    if(fanLinght.FanDirection==0)
+                        imageButton1.setImageResource(R.drawable.ibtn_1_cloud_2_orange);
+                    else
+                        imageButton1.setImageResource(R.drawable.ibtn_1_cloud_orange);
+                    if(fanLinght.FanModel==0)
+                        imageButton2.setImageResource(R.drawable.ibtn_2_natural_orange);
+                    else
+                        imageButton2.setImageResource(R.drawable.ibtn_2_fan_orange);
                 }
             }
         });
@@ -491,16 +546,33 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             public void onClick(View v) {
                 if(lightstate)
                 {
+                    brightnss.setTextColor(getActivity().getResources().getColor(R.color.linear_item_bg_normal));
+
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,false);
                     lightstate=false;
                     fanLinght.setPowerOfLight(false);
                     imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_white);
+
+                    if(fanLinght.Coolor_Tem==0)
+                    imageButton3.setImageResource(R.drawable.ibtn_3_light_one_white);
+                    else if(fanLinght.Coolor_Tem==1)
+                        imageButton3.setImageResource(R.drawable.ibtn_3_light_two_white);
+                    else
+                        imageButton3.setImageResource(R.drawable.ibtn_3_light_three_white);
                 }else
                 {
+                    brightnss.setTextColor(getActivity().getResources().getColor(R.color.colorOrange));
                     fanLightHelper.setDataPoint(2, XlinkCode.DP_TYPE_BOOL,true);
                     lightstate=true;
                     fanLinght.setPowerOfLight(true);
                     imageButtonButtomRight.setImageResource(R.drawable.icon_fanled_br_orange);
+
+                    if(fanLinght.Coolor_Tem==0)
+                        imageButton3.setImageResource(R.drawable.ibtn_3_light_one_orange);
+                    else if(fanLinght.Coolor_Tem==1)
+                        imageButton3.setImageResource(R.drawable.ibtn_3_light_two_orange);
+                    else
+                        imageButton3.setImageResource(R.drawable.ibtn_3_light_three_orange);
                 }
             }
         });
