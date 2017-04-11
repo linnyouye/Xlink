@@ -6,7 +6,9 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-       android:layout_margin="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,6 +40,7 @@
             android:layout_weight="1"
             android:src="@drawable/selector_ibtn_4_timer" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -48,7 +51,4 @@
         android:layout_height="1px"
         android:background="@color/colorBottomPopViewStart"
         />
-
-
-
 </LinearLayout>

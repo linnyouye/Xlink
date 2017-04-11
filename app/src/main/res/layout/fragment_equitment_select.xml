@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+      android:clickable="true"
     android:background="@drawable/shape_fragmentlayout"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -15,8 +16,8 @@
 
     <Button
         android:id="@+id/select_btn_open"
-        android:text="@string/btn_light"
-        style="@style/btn_selectequitment_stytle" />
+        style="@style/btn_selectequitment_stytle"
+        android:text="@string/btn_light" />
 
     <Button
         android:id="@+id/select_btn_led"

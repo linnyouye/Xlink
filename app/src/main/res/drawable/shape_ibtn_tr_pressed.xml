@@ -13,7 +13,7 @@
         />
     <stroke
         android:width="2dp"
-        android:color="@color/colorControlText"
+        android:color="@color/colorStrokeGray"
         />
 
 </shape>

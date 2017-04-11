@@ -24,9 +24,9 @@
     <ImageButton
         android:id="@+id/toolbar_ibtn_search"
         android:background="@color/colorMainGray"
-        android:src="@drawable/toolbar_search_gray"
+        android:src="@drawable/toolbar_seatch_white"
         android:scaleType="fitCenter"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
@@ -34,8 +34,8 @@
     <ImageButton
         android:background="@color/colorMainGray"
         android:scaleType="fitCenter"
-        android:padding="5dp"
-        android:src="@drawable/toolbar_menu_gray"
+        android:padding="7dp"
+        android:src="@drawable/toolbar_menu_white"
         android:id="@+id/toolbar_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"

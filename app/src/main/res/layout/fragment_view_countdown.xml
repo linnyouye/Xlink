@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
+    android:clickable="true"
     android:background="@drawable/shape_fragmentlayout"
     android:padding="10dp"
     android:layout_width="match_parent"

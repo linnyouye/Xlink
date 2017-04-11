@@ -12,9 +12,10 @@
             style="@style/TitleTextView"
             android:text="登录" />
 
-        <Button style="@style/TitleActionButton"
+        <Button
             android:id="@+id/to_register"
-            android:text="去注册"/>
+            style="@style/TitleActionButton"
+            android:text="去注册" />
 
     </RelativeLayout>
 

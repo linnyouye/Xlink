@@ -9,8 +9,9 @@
   android:layout_marginLeft="20dp"
     android:layout_gravity="center_vertical"
     android:id="@+id/ibtn_toolbar_backup"
-    style="@style/ibtn_size_stytle"
-     android:background="@drawable/backup"
+    android:src="@drawable/backup"
+    style="@style/ibtn_icon_size_stytle"
+
 
     />
 
@@ -26,7 +27,6 @@
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:background="@drawable/shape_divider"
-
         />
 
 </FrameLayout>

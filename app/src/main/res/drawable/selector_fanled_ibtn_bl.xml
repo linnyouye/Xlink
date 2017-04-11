@@ -4,7 +4,6 @@
 
     <item
          android:state_pressed="true"
-         android:src="@drawable/icon_fanled_tl_orange"
          android:drawable="@drawable/shape_ibtn_bl_pressed"/>
     <item
         android:src="@drawable/icon_fanled_tl_white"

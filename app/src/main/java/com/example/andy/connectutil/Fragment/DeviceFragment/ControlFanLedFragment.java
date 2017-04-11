@@ -36,7 +36,7 @@ public class ControlFanLedFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-            ButterKnife.bind(this,view);
+
     }
 
     @Override

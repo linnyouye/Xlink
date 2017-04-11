@@ -124,8 +124,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         Log.d("waiwen", "setAdapter：");
 
 
-
-
         account = new Account(getApplicationContext());
         getOnlinedevicelist();
         if(equitmentSelectFragment == null){
@@ -248,7 +246,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public void startWifiConnection(String produt_id) {
-
 
         holder.replaceFragment(WifiConnectionFragment.newInstance(WifiUtils.getWifiSSID(this), produt_id), WifiConnectionFragment.TAG, true);
 
