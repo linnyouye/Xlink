@@ -58,6 +58,8 @@ public class HttpUtils {
             });
         }
     }
+
+
 //发送失败的回调
     private static void listenerOnFailure(final HttpUtilsListner listener, final int code, String msg) {
         if (listener != null) {
@@ -71,6 +73,8 @@ public class HttpUtils {
             });
         }
     }
+
+
 
     public static void get(String url, Map<String,String> content, final HttpUtilsListner listner)//content就是传过来的Json数据
     {
