@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="9"
-                android:inputType="number" />
+                android:inputType="textPassword" />
 
 
             <ImageButton
@@ -100,5 +100,7 @@
             android:textSize="18sp" />
     </LinearLayout>
 <include layout="@layout/view_firstguide"     />
+
+
 
 </FrameLayout>
