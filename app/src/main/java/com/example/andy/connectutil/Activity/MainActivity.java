@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,8 +39,12 @@ import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
+import com.example.andy.connectutil.entity.Net.Key;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +95,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     ImageButton bottom_setting;
 
     TextView main_title;
-
+    List<String> devicenames;
     protected BottomSheetBehavior behavior;
 
     @Override
@@ -108,13 +114,14 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         fragmentManager = getSupportFragmentManager();
         holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
+        devicenames=new ArrayList<>();
         //测试数据
-        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize);
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize,devicenames);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
 
-        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
+        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList,devicenames);
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
         Log.d("waiwen", "setAdapter：");
@@ -313,23 +320,27 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        int state=behavior.getState();
-        if (state==BottomSheetBehavior.STATE_EXPANDED) {
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }else
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(!imm.isActive())
         {
-            if (keyCode == event.KEYCODE_BACK) {
+            int state=behavior.getState();
+            if (state==BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }else
+            {
+                if (keyCode == event.KEYCODE_BACK) {
 
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else if (!holder.removeOne()) {
-                    backup();
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+                        drawer.closeDrawer(GravityCompat.START);
+                    } else if (!holder.removeOne()) {
+                        backup();
+
+                    }
 
                 }
-
             }
         }
+
 
 
         return false;  //super.onKeyDown(keyCode, event);
@@ -386,7 +397,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     public void getOnlinedevicelist() {
         for(int i=0;i<OnlinedeviceList.size();i++)
-        OnlinedeviceList.remove(i);
+        {
+            OnlinedeviceList.remove(i);
+            devicenames.remove(i);
+        }
+
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
@@ -396,8 +411,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 for (Device device : list) {
                     if(!OnlinedeviceList.contains(device))
                         OnlinedeviceList.add(device);
+                    getname(OnlinedeviceList.size());
                 }
-                notifyAdapter();
+
+               /* try {
+
+                    JSONObject obj=new JSONObject(content);
+                   String name=obj.optString("name");
+                    devicenames.add(name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
             }
             @Override
             public void onFailed(int code, String msg) {
@@ -426,5 +450,40 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             img_backup.setVisibility(View.VISIBLE);
         }
 
+    }
+//刷新列表的设备名字
+   public void getname(int position)
+    {
+
+            LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    String name;
+                    try {
+
+                        JSONObject obj=new JSONObject(content);
+                         name=obj.optString("name");
+                        devicenames.add(name);
+                        //防止position出错
+                        if(OnlinedeviceList.size()==devicenames.size())
+                            notifyAdapter();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
+            },OnlinedeviceList.get(position-1).getProduct_ID(),OnlinedeviceList.get(position-1).getxDevice().getDeviceId());
+
+    }
+
+    public void notigynamechange(int position,String name)
+    {
+        devicenames.set(position,name);
+        mAdapter.notifyDataSetChanged();
+        onlineDeviceAdapter.notifyDataSetChanged();
     }
 }

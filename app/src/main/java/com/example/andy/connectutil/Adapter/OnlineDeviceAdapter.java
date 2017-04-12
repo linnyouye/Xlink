@@ -17,6 +17,7 @@ import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,10 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
     private List<Device> OnlineList ;
     private Context mContext;
     private LayoutInflater mInflater;
-    public OnlineDeviceAdapter(Context context, List<Device> onlineList)
+    private List<String> devicename=new ArrayList<>();
+    public OnlineDeviceAdapter(Context context, List<Device> onlineList,List<String> devicename)
     {
+        this.devicename=devicename;
         this.mContext=context;
         this.OnlineList=onlineList;
         this.mInflater=LayoutInflater.from(mContext);
@@ -42,22 +45,30 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
+
         String DeviceName="";
-        switch (OnlineList.get(position).getProduct_ID())
+        if(devicename.size()==0||devicename.get(position).equals(""))
         {
-            case Content.FanLIght_ID:
-                DeviceName="风扇灯";
-                break;
-            case Content.Light_ID:
-                DeviceName="灯";
-                break;
-            case Content.LEDLIght_ID:
-                DeviceName="LED灯";
-                break;
-            case Content.BathBully_ID:
-                DeviceName="浴霸";
-                break;
+            switch (OnlineList.get(position).getProduct_ID())
+            {
+                case Content.FanLIght_ID:
+                    DeviceName="风扇灯";
+                    break;
+                case Content.Light_ID:
+                    DeviceName="灯";
+                    break;
+                case Content.LEDLIght_ID:
+                    DeviceName="LED灯";
+                    break;
+                case Content.BathBully_ID:
+                    DeviceName="浴霸";
+                    break;
+            }
+        }else
+        {
+            DeviceName=devicename.get(position);
         }
+
         holder.btn.setText(DeviceName);
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override

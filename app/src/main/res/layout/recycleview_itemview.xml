@@ -12,6 +12,11 @@ android:gravity="center"
         android:layout_height="20dp" />
     <EditText
         android:background="@drawable/ditext_bg"
+        android:id="@+id/item_tv_editname"
+        android:gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="match_parent" />
+    <TextView
         android:id="@+id/item_tv_equitname"
         android:gravity="center"
         android:layout_width="200dp"

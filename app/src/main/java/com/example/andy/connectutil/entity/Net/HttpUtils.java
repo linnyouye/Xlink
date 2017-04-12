@@ -109,6 +109,23 @@ public class HttpUtils {
         }
         HandleCallback(builder.build(),listener);
     }
+    public static void putJson(String url, String json, Map<String, String> header, HttpUtilsListner listener)
+    {
+        Log.i(TAG, "put_json: url = " + url);
+        Log.i(TAG, "put_json: json = " + json);
+        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
+
+        Request.Builder builder = new Request.Builder();
+
+        builder.url(url).put(body);
+
+        if (header != null) {
+            for (String key : header.keySet()) {
+                builder.addHeader(key, header.get(key));
+            }
+        }
+        HandleCallback(builder.build(),listener);
+    }
 
     private static void HandleCallback(final Request build, final HttpUtilsListner listener) {
         myokhttp.newCall(build).enqueue(new Callback() {
