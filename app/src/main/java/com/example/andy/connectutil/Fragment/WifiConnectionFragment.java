@@ -24,7 +24,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
 
    public static final String TAG = "WifiConnectionFragment";
 
-    private boolean password_status = true;
+    private boolean password_status = false;
       private TextView wifi_name;
       private EditText et_wifi_password;
       private Button btn_next;
@@ -81,9 +81,10 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
         tv_firstguide.setText("wifi配对界面时输入WiFi密码然后用遥控激活配网：按一下遥控开关键再按一下灯开关键，正确配对后\n" +
                 "出现‘滴’的一声。" + "\n" + "不带遥控激活方式：按墙壁开关键5次即配对成功。" + "\n" + "再按“next”键。");
         wifi_name.setText(str);
-//密码默认是隐藏的
         et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
     }
+
 
     @Override
     public String setState() {
@@ -108,22 +109,27 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
                 linearLayout_firstguide.setVisibility(View.INVISIBLE);
                  break;
              case R.id.ibtn_password_see:
-                 if (password_status) {
-                     //密码隐藏
-                     et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                     password_status = false;
-                     ibtn_password_see.setImageResource(R.drawable.password_eye_white);
-                 } else {
-                     //密码可见
-                     et_wifi_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                     password_status = true;
-                     ibtn_password_see.setImageResource(R.drawable.password_eye_orange);
-                 }
+               Password_status(password_status);
                  break;
-
 
 }
     }
-   
+
+
+   private void Password_status(boolean seen){
+       if (seen) {
+           //密码隐藏
+           et_wifi_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+           password_status = false;
+           ibtn_password_see.setImageResource(R.drawable.password_eye_white);
+       } else {
+           //密码可见
+           et_wifi_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+           password_status = true;
+           ibtn_password_see.setImageResource(R.drawable.password_eye_orange);
+       }
+
+    }
+
 
 }

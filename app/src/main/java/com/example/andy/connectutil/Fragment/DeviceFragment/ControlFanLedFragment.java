@@ -224,10 +224,6 @@ public class ControlFanLedFragment extends BaseFragment implements View.OnTouchL
 
             }
 
-            @Override
-            public void onClickBottom() {
-
-            }
 
             @Override
             public void onClickOne() {

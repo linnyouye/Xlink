@@ -62,7 +62,7 @@ public class ControFanLedlView extends View {
     private boolean mPowerOpen = false;   //默认电源开关状态
     private Bitmap mPowerWhite = BitmapFactory.decodeResource(getResources(), R.drawable.power_white);
     private Bitmap mPowerOrange = BitmapFactory.decodeResource(getResources(), R.drawable.power_orange);
-    private Bitmap mBottomIcon = BitmapFactory.decodeResource(getResources(), R.drawable.control_bottom_icon);
+
 
     private Paint mDeafultPaint;   //默认画笔
     private Paint mCirclePaint;    //中心圆画笔
@@ -83,7 +83,7 @@ public class ControFanLedlView extends View {
 
     //点击区域的标记
     int CENTER = 10;
-    int BOTTOM = 0;
+
     int ONE = 1;
     int TWO = 2;
     int THREE = 3;
@@ -106,15 +106,10 @@ public class ControFanLedlView extends View {
         invalidate();
     }
 
-    public void setLightNum(int lightNum) {
-        this.lightNum = lightNum;
-        invalidate();
-    }
 
     public interface OnControlListener {
         void onClickCenter();
 
-        void onClickBottom();
 
         void onClickOne();
 
@@ -166,7 +161,7 @@ public class ControFanLedlView extends View {
         }
         //画笔初始化
         mOutArcPaint = new Paint();
-        mOutArcPaint.setColor(getResources().getColor(R.color.colorStrokeGray));
+        mOutArcPaint.setColor(getResources().getColor(R.color.colorInnerGray));
         mOutArcPaint.setStyle(Paint.Style.STROKE);
         mOutArcPaint.setAntiAlias(true);
 
@@ -201,48 +196,8 @@ public class ControFanLedlView extends View {
         this.My_w = w;
         this.My_oldh = oldh;
         this.My_oldw = oldw;
-
         paintHelper = new PaintHelper(context, w, h);
-//        center_x = w / 2;  //绘图中心
-//        center_y = h / 2;
-//
-//
-//        globalRegion = new Region(-w, -h, w, h);
-//        int minwidth = w > h ? h : w;
-//        minwidth *= 0.95;
-//
-//        //内围的圆的宽度，中心圆的宽度是内围圆的一半
-//        innerWidth = minwidth;
-//        int circleWidth = innerWidth-25;
-//        int br = circleWidth / 2;   //中心圆的半径
-//        int sr = circleWidth / 4;   //内圆的半径
-//
-//
-//        mOutArcPaint.setStrokeWidth(br / 13);
-//
-//        currentSweepAngle = (360 - bottomAngle) / (geerNum - 1);  //获得每个扇形扫过的角度
-//        firstAngle = -270 + bottomAngle / 2 + currentSweepAngle / 2;      //第一档位开始的中心角度
-//        float firstOutArcAngle = -270 + bottomAngle / 2;  //第一档位外围框开始的角度
-//
-//        outCir_p.addCircle(center_x, center_y, innerWidth/2, Path.Direction.CW);
-//        //画圆
-//        center_p.addCircle(center_x, center_y, sr, Path.Direction.CW);
-//        center_re.setPath(center_p, globalRegion);
-//
-//        //根据传进来的档位个数画档位扇形
-//        for (int i = 0; i < geerNum; i++) {
-//            if (i == 0) {
-//                mPathList.add(paintHelper.getNumPath(bottomAngle, 90, br, sr, mRegionList.get(i)));
-//                mOutArcList.add(paintHelper.getOutArcPath(bottomAngle, 90 - bottomAngle / 2, br));
-//
-//            } else {
-//                Path path = paintHelper.getNumPath(currentSweepAngle, firstAngle + currentSweepAngle * (i - 1), br, sr, mRegionList.get(i));
-//                mPathList.add(path);
-//                Path path1 = paintHelper.getOutArcPath(currentSweepAngle, firstOutArcAngle + currentSweepAngle * (i - 1), br);
-//                mOutArcList.add(path1);
-//            }
-//
-//        }
+
 
     }
 
@@ -253,10 +208,25 @@ public class ControFanLedlView extends View {
 
         initPath(My_w, My_h, My_oldw, My_oldh);
 
+        //画中心圆
+        if (current_flag == CENTER) {
+            mCirclePaint.setColor(getResources().getColor(R.color.colorBottomBtnEnd));
+            canvas.drawPath(center_p, mCirclePaint);
+            mCirclePaint.setColor(getResources().getColor(R.color.colorCenterBtnGreen));
+            canvas.drawPath(center_p, mLinePaint);
+        } else {
+            canvas.drawPath(center_p, mCirclePaint);
+            canvas.drawPath(center_p, mLinePaint);
+        }
 
-//画圆
-        canvas.drawPath(center_p, mCirclePaint);
-        canvas.drawPath(center_p, mLinePaint);
+        //画开关
+        Rect rect = new Rect(center_x - innerWidth / 9, center_y - innerWidth / 9, center_x + innerWidth / 9, center_y + innerWidth / 9);
+        if (mPowerOpen) {
+            canvas.drawBitmap(mPowerOrange, null, rect, mLinePaint);
+        } else {
+            canvas.drawBitmap(mPowerWhite, null, rect, mLinePaint);
+        }
+
 
 //画圆外围的线框
         canvas.drawPath(outCir_p, mOutArcPaint);
@@ -273,75 +243,50 @@ public class ControFanLedlView extends View {
 
 //画档位扇形
         if (mPathList.size() > 0) {
-
             for (Path path : mPathList) {
                 canvas.drawPath(path, mDeafultPaint);
                 canvas.drawPath(path, mLinePaint);
             }
         }
+        mDeafultPaint.setColor(mTouchedColor);
+        if (current_flag > 0 && current_flag < mPathList.size()) {
+            canvas.drawPath(mPathList.get(current_flag), mDeafultPaint);
+        }
+        mDeafultPaint.setColor(mDefaultColor);
+
         //画档位数字
         textPaint.setTextSize(innerWidth / 9);
         for (int i = 0; i < geerNum; i++) {
 
             String a = String.valueOf(i);
             float strwidth = textPaint.measureText(a);  // 获取到文字的宽度
-            Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();  //获取到文字的高度
+            //获取到文字的高度
+            Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
             float strheight = Math.abs(-fontMetrics.descent + (fontMetrics.bottom - fontMetrics.top) / 2);
 
             float xx = (float) (innerWidth * 0.75 * 0.5 * Math.cos((firstAngle + currentSweepAngle * (i - 1)) / 180 * Math.PI));
             float yy = (float) (innerWidth * 0.75 * 0.5 * Math.sin((firstAngle + currentSweepAngle * (i - 1)) / 180 * Math.PI));
-            if (mArcState >= 0 && i == mArcState) {
 
-                textPaint.setColor(mOutArcFocusColor);
-                if (mArcState == 0) {
-                    //          canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight , textPaint);
-                } else {
-                    canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
-                }
-
-                textPaint.setColor(Color.parseColor("#cdcdcd"));
-           } else if (i == 0) {
-                //         if(bottomAngle!=0){canvas.drawText(a, center_x - strwidth / 2, (float) (center_y + innerWidth * 0.75 * 0.5) + strheight, textPaint);}
-
-//                canvas.save();
-//                canvas.translate(center_x,center_y+innerWidth/3+20);
-//              Rect rect = new Rect(-innerWidth/15,-innerWidth/24,innerWidth/15,innerWidth/24);
-//                canvas.drawBitmap(mBottomIcon,null,rect,textPaint);
-//               canvas.restore();
-
-      } else {
-
+            if(i>0){
                 canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
-           }
-
+            }
+            if(mArcState > 0 && i == mArcState){
+                textPaint.setColor(mOutArcFocusColor);
+                canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
+                textPaint.setColor(getResources().getColor(R.color.colorControlText));
+            }
+            if(current_flag>0 && i==current_flag){
+                textPaint.setColor(mOutArcFocusColor);
+                canvas.drawText(a, center_x + xx - strwidth / 2, center_y + yy + strheight, textPaint);
+                textPaint.setColor(getResources().getColor(R.color.colorControlText));
+            }
         }
 
-        mDeafultPaint.setColor(mTouchedColor);
-        mCirclePaint.setColor(mTouchedColor);
-
-        if (current_flag > 0 && current_flag < mPathList.size()) {
-            canvas.drawPath(mPathList.get(current_flag), mDeafultPaint);
-
-        } else if (current_flag == CENTER) {
-            Toast.makeText(getContext(),"画",Toast.LENGTH_SHORT).show();
-            canvas.drawPath(center_p, mCirclePaint);
-        }
-
-
-        mDeafultPaint.setColor(mDefaultColor);
-        mCirclePaint.setColor(mCircleColor);
-        mOutArcPaint.setColor(getResources().getColor(R.color.colorInnerGray));
-        Rect rect1 = new Rect(center_x - innerWidth / 9, center_y - innerWidth / 9, center_x + innerWidth / 9, center_y + innerWidth / 9);
-        if (mPowerOpen) {
-            canvas.drawBitmap(mPowerOrange, null, rect1, mLinePaint);
-        } else {
-            canvas.drawBitmap(mPowerWhite, null, rect1, mLinePaint);
-        }
-
+        Bitmap mBottomIcon = BitmapFactory.decodeResource(getResources(), R.drawable.control_bottom_icon);
         canvas.save();
         canvas.translate(center_x, center_y + innerWidth / 3 + 20);
-        Rect rect = new Rect(-innerWidth / 15, -innerWidth / 24, innerWidth / 15, innerWidth / 24);
-        canvas.drawBitmap(mBottomIcon, null, rect, textPaint);
+        Rect rect1 = new Rect(-innerWidth / 15, -innerWidth / 24, innerWidth / 15, innerWidth / 24);
+        canvas.drawBitmap(mBottomIcon, null, rect1, textPaint);
         canvas.restore();
 
     }
@@ -453,7 +398,6 @@ public class ControFanLedlView extends View {
             return CENTER;
         } else {
             for (int i = 0; i < mRegionList.size(); i++) {
-
                if (mRegionList.get(i).contains(x, y)) {return i;}
             }
         }

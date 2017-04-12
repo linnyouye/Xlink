@@ -18,6 +18,9 @@ public class Account {
 
     private static final String KEY_LOGO_PATH="logo_path";
 
+    private static final String KEY_WFIFPASSWORD_SEE ="edit_password_see";
+
+
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -26,7 +29,10 @@ public class Account {
         mEditor = mPreferences.edit();
     }
 
-
+public static Account getAccount(Context context){
+    Account account = new Account(context);
+    return account;
+}
     public void setAccount(String user,String password){
         mEditor.putString(KEY_USER,user);
         mEditor.putString(KEY_PASSWORD,password);
@@ -66,5 +72,15 @@ public class Account {
     }
     public String getNickname(){
         return mPreferences.getString(KEY_NICKNAME,"");
+    }
+
+
+    public void setPasswordEditStatus(boolean see){
+
+        mEditor.putBoolean(KEY_WFIFPASSWORD_SEE,see);
+        mEditor.commit();
+    }
+    public boolean getPasswordEditStatus(){
+        return mPreferences.getBoolean(KEY_WFIFPASSWORD_SEE,true);
     }
 }
