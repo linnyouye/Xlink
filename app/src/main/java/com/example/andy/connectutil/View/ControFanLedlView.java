@@ -83,7 +83,7 @@ public class ControFanLedlView extends View {
 
     //点击区域的标记
     int CENTER = 10;
-    int BOTTOM = 0;
+
     int ONE = 1;
     int TWO = 2;
     int THREE = 3;
@@ -114,7 +114,7 @@ public class ControFanLedlView extends View {
     public interface OnControlListener {
         void onClickCenter();
 
-        void onClickBottom();
+
 
         void onClickOne();
 

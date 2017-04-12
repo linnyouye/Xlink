@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
-import com.example.andy.connectutil.Bean.Equitment;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.ControlFanLedFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
@@ -34,9 +33,7 @@ import com.example.andy.connectutil.Fragment.WifiConnectionFragment;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
-
 import com.example.andy.connectutil.XlinkConnect;
-import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
@@ -44,7 +41,6 @@ import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -126,7 +122,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         account = new Account(getApplicationContext());
         getOnlinedevicelist();
-        if(equitmentSelectFragment == null){
+        if (equitmentSelectFragment == null) {
             equitmentSelectFragment = EquitmentSelectFragment.newInstance();
         }
         notifybackup();
@@ -201,8 +197,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 break;
             case R.id.img_backup:
-               // fragmentManager.popBackStackImmediate();
-                    holder.removeAllFragment();
+                // fragmentManager.popBackStackImmediate();
+                holder.removeAllFragment();
                 break;
         }
     }
@@ -223,8 +219,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             startActivity(new Intent(this, HelpActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
-           // startActivity(new Intent(this, LanguageActivity.class));
-            holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
+            // startActivity(new Intent(this, LanguageActivity.class));
+            holder.replaceFragment(ControlFanLedFragment.newInstance(), ControlFanLedFragment.TAG, false);
             setDrawerOnOff();
         } else if (id == R.id.nav_backup) {
             account.setAccount(account.getUser(), "");
@@ -254,9 +250,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void setFraagment_State(String str) {
         fragment_state = str;
-        if(fragment_state == MainActivity.TAG){
+        if (fragment_state == MainActivity.TAG) {
             img_backup.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             img_backup.setVisibility(View.VISIBLE);
         }
         switch (fragment_state) {
@@ -285,13 +281,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
 
-
-
     public void setBottomSheetOnOff() {
-        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
-        {
-            int state=behavior.getState();
-            if (state==BottomSheetBehavior.STATE_EXPANDED) {
+        if (holder.getFragmentManager().getFragments() == null || holder.getFragment_State().equals("Main")) {
+            int state = behavior.getState();
+            if (state == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             } else {
@@ -307,18 +300,19 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {  super.onBackPressed();}
+        } else {
+            super.onBackPressed();
+        }
 
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        int state=behavior.getState();
-        if (state==BottomSheetBehavior.STATE_EXPANDED) {
+        int state = behavior.getState();
+        if (state == BottomSheetBehavior.STATE_EXPANDED) {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }else
-        {
+        } else {
             if (keyCode == event.KEYCODE_BACK) {
 
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -371,23 +365,19 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         if (getFragment_state() != EquitmentSelectFragment.TAG) {
             if (getFragment_state() == WifiConnectionFragment.TAG) {
                 fragmentManager.popBackStackImmediate();
-            }
-            else if(getFragment_state() == CountDownFragment.TAG){
+            } else if (getFragment_state() == CountDownFragment.TAG) {
                 return;
-            }
-            else {
+            } else {
                 holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
-            }{
-
-
             }
+
         }
 
     }
 
     public void getOnlinedevicelist() {
-        for(int i=0;i<OnlinedeviceList.size();i++)
-        OnlinedeviceList.remove(i);
+        for (int i = 0; i < OnlinedeviceList.size(); i++)
+            OnlinedeviceList.remove(i);
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
@@ -395,11 +385,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {
-                    if(!OnlinedeviceList.contains(device))
+                    if (!OnlinedeviceList.contains(device))
                         OnlinedeviceList.add(device);
+                }
+                if(OnlinedeviceList.size()==0){
+                    Toast.makeText(MainActivity.this, "你当前未订阅任何设备", Toast.LENGTH_SHORT).show();
                 }
                 notifyAdapter();
             }
+
             @Override
             public void onFailed(int code, String msg) {
                 Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
@@ -412,18 +406,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
     }
-    public void destoryOrtherFragment()
-    {
+
+    public void destoryOrtherFragment() {
         holder.removeAllFragment();
     }
-    public void notifybackup()
-    {
-        if(holder.getFragment_State().equals("Main"))
-        {
-        img_backup.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+
+    public void notifybackup() {
+        if (holder.getFragment_State().equals("Main")) {
+            img_backup.setVisibility(View.INVISIBLE);
+        } else {
             img_backup.setVisibility(View.VISIBLE);
         }
 

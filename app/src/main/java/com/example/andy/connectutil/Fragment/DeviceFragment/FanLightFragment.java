@@ -274,10 +274,6 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
             }
 
-            @Override
-            public void onClickBottom() {
-
-            }
 
             @Override
             public void onClickOne() {
