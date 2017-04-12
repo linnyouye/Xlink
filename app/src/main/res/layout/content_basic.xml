@@ -97,7 +97,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/main_refresh_ibtn" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/main_refresh_ibtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

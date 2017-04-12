@@ -37,4 +37,6 @@ public class Url {
     public static final String UNSBCRIB_DEVICE=XLINK_SERVER+"/v2/user/%s/unsubscribe";
     //获取设备地理位置
     public static final String GET_DEVICE_LOCATION= XLINK_SERVER +"/v2/product/%s/device/%d/geography";
+    //重命名设备
+    public static final String RENAME_DEVICE=XLINK_SERVER +"/v2/product/%s/device/%d";
 }

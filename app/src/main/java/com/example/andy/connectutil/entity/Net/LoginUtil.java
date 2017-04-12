@@ -145,6 +145,36 @@ public class LoginUtil {
             e.printStackTrace();
         }
     }
+
+    //重命名设备
+    public static void renameDevice(HttpUtils.HttpUtilsListner listener,String name,String Product_id,int Device_id)
+    {
+        try{
+            JSONObject data=new JSONObject();
+            data.put("name",name);
+            Map<String,String> header=new HashMap<>();
+            header.put("Access-Token", XlinkConnect.accessToken);
+            String url=String.format(Url.RENAME_DEVICE,Product_id,Device_id);
+            Log.d("RenameDevice", "renameDevice: "+XlinkConnect.accessToken);
+            HttpUtils.putJson(url,data.toString(),header,listener);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    //获取名字
+    public static void getname(HttpUtils.HttpUtilsListner listener,String pid,int Device_id)
+    {
+        try{
+            Map<String,String> header=new HashMap<>();
+            header.put("Access-Token", XlinkConnect.accessToken);
+            String url=String.format(Url.RENAME_DEVICE,pid,Device_id);
+            Log.d("getnameDevice", "getnameDevice: "+XlinkConnect.accessToken);
+            HttpUtils.get(url,header,listener);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+    }
     //获取设备地理位置
     public static void getDeviceLocation(String pid,int deviceId,HttpUtils.HttpUtilsListner listener){
         try{

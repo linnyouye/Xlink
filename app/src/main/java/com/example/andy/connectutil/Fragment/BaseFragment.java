@@ -22,9 +22,11 @@ public abstract class BaseFragment extends Fragment {
 
 
     public static final String TAG = "BaseFragment";
+
     public MainActivity mActivity = null;
     public View rootview;
     public HolderListener holderListener;
+
 
     @Nullable
     @Override

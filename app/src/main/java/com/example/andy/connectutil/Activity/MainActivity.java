@@ -1,5 +1,6 @@
 package com.example.andy.connectutil.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,7 +27,7 @@ import android.widget.Toast;
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
-import com.example.andy.connectutil.Fragment.DeviceFragment.ControlFanLedFragment;
+import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
 import com.example.andy.connectutil.Fragment.EquitmentSelectFragment;
 import com.example.andy.connectutil.Fragment.FragmentHolder;
 import com.example.andy.connectutil.Fragment.HolderListener;
@@ -37,8 +39,12 @@ import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
+import com.example.andy.connectutil.entity.Net.Key;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
 import com.example.andy.connectutil.entity.WifiUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +64,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     public static final String TAG = "MainActivity";
 
-
+    private ImageButton refresh_ibtn;
     private String fragment_state = "MainActivity";
 
     private boolean isExit = false;
@@ -89,7 +95,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     ImageButton bottom_setting;
 
     TextView main_title;
-
+    List<String> devicenames;
     protected BottomSheetBehavior behavior;
 
     @Override
@@ -108,13 +114,14 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         fragmentManager = getSupportFragmentManager();
         holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
+        devicenames = new ArrayList<>();
         //测试数据
-        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize);
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize, devicenames);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
 
-        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
+        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList, devicenames);
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
         Log.d("waiwen", "setAdapter：");
@@ -150,6 +157,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         toolbar_search = obtainView(R.id.toolbar_ibtn_search);
         toolbar_menu = obtainView(R.id.toolbar_menu);
 
+        refresh_ibtn = obtainView(R.id.main_refresh_ibtn);
         img_backup = obtainView(R.id.img_backup);
         main_title = obtainView(R.id.main_tv_title);
 
@@ -219,8 +227,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             startActivity(new Intent(this, HelpActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
-            // startActivity(new Intent(this, LanguageActivity.class));
-            holder.replaceFragment(ControlFanLedFragment.newInstance(), ControlFanLedFragment.TAG, false);
+
+            startActivity(new Intent(this, LanguageActivity.class));
             setDrawerOnOff();
         } else if (id == R.id.nav_backup) {
             account.setAccount(account.getUser(), "");
@@ -252,13 +260,16 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         fragment_state = str;
         if (fragment_state == MainActivity.TAG) {
             img_backup.setVisibility(View.INVISIBLE);
+            refresh_ibtn.setVisibility(View.VISIBLE);
         } else {
+
             img_backup.setVisibility(View.VISIBLE);
+            refresh_ibtn.setVisibility(View.INVISIBLE);
         }
         switch (fragment_state) {
 
             case MainActivity.TAG:
-                main_title.setText("设备");
+                main_title.setText("设备列表");
 
                 break;
 
@@ -273,8 +284,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             case CountDownFragment.TAG:
                 main_title.setText("正在连接");
                 break;
-
-
+            case FanLightFragment.TAG:
+                main_title.setText("风扇灯");
+                break;
         }
 
 
@@ -309,114 +321,156 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        int state = behavior.getState();
-        if (state == BottomSheetBehavior.STATE_EXPANDED) {
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        } else {
-            if (keyCode == event.KEYCODE_BACK) {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (!imm.isActive()) {
+                    int state = behavior.getState();
+                    if (state == BottomSheetBehavior.STATE_EXPANDED) {
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    } else {
+                        if (keyCode == event.KEYCODE_BACK) {
 
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else if (!holder.removeOne()) {
-                    backup();
+                            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                                drawer.closeDrawer(GravityCompat.START);
+                            } else if (!fragmentManager.popBackStackImmediate()) {
+                                backup();
 
+                            }
+
+                        }
+                    }
                 }
 
+                return false;  //super.onKeyDown(keyCode, event);
             }
+
+        public String getFragment_state () {
+            return fragment_state;
         }
 
 
-        return false;  //super.onKeyDown(keyCode, event);
-    }
-
-    public String getFragment_state() {
-        return fragment_state;
-    }
-
-
-    public FragmentHolder getHolder() {
-        return holder;
-    }
-
-    public FragmentManager getFragmentManger() {
-        return fragmentManager;
-    }
-
-    public void backup() {
-        if (isExit == false) {
-            isExit = true; // 准备退出
-            Toast.makeText(this, "双击退出程序", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false; // 取消退出
-                }
-            }, 1000); // 如果时间内没有按下返回键，则启动定时器取消掉刚才执行的任务
-
-        } else {
-            this.onBackPressed();
-            System.exit(0);
+        public FragmentHolder getHolder () {
+            return holder;
         }
 
-    }
+        public FragmentManager getFragmentManger () {
+            return fragmentManager;
+        }
+//双击退出程序
+        public void backup () {
+            if (isExit == false) {
+                isExit = true; // 准备退出
+                Toast.makeText(this, "双击退出程序", Toast.LENGTH_SHORT).show();
+                tExit = new Timer();
+                tExit.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        isExit = false; // 取消退出
+                    }
+                }, 1000); // 如果时间内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
-    public void addEquitment() {
-        if (getFragment_state() != EquitmentSelectFragment.TAG) {
-            if (getFragment_state() == WifiConnectionFragment.TAG) {
-                fragmentManager.popBackStackImmediate();
-            } else if (getFragment_state() == CountDownFragment.TAG) {
-                return;
             } else {
-                holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
+                this.onBackPressed();
+                System.exit(0);
+            }
+
+        }
+//添加设备逻辑
+        public void addEquitment () {
+            if (getFragment_state() != EquitmentSelectFragment.TAG) {
+                if (getFragment_state() == WifiConnectionFragment.TAG) {
+                    fragmentManager.popBackStackImmediate();
+                } else if (getFragment_state() == CountDownFragment.TAG) {
+                    return;
+                } else {
+                    holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
+
+                }
             }
 
         }
 
-    }
+        public void getOnlinedevicelist () {
 
-    public void getOnlinedevicelist() {
-        for (int i = 0; i < OnlinedeviceList.size(); i++)
-            OnlinedeviceList.remove(i);
-        LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
-            @Override
-            public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表成功" + content, Toast.LENGTH_SHORT).show();
-                List<Device> list = new ArrayList<Device>();
-                list = JsonParser.parseDeviceList(content);
-                for (Device device : list) {
-                    if (!OnlinedeviceList.contains(device))
-                        OnlinedeviceList.add(device);
+            for (int i = 0; i < OnlinedeviceList.size(); i++)
+                OnlinedeviceList.remove(i);
+
+            LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    Toast.makeText(getApplicationContext(), "获取设备列表成功", Toast.LENGTH_SHORT).show();
+                    List<Device> list = new ArrayList<Device>();
+                    list = JsonParser.parseDeviceList(content);
+                    for (Device device : list) {
+                        if (!OnlinedeviceList.contains(device))
+                            OnlinedeviceList.add(device);
+                        getname(OnlinedeviceList.size());
+                    }
+
+                    if (OnlinedeviceList.size() == 0) {
+                        Toast.makeText(MainActivity.this, "你当前未订阅任何设备", Toast.LENGTH_SHORT).show();
+                    }
+                    notifyAdapter();
+
                 }
-                if(OnlinedeviceList.size()==0){
-                    Toast.makeText(MainActivity.this, "你当前未订阅任何设备", Toast.LENGTH_SHORT).show();
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
+
                 }
-                notifyAdapter();
-            }
-
-            @Override
-            public void onFailed(int code, String msg) {
-                Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    public void notifyAdapter() {
-        mAdapter.notifyDataSetChanged();
-        onlineDeviceAdapter.notifyDataSetChanged();
-    }
-
-    public void destoryOrtherFragment() {
-        holder.removeAllFragment();
-    }
-
-    public void notifybackup() {
-        if (holder.getFragment_State().equals("Main")) {
-            img_backup.setVisibility(View.INVISIBLE);
-        } else {
-            img_backup.setVisibility(View.VISIBLE);
+            });
         }
 
+        public void notifyAdapter () {
+            mAdapter.notifyDataSetChanged();
+            onlineDeviceAdapter.notifyDataSetChanged();
+        }
+
+        public void destoryOrtherFragment () {
+            holder.removeAllFragment();
+        }
+
+        public void notifybackup () {
+            if (holder.getFragment_State().equals("Main")) {
+                img_backup.setVisibility(View.INVISIBLE);
+            } else {
+                img_backup.setVisibility(View.VISIBLE);
+            }
+
+        }
+//刷新列表的设备名字
+        public void getname ( int position)
+        {
+
+            LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    String name;
+                    try {
+
+                        JSONObject obj = new JSONObject(content);
+                        name = obj.optString("name");
+                        devicenames.add(name);
+                        //防止position出错
+                        if (OnlinedeviceList.size() == devicenames.size())
+                            notifyAdapter();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                }
+            }, OnlinedeviceList.get(position - 1).getProduct_ID(), OnlinedeviceList.get(position - 1).getxDevice().getDeviceId());
+
+        }
+
+        public void notifyNameChange ( int position, String name)
+        {
+            devicenames.set(position, name);
+            mAdapter.notifyDataSetChanged();
+            onlineDeviceAdapter.notifyDataSetChanged();
+        }
     }
-}

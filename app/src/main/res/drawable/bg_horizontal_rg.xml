@@ -9,6 +9,6 @@
 
     <stroke
         android:width="@dimen/rb_line_width"
-        android:color="@color/radiogroup_line" />
+        android:color="@color/colorStrokeGray" />
 
 </shape>

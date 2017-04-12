@@ -178,7 +178,7 @@ public class HorizontalRadioGroup extends LinearLayout {
 		View mVerticalDivider = new LinearLayout(mContext);
 		mVerticalDivider.setLayoutParams(params);
 		mVerticalDivider.setBackgroundColor(mContext.getResources().getColor(
-				R.color.radiogroup_line));
+				R.color.colorStrokeGray));
 
 		addView(mVerticalDivider);
 	}
