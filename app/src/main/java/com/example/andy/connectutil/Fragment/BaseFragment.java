@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andy.connectutil.Activity.MainActivity;
-import com.example.andy.connectutil.andy;
 
 /**
  * Created by 95815 .

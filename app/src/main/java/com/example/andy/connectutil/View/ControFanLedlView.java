@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.example.andy.connectutil.Helper.PaintHelper;
 import com.example.andy.connectutil.R;
+import com.example.andy.connectutil.andy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,9 @@ public class ControFanLedlView extends View {
     int center_y;  //视图的y原点
 
     //点击区域的标记
+
     int CENTER = 33;
+
 
     int ONE = 1;
     int TWO = 2;
