@@ -12,6 +12,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
+import com.example.andy.connectutil.Adapter.DragItemCallback;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
@@ -63,6 +65,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     public static final String TAG = "MainActivity";
 
+    private boolean setting_state=true;
     private ImageButton refresh_ibtn;
     private String fragment_state = "MainActivity";
 
@@ -90,9 +93,11 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     ImageButton toolbar_menu;
     ImageButton img_backup;
 
+
     ImageButton bottom_add_equitment;
     ImageButton bottom_setting;
 
+    ItemTouchHelper itemTouchHelper;
     TextView main_title;
     List<String> devicenames;
     protected BottomSheetBehavior behavior;
@@ -118,6 +123,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize, devicenames);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+
+        itemTouchHelper = new ItemTouchHelper(new DragItemCallback(mAdapter));
+
+
         recyclerView.setAdapter(mAdapter);
 
         onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList, devicenames);
@@ -174,6 +183,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         bottom_setting = obtainView(R.id.bottom_setting);
 
         recyclerView = obtainView(R.id.pop_recycleview);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         OnlineDeviceRecycleview = obtainView(R.id.Online_device);
@@ -204,9 +214,29 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 break;
             case R.id.img_backup:
-                // fragmentManager.popBackStackImmediate();
-                holder.removeAllFragment();
+                 fragmentManager.popBackStackImmediate();
+               // holder.removeAllFragment();
                 break;
+            case R.id.bottom_setting:
+                if(setting_state){
+                    mAdapter.setShow_type(true);
+                    mAdapter.notifyDataSetChanged();
+                    setting_state = false;
+                }else {
+                    mAdapter.setShow_type(false);
+                    itemTouchHelper.attachToRecyclerView(recyclerView);
+                    mAdapter.notifyDataSetChanged();
+                    setting_state=true;
+                }
+
+
+
+
+
+
+
+
+
         }
     }
 
@@ -325,25 +355,18 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             public boolean onKeyDown ( int keyCode, KeyEvent event){
 
                 InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (!imm.isActive()) {
+
                     int state = behavior.getState();
                     if (state == BottomSheetBehavior.STATE_EXPANDED) {
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     } else {
                         if (keyCode == event.KEYCODE_BACK) {
-
-                            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                                drawer.closeDrawer(GravityCompat.START);
-                            } else if (!fragmentManager.popBackStackImmediate()) {
+                            if (!fragmentManager.popBackStackImmediate()) {
                                 backup();
                                 }
-
                             }
                         }
-
-                    }
-
-                    return false;  //super.onKeyDown(keyCode, event);
+                    return true;  //super.onKeyDown(keyCode, event);
                 }
 
             public String getFragment_state () {
@@ -388,7 +411,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                     return;
                 } else {
                     holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
-
                 }
             }
 
