@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.andy.connectutil.Helper.PaintHelper;
 import com.example.andy.connectutil.R;
@@ -76,13 +75,14 @@ public class ControFanLedlView extends View {
     int mTouchedColor = getResources().getColor(R.color.colorControlBtnStart);
     int mCircleColor = getResources().getColor(R.color.colorCenterBtnGreen);
     int mOutArcDefaultColor = getResources().getColor(R.color.colorMainGray);
+
     int mOutArcFocusColor = Color.parseColor("#FF9F1C");
 
     int center_x;  //视图的x原点
     int center_y;  //视图的y原点
 
     //点击区域的标记
-    int CENTER = 10;
+    int CENTER = 33;
 
     int ONE = 1;
     int TWO = 2;
@@ -231,16 +231,12 @@ public class ControFanLedlView extends View {
 //画圆外围的线框
         canvas.drawPath(outCir_p, mOutArcPaint);
 
-//        if (mOutArcList.size() > 0) {
-//            for (Path path : mOutArcList) {
-//                canvas.drawPath(path, mOutArcPaint);
-//            }
-//        }
+
         mOutArcPaint.setColor(mOutArcFocusColor);
         if (mArcState > 0) {
             canvas.drawPath(mOutArcList.get(mArcState), mOutArcPaint);
         }
-
+        mOutArcPaint.setColor(getResources().getColor(R.color.colorInnerGray));
 //画档位扇形
         if (mPathList.size() > 0) {
             for (Path path : mPathList) {
@@ -252,7 +248,7 @@ public class ControFanLedlView extends View {
         if (current_flag > 0 && current_flag < mPathList.size()) {
             canvas.drawPath(mPathList.get(current_flag), mDeafultPaint);
         }
-        mDeafultPaint.setColor(mDefaultColor);
+       mDeafultPaint.setColor(mDefaultColor);
 
         //画档位数字
         textPaint.setTextSize(innerWidth / 9);
@@ -292,7 +288,6 @@ public class ControFanLedlView extends View {
     }
 
     private void initPath(int w, int h, int oldw, int oldh) {
-
 
         center_x = w / 2;  //绘图中心
         center_y = h / 2;
