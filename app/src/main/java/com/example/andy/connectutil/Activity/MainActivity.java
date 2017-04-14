@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -48,7 +47,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by 95815 .
@@ -63,10 +61,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     private boolean setting_state = true;
 
+    private long firstTime = 0;
+
     private List<Device> saveInstance;
     public static final String TAG = "MainActivity";
 
-        private ImageButton refresh_ibtn;
+    private ImageButton refresh_ibtn;
     private String fragment_state = "MainActivity";
 
     private boolean isExit = false;
@@ -80,7 +80,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     private EquitmentSelectFragment equitmentSelectFragment = null;
-    private    List<Device> OnlinedeviceList;
+    private List<Device> OnlinedeviceList;
 
     //adapter要获取itemhelper对象，点击是开始滑动
     public ItemTouchHelper getItemTouchHelper() {
@@ -88,20 +88,20 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     private ItemTouchHelper itemTouchHelper = null;
-    private  RecyclerView bottomRecyclerView;
-    private   AddEquitAdapter mAdapter;
-    private   RecyclerView OnlineDeviceRecycleview;
+    private RecyclerView bottomRecyclerView;
+    private AddEquitAdapter mAdapter;
+    private RecyclerView OnlineDeviceRecycleview;
     private OnlineDeviceAdapter onlineDeviceAdapter;
 
     private EditText et_tb_search;
-    private   ImageView ibtn_tb_search;
+    private ImageView ibtn_tb_search;
 
     private ImageButton toolbar_search;
-    private  ImageButton toolbar_menu;
+    private ImageButton toolbar_menu;
     private ImageButton img_backup;
 
-    private  ImageButton bottom_add_equitment;
-   private ImageButton bottom_setting;
+    private ImageButton bottom_add_equitment;
+    private ImageButton bottom_setting;
 
     TextView main_title;
     protected BottomSheetBehavior behavior;
@@ -116,9 +116,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         Toolbar toolbar = obtainView(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
-
-
 
 
     @Override
@@ -185,7 +182,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
-        itemTouchHelper = new ItemTouchHelper(new DragItemCallback(mAdapter,onlineDeviceAdapter));
+        itemTouchHelper = new ItemTouchHelper(new DragItemCallback(mAdapter, onlineDeviceAdapter));
         itemTouchHelper.attachToRecyclerView(bottomRecyclerView);
 
         Log.d("waiwen", "setAdapter：");
@@ -193,16 +190,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
         account = new Account(getApplicationContext());
         getOnlinedevicelist();
-        if(equitmentSelectFragment == null){
+        if (equitmentSelectFragment == null) {
             equitmentSelectFragment = EquitmentSelectFragment.newInstance();
         }
-        notifybackup();
+        //notifybackup();
+        setFraagment_State(MainActivity.TAG);
     }
-
-
-
-
-
 
 
     @Override
@@ -224,19 +217,19 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.bottom_add_ibtn:
                 addEquitment();
-                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
                 break;
             case R.id.img_backup:
-               // fragmentManager.popBackStackImmediate();
-                    holder.removeAllFragment();
+         
+                holder.removeAllFragment();
                 break;
             case R.id.bottom_setting:
-                if(setting_state){
+                if (setting_state) {
 
                     mAdapter.setShow_type(true);
                     setting_state = false;
 
-                }else {
+                } else {
                     mAdapter.setShow_type(false);
                     setting_state = true;
                 }
@@ -261,7 +254,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             setDrawerOnOff();
         } else if (id == R.id.nav_language) {
             startActivity(new Intent(this, LanguageActivity.class));
-           // holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
+            // holder.replaceFragment(ControlFanLedFragment.newInstance(),ControlFanLedFragment.TAG,false);
             setDrawerOnOff();
         } else if (id == R.id.nav_backup) {
             account.setAccount(account.getUser(), "");
@@ -291,12 +284,14 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     @Override
     public void setFraagment_State(String str) {
         fragment_state = str;
-        if(fragment_state == MainActivity.TAG){
+        if (fragment_state == MainActivity.TAG) {
             img_backup.setVisibility(View.INVISIBLE);
             refresh_ibtn.setVisibility(View.VISIBLE);
-        }else {
+            rl_bottom.setClickable(true);
+        } else {
             img_backup.setVisibility(View.VISIBLE);
             refresh_ibtn.setVisibility(View.INVISIBLE);
+            rl_bottom.setClickable(false );
         }
         switch (fragment_state) {
 
@@ -318,20 +313,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case FanLightFragment.TAG:
                 main_title.setText("风扇灯");
-             break;
+                break;
         }
 
 
     }
 
 
-
-
     public void setBottomSheetOnOff() {
-        if(holder.getFragmentManager().getFragments()==null||holder.getFragment_State().equals("Main"))
-        {
-            int state=behavior.getState();
-            if (state==BottomSheetBehavior.STATE_EXPANDED) {
+        if (holder.getFragmentManager().getFragments() == null || holder.getFragment_State().equals("Main")) {
+            int state = behavior.getState();
+            if (state == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             } else {
@@ -347,32 +339,45 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {  super.onBackPressed();}
-
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-            int state=behavior.getState();
-            if (state==BottomSheetBehavior.STATE_EXPANDED) {
-                return true;
-            }else
-            {
-                if (keyCode == event.KEYCODE_BACK) {
-
-                    if (drawer.isDrawerOpen(GravityCompat.START)) {
-                        drawer.closeDrawer(GravityCompat.START);
-                    } else if (!holder.removeOne()) {
-                        backup();
-
-                    }
-
-                }
+        } else if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else if (!fragmentManager.popBackStackImmediate()) {
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {
+                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;
+            } else {
+                super.onBackPressed();
             }
+        }
 
-        return false;  //super.onKeyDown(keyCode, event);
+
     }
+
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
+//            int state=behavior.getState();
+//            if (state==BottomSheetBehavior.STATE_EXPANDED) {
+//          //      behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//         //       return true;
+//            }else
+//            {
+//                if (keyCode == event.KEYCODE_BACK) {
+//
+//                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+//                        drawer.closeDrawer(GravityCompat.START);
+//                    } else if (!holder.removeOne()) {
+//
+//                  //      backup();
+//
+//                    }
+//
+//                }
+//            }
+//        return false;  //super.onKeyDown(keyCode, event);
+//    }
 
     public String getFragment_state() {
         return fragment_state;
@@ -387,36 +392,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         return fragmentManager;
     }
 
-    public void backup() {
-        if (isExit == false) {
-            isExit = true; // 准备退出
-            Toast.makeText(this, "双击退出程序", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false; // 取消退出
-                }
-            }, 1000); // 如果时间内没有按下返回键，则启动定时器取消掉刚才执行的任务
-
-        } else {
-            this.onBackPressed();
-            System.exit(0);
-        }
-
-    }
 
     public void addEquitment() {
         if (getFragment_state() != EquitmentSelectFragment.TAG) {
             if (getFragment_state() == WifiConnectionFragment.TAG) {
                 fragmentManager.popBackStackImmediate();
-            }
-            else if(getFragment_state() == CountDownFragment.TAG){
+            } else if (getFragment_state() == CountDownFragment.TAG) {
                 return;
-            }
-            else {
+            } else {
                 holder.replaceFragment(equitmentSelectFragment, EquitmentSelectFragment.TAG, true);
-            }{
+            }
+            {
 
             }
         }
@@ -424,19 +410,18 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     }
 
     public void getOnlinedevicelist() {
-        for(int i=0;i<OnlinedeviceList.size();i++)
-        {
+        for (int i = 0; i < OnlinedeviceList.size(); i++) {
             OnlinedeviceList.remove(i);
         }
 
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表成功" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取设备列表成功", Toast.LENGTH_SHORT).show();
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {
-                    if(!OnlinedeviceList.contains(device))
+                    if (!OnlinedeviceList.contains(device))
                         OnlinedeviceList.add(device);
                 }
                 getname();
@@ -449,14 +434,13 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                     e.printStackTrace();
                 }*/
             }
+
             @Override
             public void onFailed(int code, String msg) {
-                if(code>4000000)
-                {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
-                }else
-                {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                if (code > 4000000) {
+                    ErrorMessage e = new ErrorMessage(getApplicationContext(), code);
+                } else {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -466,69 +450,71 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
     }
-    public void destoryOrtherFragment()
-    {
+
+    public void destoryOrtherFragment() {
         holder.removeAllFragment();
     }
-    public void notifybackup()
-    {
-        if(holder.getFragment_State().equals("Main"))
-        {
-        img_backup.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+
+    public void notifybackup() {
+            if (holder.getFragment_State().equals(MainActivity.TAG)) {
+            img_backup.setVisibility(View.INVISIBLE);
+        } else {
             img_backup.setVisibility(View.VISIBLE);
         }
 
     }
-//刷新列表的设备名字
-   public void getname()
-    {
-           for(int i=0;i<OnlinedeviceList.size();i++)
-           {
-               final int finalI = i;
-               LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
-                   @Override
-                   public void onSuccess(String content) {
-                       String name;
-                       try {
 
-                           JSONObject obj=new JSONObject(content);
-                           name=obj.optString("name");
-                           OnlinedeviceList.get(finalI).setName(name);
-                           //防止position出错
-                           if(finalI==OnlinedeviceList.size()-1)
-                               notifyAdapter();
-                       } catch (JSONException e) {
-                           e.printStackTrace();
-                       }
-                   }
+    //刷新列表的设备名字
+    public void getname() {
+        for (int i = 0; i < OnlinedeviceList.size(); i++) {
+            final int finalI = i;
+            LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
+                @Override
+                public void onSuccess(String content) {
+                    String name;
+                    try {
 
-                   @Override
-                   public void onFailed(int code, String msg) {
-                       if(code>4000000)
-                       {
-                           ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
-                       }else
-                       {
-                           Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                       }
-                   }
-               },OnlinedeviceList.get(i).getProduct_ID(),OnlinedeviceList.get(i).getxDevice().getDeviceId());
-           }
+                        JSONObject obj = new JSONObject(content);
+                        name = obj.optString("name");
+                        OnlinedeviceList.get(finalI).setName(name);
+                        //防止position出错
+                        if (finalI == OnlinedeviceList.size() - 1)
+                            notifyAdapter();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(int code, String msg) {
+                    if (code > 4000000) {
+                        ErrorMessage e = new ErrorMessage(getApplicationContext(), code);
+                    } else {
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, OnlinedeviceList.get(i).getProduct_ID(), OnlinedeviceList.get(i).getxDevice().getDeviceId());
+        }
 
 
     }
 
-    public void notifyNameChange(int position,String name)
-    {
+    public void delectDevice(int position) {
+
+
+        //在这里写你的删除逻辑，不用再写通知变化，adapter里已经写了，这样职责分明点
+
+
+    }
+
+
+    public void notifyNameChange(int position, String name) {
         OnlinedeviceList.get(position).setName(name);
         mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
     }
-    public void saveInstance()
-    {
-        
+
+    public void saveInstance() {
+
     }
 }

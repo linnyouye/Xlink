@@ -5,11 +5,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.FrameStats;
 
 import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
-import com.example.andy.connectutil.andy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,16 +130,16 @@ fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUS
         mainActivity.notifybackup();
 
     }
-    public boolean removeOne()
-    {
-        if(!fragmentstack.isEmpty())
-        {
-            fragmentstack.pop();
-            Fragment_State=fragmentstack.peek();
-        }
-        mainActivity.notifybackup();
-        return fragmentManager.popBackStackImmediate();
-    }
+//    public boolean removeOne()
+//    {
+////        if(!fragmentstack.isEmpty())
+////        {
+////            fragmentstack.pop();
+////            Fragment_State=fragmentstack.peek();
+////        }
+////        mainActivity.notifybackup();
+//        return fragmentManager.popBackStackImmediate();
+//    }
 
     /**
      * @param fragmentLayoutId 修改layoutId

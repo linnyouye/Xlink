@@ -24,7 +24,7 @@ public class WifiConnectionFragment extends BaseFragment implements View.OnClick
 
    public static final String TAG = "WifiConnectionFragment";
 
-    private boolean password_status = true;
+    private boolean password_status = false;
       private TextView wifi_name;
       private EditText et_wifi_password;
       private Button btn_next;
