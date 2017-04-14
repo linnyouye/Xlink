@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.entity.Net.Content;
+import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.Key;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
@@ -128,7 +129,13 @@ public class ResetPasswordActivity extends RegisBasicActivity {
             @Override
             public void onFailed(int code, String msg) {
 
-                showToast(msg);
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -156,13 +163,17 @@ public class ResetPasswordActivity extends RegisBasicActivity {
 
                 @Override
                 public void onFailed(int code, String msg) {
-                    Toast.makeText(getApplicationContext(), "重置密码失败"+msg, Toast.LENGTH_SHORT).show();
-                    showToast(msg);
+                    if(code>4000000)
+                    {
+                        ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    }else
+                    {
+                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
 
     }
-
 
 }

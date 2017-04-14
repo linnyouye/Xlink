@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.XlinkConnect;
+import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
 
@@ -222,8 +223,14 @@ public class RegisterAndLoginActivity extends Activity {
 
             @Override
             public void onFailed(int code, String msg) {
-               // cancelProgressDialog();
-              //  showToast(msg);
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -245,8 +252,13 @@ public class RegisterAndLoginActivity extends Activity {
 
             @Override
             public void onFailed(int code, String msg) {
-                //cancelProgressDialog();
-               // showToast(msg);
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -270,8 +282,13 @@ public class RegisterAndLoginActivity extends Activity {
 
             @Override
             public void onFailed(int code, String msg) {
-               // cancelProgressDialog();
-               // showToast(msg);
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -296,7 +313,13 @@ public class RegisterAndLoginActivity extends Activity {
             public void onFailed(int code, String msg) {
                // cancelProgressDialog();
                // showToast(msg);
-                Toast.makeText(RegisterAndLoginActivity.this, "登陆失败。。。", Toast.LENGTH_SHORT).show();
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
                 if(launchView.getVisibility()== View.VISIBLE){
                     hideLauncherView();
                 }
@@ -343,8 +366,13 @@ public class RegisterAndLoginActivity extends Activity {
 
                 @Override
                 public void onFailed(int code, String msg) {
-                    // cancelProgressDialog();
-                    // showToast(msg);
+                    if(code>4000000)
+                    {
+                        ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    }else
+                    {
+                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    }
                     if(launchView.getVisibility()== View.VISIBLE){
                         hideLauncherView();
                     }

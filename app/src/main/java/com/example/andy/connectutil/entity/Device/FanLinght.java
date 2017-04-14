@@ -2,10 +2,18 @@ package com.example.andy.connectutil.entity.Device;
 
 import android.util.Log;
 
+import com.example.andy.connectutil.entity.Net.Content;
+import com.example.andy.connectutil.entity.Net.Key;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
 import io.xlink.wifi.sdk.bean.DataPoint;
 
 /**
@@ -13,6 +21,7 @@ import io.xlink.wifi.sdk.bean.DataPoint;
  */
 
 public class FanLinght extends DeviceDate implements Serializable {
+    private String MacAddress;
     public String TAG="FanLight";
     public boolean Power;//总开关
     public boolean PowerOfFanc;
@@ -145,5 +154,44 @@ public class FanLinght extends DeviceDate implements Serializable {
             }
         }
         return data;
+    }
+
+    public static FanLinght parsefromJson(String json){
+        FanLinght fanLinght = null;
+        try {
+            fanLinght=new FanLinght();
+             JSONObject jsonObject=new JSONObject(json);
+            fanLinght.setPower(jsonObject.optBoolean("Power"));
+            fanLinght.setPowerOfFanc(jsonObject.optBoolean("PowerOfFanc"));
+            fanLinght.setPowerOfLight(jsonObject.optBoolean("PowerOfLight"));
+            fanLinght.setFanDirection((byte)jsonObject.optInt("FanDirection"));
+            fanLinght.setModel((byte)jsonObject.optInt("Model"));
+            fanLinght.setFanModel((byte)jsonObject.optInt("FanModel"));
+            fanLinght.setFanPosition((byte)jsonObject.optInt("FanPosition"));
+            fanLinght.setCoolor_Tem((byte) jsonObject.optInt("Coolor_Tem"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return  fanLinght;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            JSONObject jsonObject=new JSONObject();
+           jsonObject.put("Power",this.Power);
+            jsonObject.optBoolean("PowerOfFanc",this.PowerOfFanc);
+            jsonObject.optBoolean("PowerOfLight",this.PowerOfLight);
+            jsonObject.optInt("FanDirection",(int)this.FanDirection);
+            jsonObject.optInt("Model",(int)this.Model);
+            jsonObject.optInt("FanModel",(int)this.FanModel);
+            jsonObject.optInt("FanPosition",(int)this.FanPosition);
+             jsonObject.optInt("Coolor_Tem",(int)this.Coolor_Tem);
+            return jsonObject.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

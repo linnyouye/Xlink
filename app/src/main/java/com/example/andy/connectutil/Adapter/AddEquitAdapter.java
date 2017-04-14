@@ -24,6 +24,7 @@ import com.example.andy.connectutil.Activity.MainActivity;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
+import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
 
@@ -51,16 +52,12 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
     int resource=0;
 
     private List<XDevice> devices;
-    private String  authorcode;
     private List<Device> equitmentList ;
     private Context mContext;
     private LayoutInflater mInflater;
     private MainActivity mainActivity;
-    private List<String> devicenaem=new ArrayList<>();
 
-    public AddEquitAdapter(Context context, List<Device> list, String authorcode,List<String> devicename) {
-        this.devicenaem=devicename;
-        this.authorcode=authorcode;
+    public AddEquitAdapter(Context context, List<Device> list) {
         this.mContext = context;
         mainActivity=(MainActivity)mContext;
         this.equitmentList = list;
@@ -83,8 +80,8 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-
-        if(devicenaem.size()==0||devicenaem.get(position).equals(""))
+         int i=0;
+        if(equitmentList.get(position).getName()==null||equitmentList.get(position).getName().equals(""))
         {
             switch (equitmentList.get(position).getProduct_ID())
             {
@@ -108,7 +105,24 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             }
         }else
         {
-            DeviceName=devicenaem.get(position);
+            DeviceName=equitmentList.get(position).getName();
+            switch (equitmentList.get(position).getProduct_ID())
+            {
+
+                case Content.FanLIght_ID:
+                    resource=R.drawable.buttom_menu_fan_light;
+                    break;
+                case Content.Light_ID:
+                    resource=R.drawable.button_menu_led;
+                    break;
+                case Content.LEDLIght_ID:
+                    resource= R.drawable.button_menu_fanc;
+                    break;
+                case Content.BathBully_ID:
+                    resource=R.drawable.buttom_menu_bathbully;
+                    break;
+            }
+
         }
 
         if(!DeviceName.equals("")&&!(resource==0))
@@ -207,7 +221,13 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
                             @Override
                             public void onFailed(int code, String msg) {
-                                Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+                                if(code>4000000)
+                                {
+                                    ErrorMessage e=new ErrorMessage(mContext,code);
+                                }else
+                                {
+                                    Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+                                }
                             }
                         },name,equitmentList.get(position).getProduct_ID(),equitmentList.get(position).getxDevice().getDeviceId());
                         return true;

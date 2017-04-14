@@ -37,6 +37,7 @@ import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
 import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.Key;
@@ -61,7 +62,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
-
+    private List<Device> saveInstance;
     public static final String TAG = "MainActivity";
 
         private ImageButton refresh_ibtn;
@@ -95,7 +96,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     ImageButton bottom_setting;
 
     TextView main_title;
-    List<String> devicenames;
     protected BottomSheetBehavior behavior;
 
     @Override
@@ -114,14 +114,13 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         fragmentManager = getSupportFragmentManager();
         holder = new FragmentHolder(this, this, fragmentManager);
         OnlinedeviceList = new ArrayList<>();
-        devicenames=new ArrayList<>();
         //测试数据
-        mAdapter = new AddEquitAdapter(this, OnlinedeviceList, XlinkConnect.authorize,devicenames);
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList);
         int spacingInPixels = 8;
         recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         recyclerView.setAdapter(mAdapter);
 
-        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList,devicenames);
+        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
 
         Log.d("waiwen", "setAdapter：");
@@ -320,12 +319,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(!imm.isActive())
-        {
+
             int state=behavior.getState();
             if (state==BottomSheetBehavior.STATE_EXPANDED) {
-                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                return true;
             }else
             {
                 if (keyCode == event.KEYCODE_BACK) {
@@ -339,9 +336,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
                 }
             }
-        }
-
-
 
         return false;  //super.onKeyDown(keyCode, event);
     }
@@ -399,7 +393,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         for(int i=0;i<OnlinedeviceList.size();i++)
         {
             OnlinedeviceList.remove(i);
-            devicenames.remove(i);
         }
 
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
@@ -411,9 +404,8 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 for (Device device : list) {
                     if(!OnlinedeviceList.contains(device))
                         OnlinedeviceList.add(device);
-                    getname(OnlinedeviceList.size());
                 }
-
+                getname();
                /* try {
 
                     JSONObject obj=new JSONObject(content);
@@ -425,8 +417,13 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             }
             @Override
             public void onFailed(int code, String msg) {
-                Toast.makeText(getApplicationContext(), "获取设备列表失败", Toast.LENGTH_SHORT).show();
-
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -452,38 +449,52 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     }
 //刷新列表的设备名字
-   public void getname(int position)
+   public void getname()
     {
+           for(int i=0;i<OnlinedeviceList.size();i++)
+           {
+               final int finalI = i;
+               LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
+                   @Override
+                   public void onSuccess(String content) {
+                       String name;
+                       try {
 
-            LoginUtil.getname(new HttpUtils.HttpUtilsListner() {
-                @Override
-                public void onSuccess(String content) {
-                    String name;
-                    try {
+                           JSONObject obj=new JSONObject(content);
+                           name=obj.optString("name");
+                           OnlinedeviceList.get(finalI).setName(name);
+                           //防止position出错
+                           if(finalI==OnlinedeviceList.size()-1)
+                               notifyAdapter();
+                       } catch (JSONException e) {
+                           e.printStackTrace();
+                       }
+                   }
 
-                        JSONObject obj=new JSONObject(content);
-                         name=obj.optString("name");
-                        devicenames.add(name);
-                        //防止position出错
-                        if(OnlinedeviceList.size()==devicenames.size())
-                            notifyAdapter();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                   @Override
+                   public void onFailed(int code, String msg) {
+                       if(code>4000000)
+                       {
+                           ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                       }else
+                       {
+                           Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                       }
+                   }
+               },OnlinedeviceList.get(i).getProduct_ID(),OnlinedeviceList.get(i).getxDevice().getDeviceId());
+           }
 
-                @Override
-                public void onFailed(int code, String msg) {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                }
-            },OnlinedeviceList.get(position-1).getProduct_ID(),OnlinedeviceList.get(position-1).getxDevice().getDeviceId());
 
     }
 
     public void notigynamechange(int position,String name)
     {
-        devicenames.set(position,name);
+        OnlinedeviceList.get(position).setName(name);
         mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
+    }
+    public void saveInstance()
+    {
+        
     }
 }

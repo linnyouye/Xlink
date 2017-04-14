@@ -13,6 +13,15 @@ public class Device implements Serializable{
     private String Product_ID;
     private XDevice xDevice;
     private DeviceDate data;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getProduct_ID() {return Product_ID;}
 

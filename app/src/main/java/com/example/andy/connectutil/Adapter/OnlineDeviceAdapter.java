@@ -28,10 +28,9 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
     private List<Device> OnlineList ;
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<String> devicename=new ArrayList<>();
-    public OnlineDeviceAdapter(Context context, List<Device> onlineList,List<String> devicename)
+    public OnlineDeviceAdapter(Context context, List<Device> onlineList)
     {
-        this.devicename=devicename;
+
         this.mContext=context;
         this.OnlineList=onlineList;
         this.mInflater=LayoutInflater.from(mContext);
@@ -47,7 +46,7 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
     public void onBindViewHolder(MyHolder holder, final int position) {
 
         String DeviceName="";
-        if(devicename.size()==0||devicename.get(position).equals(""))
+        if(OnlineList.get(position).getName()==null||OnlineList.get(position).getName().equals(""))
         {
             switch (OnlineList.get(position).getProduct_ID())
             {
@@ -66,7 +65,7 @@ public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapte
             }
         }else
         {
-            DeviceName=devicename.get(position);
+            DeviceName=OnlineList.get(position).getName();
         }
 
         holder.btn.setText(DeviceName);
