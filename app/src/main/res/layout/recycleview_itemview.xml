@@ -7,35 +7,36 @@ android:gravity="center"
 
     <ImageButton
         android:background="@null"
-       android:layout_marginRight="20dp"
+       android:layout_marginRight="5dp"
+        android:padding="5dp"
         android:scaleType="fitCenter"
         android:id="@+id/item_left_ibtn"
         android:layout_gravity="center_vertical"
         android:layout_width="30dp"
         android:layout_height="30dp" />
-<FrameLayout
-    android:layout_width="150dp"
-    android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/item_edit_name"
-        android:layout_width="150dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/ditext_bg"
-        android:gravity="center" />
 
     <TextView
+        android:layout_weight="4"
         android:id="@+id/item_tv_name"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center" />
 
-</FrameLayout>
+
+    <EditText
+        android:layout_weight="4"
+        android:id="@+id/item_edit_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_ditext_bg"
+        android:gravity="center" />
 
 
     <ImageButton
+
         android:id="@+id/item_right_ibtn"
         android:background="@null"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="5dp"
         android:scaleType="fitCenter"
         android:layout_gravity="center_vertical"
         android:layout_width="30dp"

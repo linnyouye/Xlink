@@ -109,8 +109,14 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
         }
 
         viewHolder.right_ibtn.setVisibility(View.INVISIBLE);
-        viewHolder.right_ibtn.setClickable(false);
         viewHolder.edit_name.setVisibility(View.GONE);
+        //每次刷新，初始状态变成不拦截
+        viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
 
         // 根据show_type进行相应的显示
         if (show_type) {
@@ -119,7 +125,13 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                 viewHolder.right_ibtn.setVisibility(View.INVISIBLE);
                 viewHolder.right_ibtn.setClickable(false);
                 viewHolder.edit_name.setVisibility(View.GONE);
-
+                //这里重写是为了返回的时候拦截长按，否则在编辑长按返回正常显示后，这里也能长按编辑
+             viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+             public boolean onTouch(View v, MotionEvent event) {
+        return true;
+    }
+});
                 viewHolder.tv_realname.setText(DeviceName);
                 //左边ibtn要设置设备图片和不可点击
                 viewHolder.left_ibtn.setClickable(false);
@@ -131,7 +143,6 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             //右边的滑动拖拽图片
             viewHolder.right_ibtn.setVisibility(View.VISIBLE);
             viewHolder.right_ibtn.setImageResource(R.drawable.icon_item_drag);
-            viewHolder.right_ibtn.setClickable(true);
             viewHolder.right_ibtn.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
