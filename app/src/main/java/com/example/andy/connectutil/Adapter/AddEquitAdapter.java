@@ -1,16 +1,11 @@
 package com.example.andy.connectutil.Adapter;
 
-import android.app.Notification;
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,9 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
-
-
-
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
@@ -28,15 +20,11 @@ import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.xlink.wifi.sdk.XDevice;
-import io.xlink.wifi.sdk.XlinkAgent;
-import io.xlink.wifi.sdk.XlinkCode;
-import io.xlink.wifi.sdk.listener.SubscribeDeviceListener;
 
 
 /**
@@ -215,7 +203,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                                 viewHolder.tv_realname.setVisibility(View.VISIBLE);
                                 viewHolder.img_equitment.setImageResource(resource);
                                 viewHolder.tv_name.setVisibility(View.GONE);
-                                mainActivity.notigynamechange(position,name);
+                                mainActivity.notifynamechange(position,name);
                                 viewHolder.img_equitment.setClickable(false);
                             }
 
