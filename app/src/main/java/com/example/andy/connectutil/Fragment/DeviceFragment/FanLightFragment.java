@@ -139,6 +139,8 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
         holderListener.setFraagment_State(FanLightFragment.TAG);
     }
 
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

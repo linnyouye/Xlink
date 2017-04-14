@@ -220,7 +220,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
                 break;
             case R.id.img_backup:
-         
+
                 holder.removeAllFragment();
                 break;
             case R.id.bottom_setting:
@@ -321,7 +321,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
 
     public void setBottomSheetOnOff() {
-        if (holder.getFragmentManager().getFragments() == null || holder.getFragment_State().equals("Main")) {
             int state = behavior.getState();
             if (state == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -329,8 +328,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             } else {
                 behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
-        }
-
 
     }
 
