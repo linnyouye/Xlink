@@ -115,6 +115,11 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
         controlView.setArcState(-1);
         brightnss.setTextColor(this.getResources().getColor(R.color.linear_item_bg_normal));
+        if(device.getData()!=null)
+        {
+            fanLinght=(FanLinght)device.getData();
+            setOnClike();
+        }
             if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
@@ -912,5 +917,12 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        if(fanLinght!=null)
+            device.setData(fanLinght);
+        super.onDestroy();
     }
 }
