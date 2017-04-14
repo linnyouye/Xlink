@@ -5,20 +5,39 @@ android:gravity="center"
     android:layout_margin="0dp"
     android:layout_height="40dp">
 
-    <ImageView
-        android:id="@+id/item_img_equitment"
+    <ImageButton
+        android:background="@null"
+       android:layout_marginRight="20dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/item_left_ibtn"
         android:layout_gravity="center_vertical"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+<FrameLayout
+    android:layout_width="150dp"
+    android:layout_height="match_parent">
     <EditText
+        android:id="@+id/item_edit_name"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
         android:background="@drawable/ditext_bg"
-        android:id="@+id/item_tv_editname"
-        android:gravity="center"
-        android:layout_width="200dp"
-        android:layout_height="match_parent" />
+        android:gravity="center" />
+
     <TextView
-        android:id="@+id/item_tv_equitname"
-        android:gravity="center"
-        android:layout_width="200dp"
-        android:layout_height="match_parent" />
+        android:id="@+id/item_tv_name"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+
+</FrameLayout>
+
+
+    <ImageButton
+        android:id="@+id/item_right_ibtn"
+        android:background="@null"
+        android:layout_marginLeft="20dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center_vertical"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 </LinearLayout>

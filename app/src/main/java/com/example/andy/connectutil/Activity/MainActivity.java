@@ -11,6 +11,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
+import com.example.andy.connectutil.Adapter.DragItemCallback;
 import com.example.andy.connectutil.Adapter.OnlineDeviceAdapter;
 import com.example.andy.connectutil.Fragment.CountDownFragment;
 import com.example.andy.connectutil.Fragment.DeviceFragment.FanLightFragment;
@@ -58,6 +60,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
+
+    private boolean setting_state = true;
+
     private List<Device> saveInstance;
     public static final String TAG = "MainActivity";
 
@@ -75,21 +80,28 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     protected RelativeLayout rl_bottom;
 
     private EquitmentSelectFragment equitmentSelectFragment = null;
-    List<Device> OnlinedeviceList;
-    RecyclerView recyclerView;
-    AddEquitAdapter mAdapter;
-    RecyclerView OnlineDeviceRecycleview;
-    OnlineDeviceAdapter onlineDeviceAdapter;
+    private    List<Device> OnlinedeviceList;
 
-    EditText et_tb_search;
-    ImageView ibtn_tb_search;
+    //adapter要获取itemhelper对象，点击是开始滑动
+    public ItemTouchHelper getItemTouchHelper() {
+        return itemTouchHelper;
+    }
 
-    ImageButton toolbar_search;
-    ImageButton toolbar_menu;
-    ImageButton img_backup;
+    private ItemTouchHelper itemTouchHelper = null;
+    private  RecyclerView bottomRecyclerView;
+    private   AddEquitAdapter mAdapter;
+    private   RecyclerView OnlineDeviceRecycleview;
+    private OnlineDeviceAdapter onlineDeviceAdapter;
 
-    ImageButton bottom_add_equitment;
-    ImageButton bottom_setting;
+    private EditText et_tb_search;
+    private   ImageView ibtn_tb_search;
+
+    private ImageButton toolbar_search;
+    private  ImageButton toolbar_menu;
+    private ImageButton img_backup;
+
+    private  ImageButton bottom_add_equitment;
+   private ImageButton bottom_setting;
 
     TextView main_title;
     protected BottomSheetBehavior behavior;
@@ -105,45 +117,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    protected void initData() {
-        fragmentManager = getSupportFragmentManager();
-        holder = new FragmentHolder(this, this, fragmentManager);
-        OnlinedeviceList = new ArrayList<>();
-        //测试数据
-        mAdapter = new AddEquitAdapter(this, OnlinedeviceList);
-        int spacingInPixels = 8;
-        recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
-        recyclerView.setAdapter(mAdapter);
-
-        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
-        OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
-
-        Log.d("waiwen", "setAdapter：");
 
 
-        account = new Account(getApplicationContext());
-        getOnlinedevicelist();
-        if(equitmentSelectFragment == null){
-            equitmentSelectFragment = EquitmentSelectFragment.newInstance();
-        }
-        notifybackup();
-    }
 
-    @Override
-    protected void setListener() {
-
-        toolbar_menu.setOnClickListener(this);
-        toolbar_search.setOnClickListener(this);
-        img_backup.setOnClickListener(this);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        rl_bottom.setOnClickListener(this);
-
-        bottom_add_equitment.setOnClickListener(this);
-        bottom_setting.setOnClickListener(this);
-
-    }
 
     @Override
     protected void initView() {
@@ -169,14 +145,65 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         bottom_add_equitment = obtainView(R.id.bottom_add_ibtn);
         bottom_setting = obtainView(R.id.bottom_setting);
 
-        recyclerView = obtainView(R.id.pop_recycleview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bottomRecyclerView = obtainView(R.id.pop_recycleview);
+        bottomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         OnlineDeviceRecycleview = obtainView(R.id.Online_device);
         OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
         Log.d("waiwen", "initview");
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
+
+    @Override
+    protected void setListener() {
+
+        toolbar_menu.setOnClickListener(this);
+        toolbar_search.setOnClickListener(this);
+        img_backup.setOnClickListener(this);
+
+        navigationView.setNavigationItemSelectedListener(this);
+        rl_bottom.setOnClickListener(this);
+
+        bottom_add_equitment.setOnClickListener(this);
+        bottom_setting.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void initData() {
+        fragmentManager = getSupportFragmentManager();
+        holder = new FragmentHolder(this, this, fragmentManager);
+        OnlinedeviceList = new ArrayList<>();
+        //测试数据
+        mAdapter = new AddEquitAdapter(this, OnlinedeviceList);
+        int spacingInPixels = 8;
+        bottomRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+
+
+        bottomRecyclerView.setAdapter(mAdapter);
+
+        onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
+        OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
+
+        itemTouchHelper = new ItemTouchHelper(new DragItemCallback(mAdapter,onlineDeviceAdapter));
+        itemTouchHelper.attachToRecyclerView(bottomRecyclerView);
+
+        Log.d("waiwen", "setAdapter：");
+
+
+        account = new Account(getApplicationContext());
+        getOnlinedevicelist();
+        if(equitmentSelectFragment == null){
+            equitmentSelectFragment = EquitmentSelectFragment.newInstance();
+        }
+        notifybackup();
+    }
+
+
+
+
+
+
 
     @Override
     protected int getLayoutId() {
@@ -202,6 +229,17 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             case R.id.img_backup:
                // fragmentManager.popBackStackImmediate();
                     holder.removeAllFragment();
+                break;
+            case R.id.bottom_setting:
+                if(setting_state){
+
+                    mAdapter.setShow_type(true);
+                    setting_state = false;
+
+                }else {
+                    mAdapter.setShow_type(false);
+                    setting_state = true;
+                }
                 break;
         }
     }
@@ -483,7 +521,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
 
     }
 
-    public void notifynamechange(int position,String name)
+    public void notifyNameChange(int position,String name)
     {
         OnlinedeviceList.get(position).setName(name);
         mAdapter.notifyDataSetChanged();

@@ -17,7 +17,6 @@ import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +24,10 @@ import java.util.List;
  */
 
 public class OnlineDeviceAdapter extends RecyclerView.Adapter<OnlineDeviceAdapter.MyHolder>{
+    public List<Device> getOnlineList() {
+        return OnlineList;
+    }
+
     private List<Device> OnlineList ;
     private Context mContext;
     private LayoutInflater mInflater;
