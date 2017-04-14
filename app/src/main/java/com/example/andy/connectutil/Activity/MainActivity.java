@@ -217,7 +217,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 break;
             case R.id.bottom_add_ibtn:
                 addEquitment();
-
+                setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
 
