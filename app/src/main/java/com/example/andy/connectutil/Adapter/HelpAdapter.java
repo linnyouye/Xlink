@@ -51,7 +51,7 @@ private HelpActivity helpActivity = null;
     public void onBindViewHolder(HelpAdapter.MyViewHolder holder, int position) {
           HelpItem helpItem = helpItemList.get(position);
           holder.tv_helpName.setText(helpItem.getHelpName());
-
+        //  holder.image_helpView.setImageResource(helpItem.getHelpInfo());
           holder.bindItem(position,helpItem.getHelpInfo());
 
     }
@@ -75,11 +75,13 @@ private HelpActivity helpActivity = null;
             super(itemView);
             tv_helpName = (TextView) itemView.findViewById(R.id.item_help_tv);
             image_helpView = (ImageView) itemView.findViewById(R.id.item_image_helpInfo) ;
-           itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bindItem(int pos,int Res){
-            image_helpView.setImageResource(Res);
+
+           image_helpView.setImageResource(Res);
             if (pos == opened){
                 image_helpView.setVisibility(View.VISIBLE);
            }

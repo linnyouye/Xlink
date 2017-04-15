@@ -67,8 +67,8 @@ public class DragItemCallback extends ItemTouchHelper.Callback {
             addEquitAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
             onlineDeviceAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
         } else {
-            addEquitAdapter.notifyItemRangeChanged(toPosition,fromPosition-toPosition+1);
-            onlineDeviceAdapter.notifyItemRangeChanged(toPosition,fromPosition-toPosition+1);
+            addEquitAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
+            onlineDeviceAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
         }
 
         return true;

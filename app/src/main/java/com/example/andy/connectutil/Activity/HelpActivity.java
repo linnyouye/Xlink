@@ -20,6 +20,8 @@ import java.util.List;
 
 public class HelpActivity extends BarActivity {
 
+
+
     private  LinearLayoutManager linearLayoutManager;
     private List<HelpItem> helpItemList;
 
