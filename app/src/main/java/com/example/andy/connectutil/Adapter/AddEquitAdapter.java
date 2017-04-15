@@ -112,7 +112,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
         viewHolder.edit_name.setVisibility(View.GONE);
         viewHolder.right_ibtn.setClickable(false);
         //每次刷新，初始状态变成不拦截
-        
+
         viewHolder.tv_realname.setVisibility(View.VISIBLE);
         viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
             @Override
