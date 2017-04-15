@@ -3,6 +3,8 @@ package com.example.andy.connectutil.Fragment.DeviceFragment;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.Activity.MyApplication;
 import com.example.andy.connectutil.Fragment.HolderListener;
 import com.example.andy.connectutil.Helper.FanLightHelper;
 import com.example.andy.connectutil.R;
@@ -26,6 +29,7 @@ import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;
 import com.example.andy.connectutil.entity.Device.ToastUtil;
 
+import java.nio.MappedByteBuffer;
 import java.util.List;
 
 import io.xlink.wifi.sdk.XDevice;
@@ -41,7 +45,8 @@ import io.xlink.wifi.sdk.listener.XlinkNetListener;
 
 public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
-   public static final String TAG = "FanLightFragment";
+    private Handler handler;
+    public static final String TAG = "FanLightFragment";
     private HolderListener holderListener;
     private boolean fanstate=false;
     private boolean lightstate=false;
@@ -78,6 +83,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
 
        /* testdata();*/
 
@@ -116,6 +122,92 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
 
         controlView.setArcState(-1);
         brightnss.setTextColor(this.getResources().getColor(R.color.linear_item_bg_normal));
+        //处理加减的长按和点击事件
+        handler = new Handler() {
+            public void handleMessage (Message msg){
+                switch (msg.what) {
+                    case 0x01:
+                        if(lightstate)
+                        {
+                            if(fanLinght.getBrightness()>=100)
+                            {
+                                ToastUtil.showToast("已经是最大亮度");
+                            }else
+                            {
+                                lighting+=5;
+                                if(lighting>100)
+                                    lighting=100;
+                                fanLinght.setBrightness((byte) lighting);
+                                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE, lighting);
+                                brightnss.setText(lighting+"");
+                            }
+
+                        }else
+                        {
+                            ToastUtil.showToast("请打开灯开关");
+                        }
+
+                        break;
+                    case 0x00:
+                        if(lightstate)
+                        {
+                            if(fanLinght.getBrightness()>=100)
+                            {
+                                ToastUtil.showToast("已经是最大亮度");
+                            }else {
+                                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE, ++lighting);
+                                brightnss.setText(lighting + "");
+                                fanLinght.setBrightness(lighting);
+                            }
+                        }else
+                        {
+                            ToastUtil.showToast("请打开灯开关");
+                        }
+                    break;
+                    case 0x10:
+                        if(lightstate)
+                        {
+                            if(fanLinght.getBrightness()<=0)
+                            {
+                                ToastUtil.showToast("已经是最小亮度");
+                            }else
+                            {
+                                lighting+=5;
+                                if(lighting>100)
+                                    lighting=100;
+                                fanLinght.setBrightness((byte) lighting);
+                                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE, lighting);
+                                brightnss.setText(lighting+"");
+                            }
+
+                        }else
+                        {
+                            ToastUtil.showToast("请打开灯开关");
+                        }
+                        break;
+                    case 0x11:
+                        if(lightstate)
+                        {
+                            if(fanLinght.getBrightness()<=0)
+                            {
+                                ToastUtil.showToast("已经是最小亮度");
+                            }else
+                            {
+                                fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
+                                brightnss.setText(lighting+"");
+                                fanLinght.setBrightness(lighting);
+                            }
+
+                        }else
+                        {
+                            ToastUtil.showToast("请打开灯开关");
+                        }
+                    default:
+                        break;
+                }
+            }
+        };
+
         if(device.getData()!=null)
         {
             fanLinght=(FanLinght)device.getData();
@@ -481,9 +573,16 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             public void onClick(View v) {
                 if(lightstate)
                 {
-                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
-                    brightnss.setText(lighting+"");
-                    fanLinght.setBrightness(lighting);
+                    if(fanLinght.getBrightness()==0)
+                    {
+                        ToastUtil.showToast("已经是最小亮度");
+                    }else
+                    {
+                        fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,--lighting);
+                        brightnss.setText(lighting+"");
+                        fanLinght.setBrightness(lighting);
+                    }
+
                 }else
                 {
                     ToastUtil.showToast("请打开灯开关");
@@ -491,21 +590,102 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             }
         });
 
+        imageButtonToplef.setOnTouchListener(new View.OnTouchListener() {
+            boolean OnClick;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final long time=System.currentTimeMillis();
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
+                    OnClick = true;
+                    final Thread t = new Thread(){
 
-        imageButtonTopRight.setOnClickListener(new View.OnClickListener() {
+                        public void run() {
+                            while (OnClick){
+                                long now=System.currentTimeMillis();
+                                if(now-time>399)
+                                {
+                                    handler.sendEmptyMessage(0x11);
+                                }else
+                                {
+                                    handler.sendEmptyMessage(0x10);
+                                }
+                                try {
+                                    Thread.sleep(300);
+                                }catch(InterruptedException e){
+                                    e.printStackTrace();
+                                }
+
+                                //新开启的线程中不能修改UI界面，通过handler与UI线程交互
+                            }
+                        }
+                    };
+                    t.start();
+
+                }else if( event.getAction() == MotionEvent.ACTION_UP ){
+                    OnClick = false;
+                }
+                return false;
+            }
+        });
+
+        imageButtonTopRight.setOnTouchListener(new View.OnTouchListener() {
+            boolean OnClick;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final long time=System.currentTimeMillis();
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
+                    OnClick = true;
+                    final Thread t = new Thread(){
+
+                        public void run() {
+                            while (OnClick){
+                                long now=System.currentTimeMillis();
+                                if(now-time>399)
+                                {
+                                    handler.sendEmptyMessage(0x01);
+                                }else
+                                {
+                                    handler.sendEmptyMessage(0x00);
+                                }
+                                try {
+                                    Thread.sleep(300);
+                                }catch(InterruptedException e){
+                                    e.printStackTrace();
+                                }
+
+                                //新开启的线程中不能修改UI界面，通过handler与UI线程交互
+                            }
+                        }
+                    };
+                    t.start();
+
+                }else if( event.getAction() == MotionEvent.ACTION_UP ){
+                    OnClick = false;
+                }
+                return false;
+            }
+
+        });
+
+       /* imageButtonTopRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(lightstate)
                 {
-                    fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE,++lighting);
-                    brightnss.setText(lighting+"");
-                    fanLinght.setBrightness(lighting);
+                    if(fanLinght.getBrightness()==100)
+                    {
+                        ToastUtil.showToast("已经是最大亮度");
+                    }else {
+                        fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE, ++lighting);
+                        brightnss.setText(lighting + "");
+                        fanLinght.setBrightness(lighting);
+                    }
                 }else
                 {
                     ToastUtil.showToast("请打开灯开关");
                 }
             }
-        });
+        });*/
 
         imageButtonButtomLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -926,4 +1106,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             device.setData(fanLinght);
         super.onDestroy();
     }
-}
+
+
+
+    }
