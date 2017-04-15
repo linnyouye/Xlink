@@ -172,9 +172,9 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                                 ToastUtil.showToast("已经是最小亮度");
                             }else
                             {
-                                lighting+=5;
-                                if(lighting>100)
-                                    lighting=100;
+                                lighting-=5;
+                                if(lighting<0)
+                                    lighting=0;
                                 fanLinght.setBrightness((byte) lighting);
                                 fanLightHelper.setDataPoint(8, XlinkCode.DP_TYPE_BYTE, lighting);
                                 brightnss.setText(lighting+"");
@@ -208,11 +208,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             }
         };
 
-        if(device.getData()!=null)
-        {
-            fanLinght=(FanLinght)device.getData();
-            setOnClike();
-        }
+
             if(device.isOnline())
             {
                    fanLightHelper=new FanLightHelper(device);
@@ -1106,7 +1102,5 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
             device.setData(fanLinght);
         super.onDestroy();
     }
-
-
 
     }
