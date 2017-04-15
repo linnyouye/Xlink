@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
+import com.example.andy.connectutil.Activity.MyApplication;
 import com.example.andy.connectutil.Fragment.HolderListener;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Device.ToastUtil;
 import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
@@ -171,11 +173,11 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                     //改变
                     notifyItemChanged(viewHolder.getAdapterPosition());
 
-                    Toast.makeText(mContext, "删除设备开始", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("删除设备开始");
             /*    LoginUtil.renameDevice(new HttpUtils.HttpUtilsListner() {
                     @Override
                     public void onSuccess(String content) {
-                        Toast.makeText(mContext,"修改成功",Toast.LENGTH_SHORT).show();
+                        ToastUtil.showToast("修改成功");
                     }
 
                     @Override
@@ -199,13 +201,13 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                /* LoginUtil.unsubDevice(new HttpUtils.HttpUtilsListner() {
                     @Override
                     public void onSuccess(String content) {
-                    Toast.makeText(mContext,"取消订阅成功",Toast.LENGTH_SHORT).show();
+                   ToastUtil.showToast("取消订阅成功");
                         mainActivity.getOnlinedevicelist();
                     }
 
                     @Override
                     public void onFailed(int code, String msg) {
-                        Toast.makeText(mContext,"取消订阅失败"+msg,Toast.LENGTH_SHORT).show();
+                       ToastUtil.showToast("取消订阅失败");
                     }
                 },equitmentList.get(position).getxDevice().getDeviceId());*/
                 }
@@ -247,16 +249,16 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                                 @Override
                                 public void onFailed(int code, String msg) {
                                     if (code > 4000000) {
-                                        ErrorMessage e = new ErrorMessage(mContext, code);
+                                        ErrorMessage e = new ErrorMessage(MyApplication.getContext(), code);
                                     } else {
-                                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                                        ToastUtil.showToast(msg);
                                     }
                                 }
                             }, name, equitmentList.get(position).getProduct_ID(), equitmentList.get(position).getxDevice().getDeviceId());
                             return true;
                         } else//字符大小不可以超过32个
                         {
-                            Toast.makeText(mContext, "不可以超过8个字", Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast("不可以超过8个字");
                         }
 
                     }

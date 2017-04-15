@@ -24,6 +24,7 @@ import com.example.andy.connectutil.View.ControFanLedlView;
 import com.example.andy.connectutil.View.ControlView;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.FanLinght;
+import com.example.andy.connectutil.entity.Device.ToastUtil;
 
 import java.util.List;
 
@@ -129,7 +130,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                    setOnClike();
             }else
             {
-                Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("设备不在线");
             }
       /*  fanLightHelper=new FanLightHelper(device);
         initData();
@@ -225,7 +226,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
         controlView.setGeerNum(fanLinght.FanModel+1);
         if(fanLinght.FanPosition<1)
         {
-            controlView.setArcState((int)1);
+            controlView.setArcState((int)-1);
         }else
         {
             controlView.setArcState((int) fanLinght.FanPosition);
@@ -356,7 +357,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)1);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -370,7 +371,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)2);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
 
@@ -385,7 +386,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)3);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -399,7 +400,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)4);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -413,7 +414,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)5);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -427,7 +428,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)6);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -441,7 +442,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)7);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -455,7 +456,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)8);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }
@@ -469,7 +470,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanPosition((byte)9);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开电源！",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开电源");
                 }
 
             }});
@@ -485,7 +486,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setBrightness(lighting);
                 }else
                 {
-                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开灯开关");
                 }
             }
         });
@@ -501,7 +502,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setBrightness(lighting);
                 }else
                 {
-                    Toast.makeText(getActivity(),"灯开关还没开",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开灯开关");
                 }
             }
         });
@@ -654,7 +655,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanDirection((byte)0);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开风扇开关");
                 }
 
             }
@@ -673,7 +674,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanDirection((byte)1);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开风扇开关");
                 }
 
             }
@@ -696,7 +697,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanModel((byte)0);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开风扇开关");
                 }
 
             }
@@ -715,7 +716,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setFanModel((byte)1);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开风扇",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开风扇开关");
                 }
 
             }
@@ -738,7 +739,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setCoolor_Tem((byte)0);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开开关");
                 }
 
 
@@ -758,7 +759,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setCoolor_Tem((byte)1);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开开关");
                 }
 
             }
@@ -776,7 +777,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
                     fanLinght.setCoolor_Tem((byte)2);
                 }else
                 {
-                    Toast.makeText(getActivity(),"请打开灯",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("请打开开关");
                 }
 
             }
@@ -914,7 +915,7 @@ public class FanLightFragment extends Fragment implements View.OnTouchListener{
     public boolean onTouch(View v, MotionEvent event) {
         if(!device.isOnline())
         {
-            Toast.makeText(getActivity(),"设备不在线",Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast("设备不在线");
         }
         return true;
     }
