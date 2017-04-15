@@ -88,15 +88,15 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
                 case Content.FanLIght_ID:
                     DeviceName = "风扇灯";
-                    resource = R.drawable.buttom_menu_fan_light;
+                    resource = R.drawable.icon_item_fanled_white;
                     break;
                 case Content.Light_ID:
                     DeviceName = "灯";
-                    resource = R.drawable.button_menu_led;
+                    resource = R.drawable.icon_led;
                     break;
                 case Content.LEDLIght_ID:
                     DeviceName = "LED灯";
-                    resource = R.drawable.button_menu_fanc;
+                    resource = R.drawable.icon_light;
                     break;
                 case Content.BathBully_ID:
                     DeviceName = "浴霸";
