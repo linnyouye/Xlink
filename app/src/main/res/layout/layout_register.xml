@@ -17,7 +17,7 @@
             android:id="@+id/ibtn_backup"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:background="@color/colorControlBtnEnd"
+            android:background="@color/colorMainGray"
             android:src="@drawable/backup"
             android:layout_height="match_parent"
            android:layout_width="70dp"

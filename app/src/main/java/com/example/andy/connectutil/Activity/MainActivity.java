@@ -145,6 +145,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         bottomRecyclerView = obtainView(R.id.pop_recycleview);
         bottomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         OnlineDeviceRecycleview = obtainView(R.id.Online_device);
         OnlineDeviceRecycleview.setLayoutManager(new LinearLayoutManager(this));
         Log.d("waiwen", "initview");
@@ -219,7 +220,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 setBottomSheetOnOff();
                 break;
             case R.id.img_backup:
-
+       //  fragmentManager.popBackStackImmediate();
                 holder.removeAllFragment();
                 break;
             case R.id.bottom_setting:

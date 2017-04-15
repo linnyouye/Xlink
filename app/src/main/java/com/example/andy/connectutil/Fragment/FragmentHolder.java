@@ -127,8 +127,8 @@ fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUS
         while (!fragmentstack.peek().equals("Main"))
             fragmentstack.pop();
         Fragment_State=fragmentstack.peek();
-        mainActivity.notifybackup();
-
+//        mainActivity.notifybackup();
+mainActivity.setFraagment_State(MainActivity.TAG);
     }
 //    public boolean removeOne()
 //    {

@@ -306,7 +306,7 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onSuccess(String content) {
              //   cancelProgressDialog();
-                Toast.makeText(RegisterAndLoginActivity.this, "正在登陆。。", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterAndLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                 mAccount.setAccount(account,password);
                 XlinkConnect.getLoginResult(content);
                 XlinkConnect.init(getApplicationContext());

@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="android:listDivider">@drawable/shape_recycleview_divider</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -37,7 +37,7 @@
         <item name="android:id">@id/title_bar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:background">@color/colorControlBtnEnd</item>
+        <item name="android:background">@color/colorMainGray</item>
     </style>
     <style name="TitleTextView">
         <item name="android:layout_width">match_parent</item>
@@ -50,7 +50,7 @@
         <item name="android:textColor">#eeeeff</item>
         <item name="android:gravity">center</item>
         <item name="android:id">@id/title_text</item>
-        <item name="android:background">@color/colorControlBtnEnd</item>
+        <item name="android:background">@color/colorMainGray</item>
     </style>
 
 
@@ -92,10 +92,10 @@
         <item name="android:background">@drawable/selector_select_ibtn</item>
         <item name="android:textSize">18sp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">60dp</item>
-        <item name="android:layout_marginLeft">30dp</item>
-        <item name="android:layout_marginRight">30dp</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">25dp</item>
     </style>
 <!---->
     <style name="ibtn_icon_size_stytle">
