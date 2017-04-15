@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:background="@color/colorMainGray"
+    android:background="@color/colorControlBtnEnd"
 
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
@@ -12,8 +12,13 @@
     android:src="@drawable/backup"
     style="@style/ibtn_icon_size_stytle"
 
-
     />
+
+    <View  android:layout_height="2px"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_divider"
+        />
 
     <TextView
         android:id="@+id/tv_toolbar_others"
@@ -22,11 +27,5 @@
         android:gravity="center"
         android:text="标题"
         android:textColor="#fff" />
-
-    <View  android:layout_height="2px"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape_divider"
-        />
 
 </FrameLayout>

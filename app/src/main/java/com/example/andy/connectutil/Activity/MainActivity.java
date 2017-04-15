@@ -176,7 +176,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         int spacingInPixels = 8;
         bottomRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
-
         bottomRecyclerView.setAdapter(mAdapter);
 
         onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);

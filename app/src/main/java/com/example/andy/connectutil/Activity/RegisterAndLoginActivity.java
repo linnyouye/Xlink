@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
@@ -44,6 +45,9 @@ public class RegisterAndLoginActivity extends Activity {
 
     private Account mAccount;
 
+
+
+    private ImageButton ibtn_backup;
     private View layoutRegister;
     private View layoutLogin;
 
@@ -53,7 +57,7 @@ public class RegisterAndLoginActivity extends Activity {
     private EditText rEtUserName;
     private Button btnRegister;
     private Button btnGetCode;
-    private Button btnBack;
+
     private View authCodeItem;
 
     private EditText lEtAccount;
@@ -87,6 +91,7 @@ public class RegisterAndLoginActivity extends Activity {
         setContentView(R.layout.activity_register_and_login);
         ButterKnife.bind(this);
 
+
         layoutRegister=findViewById(R.id.layout_register);
         layoutLogin=findViewById(R.id.layout_login);
 
@@ -96,7 +101,8 @@ public class RegisterAndLoginActivity extends Activity {
         rEtUserName=(EditText)layoutRegister.findViewById(R.id.et_user_name);
         btnRegister=(Button)layoutRegister.findViewById(R.id.btn_register);
         btnGetCode=(Button)layoutRegister.findViewById(R.id.btn_get_code);
-        btnBack=(Button)layoutRegister.findViewById(R.id.btnBack);
+        ibtn_backup = (ImageButton)layoutRegister.findViewById(R.id.ibtn_backup);
+       // btnBack=(Button)layoutRegister.findViewById(R.id.btnBack);
         authCodeItem=layoutRegister.findViewById(R.id.auth_code_item);
 
         lEtAccount=(EditText)layoutLogin.findViewById(R.id.et_account);
@@ -145,7 +151,7 @@ public class RegisterAndLoginActivity extends Activity {
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ibtn_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 layoutRegister.setVisibility(View.GONE);

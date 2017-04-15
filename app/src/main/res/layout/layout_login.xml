@@ -16,7 +16,7 @@
 
             android:id="@+id/to_register"
             style="@style/TitleActionButton"
-            android:text="去注册" />
+            android:text="注册" />
 
     </RelativeLayout>
 

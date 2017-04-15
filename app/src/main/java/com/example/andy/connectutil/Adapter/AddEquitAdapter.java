@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
-import com.example.andy.connectutil.Fragment.HolderListener;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Net.Content;
@@ -28,8 +27,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.xlink.wifi.sdk.XDevice;
-
-import static io.xlink.wifi.sdk.e.a.i;
 
 
 /**
@@ -170,6 +167,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                     mainActivity.delectDevice(viewHolder.getAdapterPosition());
                     //改变
                     notifyItemChanged(viewHolder.getAdapterPosition());
+              //   notifyDataSetChanged();
 
                     Toast.makeText(mContext, "删除设备开始", Toast.LENGTH_SHORT).show();
             /*    LoginUtil.renameDevice(new HttpUtils.HttpUtilsListner() {

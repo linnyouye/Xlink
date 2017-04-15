@@ -4,19 +4,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
-import com.example.andy.connectutil.entity.Net.Content;
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
-import com.example.andy.connectutil.entity.Net.Key;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
-import com.example.andy.connectutil.entity.Net.Url;
-
-import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +27,11 @@ import butterknife.OnClick;
  */
 
 public class ResetPasswordActivity extends RegisBasicActivity {
+
+
+
+    private TextView tv_title;
+    private ImageButton ibtn_backup;
 
     private Account mAccount;
     private static final int REGISTER_MODE_PHONE=0;
@@ -57,7 +59,22 @@ public class ResetPasswordActivity extends RegisBasicActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         setContentView(R.layout.activity_reset_password);
+
+
         ButterKnife.bind(this);
+
+
+        tv_title =(TextView) findViewById(R.id.tv_toolbar_others);
+        tv_title.setText("重置密码");
+        ibtn_backup = (ImageButton)findViewById(R.id.ibtn_toolbar_backup);
+        ibtn_backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
 
         mAccount=new Account(this);
         String user=mAccount.getUser();
