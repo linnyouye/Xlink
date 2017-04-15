@@ -63,7 +63,6 @@ public class ResetPasswordActivity extends RegisBasicActivity {
 
         ButterKnife.bind(this);
 
-
         tv_title =(TextView) findViewById(R.id.tv_toolbar_others);
         tv_title.setText("重置密码");
         ibtn_backup = (ImageButton)findViewById(R.id.ibtn_toolbar_backup);
@@ -156,7 +155,6 @@ public class ResetPasswordActivity extends RegisBasicActivity {
             }
         });
     }
-
 
     private void resetPassword() {
         final String account = etAccount.getText().toString();

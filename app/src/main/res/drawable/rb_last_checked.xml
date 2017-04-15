@@ -5,6 +5,6 @@
         android:bottomRightRadius="@dimen/rb_radius"
         android:topRightRadius="@dimen/rb_radius" />
 
-    <solid android:color="@color/rb_checked" />
+    <solid android:color="@color/colorBottomBtnStart" />
 
 </shape>
