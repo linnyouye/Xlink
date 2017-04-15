@@ -14,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.andy.connectutil.Activity.MyApplication;
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.WiFiConfig;
 import com.example.andy.connectutil.XlinkConnect;
 import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Device.ToastUtil;
 import com.example.andy.connectutil.entity.Net.Content;
+import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
@@ -61,7 +64,7 @@ public class CountDownFragment extends BaseFragment {
     private OnSmartLinkListener listner = new OnSmartLinkListener() {
         @Override
         public void onLinked(SmartLinkedModule smartLinkedModule) {
-            Toast.makeText(getActivity(), "连接成功", Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast("连接成功");
             getExitDevice();
         }
 
@@ -72,6 +75,9 @@ public class CountDownFragment extends BaseFragment {
 
         @Override
         public void onTimeOut() {
+
+            ToastUtil.showToast("连接失败");
+
             notifyMainActivity();
         }
     };
@@ -170,7 +176,7 @@ public class CountDownFragment extends BaseFragment {
 
 
     private void configWiFi(String password) {
-        Toast.makeText(mActivity, "开始配网", Toast.LENGTH_SHORT).show();
+        ToastUtil.showToast("开始配网");
         WiFiConfig wiFiConfig = new WiFiConfig(getActivity(), listner);
         if (password == null)
             password = "";
@@ -182,7 +188,7 @@ public class CountDownFragment extends BaseFragment {
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getActivity(), "获取设备成功", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("获取设备成功");
                 Exitslist = JsonParser.parseDeviceList(content);
                 for (Device d : Exitslist) {
                     MacList.add(d.getxDevice().getMacAddress());
@@ -192,7 +198,13 @@ public class CountDownFragment extends BaseFragment {
 
             @Override
             public void onFailed(int code, String msg) {
-                Toast.makeText(getActivity(), "获取设备失败", Toast.LENGTH_SHORT).show();
+                if(code>4000000)
+                {
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
+                }else
+                {
+                    ToastUtil.showToast(msg);
+                }
                 Log.d(TAG, "onFailed: 获取设备列表失败");
             }
         });
@@ -205,14 +217,14 @@ public class CountDownFragment extends BaseFragment {
         w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
             @Override
             public void getDevice(XDevice device) {
-                Toast.makeText(getActivity(), "扫描到设备", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("扫描到设备");
                 devicelist.add(device);
                 BindDevice();
             }
 
             @Override
             public void failed() {
-                Toast.makeText(getActivity(), "扫描失败", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("扫描失败");
                 notifyMainActivity();
             }
         });
@@ -249,10 +261,10 @@ public class CountDownFragment extends BaseFragment {
                     public void bindDevice(XDevice device, int i) {
                         if (i == XlinkCode.SUCCEED) {
                             Log.d(TAG, "bindDevice:  绑定设备成功");
-                            Toast.makeText(getActivity(), "绑定设备成功", Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast("获取设备成功");
                             notifyMainActivity();
                         } else {
-                            Toast.makeText(getActivity(), "绑定设备失败"+i, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast("获取设备失败");
                             Log.d(TAG, "bindDevice: 绑定设备失败");
                             notifyMainActivity();
                         }
@@ -262,65 +274,6 @@ public class CountDownFragment extends BaseFragment {
             }
         }
 
-    }
-
-
-        public void firstget ()
-        {
-            LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
-                @Override
-                public void onSuccess(String content) {
-                    Exitslist = JsonParser.parseDeviceList(content);
-                    for (Device d : Exitslist) {
-                        MacList.add(d.getxDevice().getMacAddress());
-                    }
-                    firstScan();
-                }
-
-                @Override
-                public void onFailed(int code, String msg) {
-                    Log.d(TAG, "onFailed: 获取设备列表失败");
-                }
-            });
-        }
-
-    public void firstScan() {
-        WiFiConfig w = new WiFiConfig(getActivity(), listner);
-        w.ScanWifi(Content.FanLIght_ID, new WiFiConfig.OnBindDeviceListner() {
-            @Override
-            public void getDevice(XDevice device) {
-                Toast.makeText(getActivity(), "扫描到设备", Toast.LENGTH_SHORT).show();
-                devicelist.add(device);
-                firstBindDivce();
-            }
-
-            @Override
-            public void failed() {
-                Toast.makeText(getActivity(), "扫描失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    public void firstBindDivce() {
-        XlinkConnect.init(getActivity());
-        for (int i = 0; i < devicelist.size(); i++) {
-            if (!MacList.contains(devicelist.get(i).getMacAddress())) {
-                XlinkConnect.bindDevice(mActivity,devicelist.get(i), new XlinkConnect.BinderDeviceListner() {
-                    @Override
-                    public void bindDevice(XDevice device, int i) {
-                        if (i == XlinkCode.SUCCEED) {
-                            Log.d(TAG, "bindDevice:  绑定设备成功");
-                            Toast.makeText(getActivity(), "绑定设备成功\n请返回", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "bindDevice: 绑定设备失败");
-                        }
-
-                    }
-                });
-            }
-
-        }
     }
     //最后通知MainActivity
     private void notifyMainActivity() {

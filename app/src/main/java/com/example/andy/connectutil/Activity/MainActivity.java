@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.andy.connectutil.Adapter.AddEquitAdapter;
 import com.example.andy.connectutil.Adapter.DragItemCallback;
@@ -35,6 +34,7 @@ import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.View.SpaceItemDecoration;
 import com.example.andy.connectutil.entity.Device.Device;
+import com.example.andy.connectutil.entity.Device.ToastUtil;
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.JsonParser;
@@ -342,7 +342,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         } else if (!fragmentManager.popBackStackImmediate()) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - firstTime > 2000) {
-                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("再按一次退出程序");
                 firstTime = secondTime;
             } else {
                 super.onBackPressed();
@@ -415,7 +415,6 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         LoginUtil.getDevices(new HttpUtils.HttpUtilsListner() {
             @Override
             public void onSuccess(String content) {
-                Toast.makeText(getApplicationContext(), "获取设备列表成功", Toast.LENGTH_SHORT).show();
                 List<Device> list = new ArrayList<Device>();
                 list = JsonParser.parseDeviceList(content);
                 for (Device device : list) {
@@ -436,9 +435,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             @Override
             public void onFailed(int code, String msg) {
                 if (code > 4000000) {
-                    ErrorMessage e = new ErrorMessage(getApplicationContext(), code);
+                    ErrorMessage e = new ErrorMessage(MyApplication.getContext(), code);
                 } else {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast(msg);
                 }
             }
         });
@@ -486,9 +485,9 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 @Override
                 public void onFailed(int code, String msg) {
                     if (code > 4000000) {
-                        ErrorMessage e = new ErrorMessage(getApplicationContext(), code);
+                        ErrorMessage e = new ErrorMessage(MyApplication.getContext(), code);
                     } else {
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                        ToastUtil.showToast(msg);
                     }
                 }
             }, OnlinedeviceList.get(i).getProduct_ID(), OnlinedeviceList.get(i).getxDevice().getDeviceId());

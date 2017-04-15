@@ -57,7 +57,6 @@ public class DragItemCallback extends ItemTouchHelper.Callback {
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
                 Collections.swap(addEquitAdapter.getEquitmentList(),i,i-1);
-
             }
 
         }

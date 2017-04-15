@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
+
+import com.example.andy.connectutil.entity.Device.ToastUtil;
+import com.example.andy.connectutil.entity.Net.Content;
+
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
@@ -152,10 +156,10 @@ public class ResetPasswordActivity extends RegisBasicActivity {
 
                 if(code>4000000)
                 {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast(msg);
                 }
             }
         });
@@ -166,16 +170,16 @@ public class ResetPasswordActivity extends RegisBasicActivity {
         String code = etCode.getText().toString();
         final String password = etPassword.getText().toString();
         if (password.equals("")) {
-            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast("请输入密码");
         } else if (account.equals("")) {
-            Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast("请输入账号");
         } else if (code.equals("")) {
-            Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast("请输入验证码");
         } else {
             LoginUtil.resetPassword(account, code, password, new HttpUtils.HttpUtilsListner() {
                 @Override
                 public void onSuccess(String content) {
-                    Toast.makeText(getApplicationContext(), "重置密码成功", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("重置成功");
                     setResult(RESULT_OK);
                     mAccount.setAccount(account,password);
                     finish();
@@ -185,10 +189,10 @@ public class ResetPasswordActivity extends RegisBasicActivity {
                 public void onFailed(int code, String msg) {
                     if(code>4000000)
                     {
-                        ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                        ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                     }else
                     {
-                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                        ToastUtil.showToast(msg);
                     }
                 }
             });

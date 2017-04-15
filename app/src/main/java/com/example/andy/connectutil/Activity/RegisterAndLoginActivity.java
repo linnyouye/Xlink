@@ -14,11 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.XlinkConnect;
+import com.example.andy.connectutil.andy;
+import com.example.andy.connectutil.entity.Device.ToastUtil;
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
 import com.example.andy.connectutil.entity.Net.LoginUtil;
@@ -234,10 +235,10 @@ public class RegisterAndLoginActivity extends Activity {
             public void onFailed(int code, String msg) {
                 if(code>4000000)
                 {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast(msg);
                 }
 
             }
@@ -263,10 +264,10 @@ public class RegisterAndLoginActivity extends Activity {
             public void onFailed(int code, String msg) {
                 if(code>4000000)
                 {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast(msg);
                 }
             }
         });
@@ -293,10 +294,10 @@ public class RegisterAndLoginActivity extends Activity {
             public void onFailed(int code, String msg) {
                 if(code>4000000)
                 {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast("获取设备列表成功");
                 }
             }
         });
@@ -309,7 +310,9 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onSuccess(String content) {
              //   cancelProgressDialog();
-                Toast.makeText(RegisterAndLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+
+                ToastUtil.showToast("登陆成功");
+
                 mAccount.setAccount(account,password);
                 XlinkConnect.getLoginResult(content);
                 XlinkConnect.init(getApplicationContext());
@@ -324,10 +327,10 @@ public class RegisterAndLoginActivity extends Activity {
                // showToast(msg);
                 if(code>4000000)
                 {
-                    ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                    ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToast(msg);
                 }
                 if(launchView.getVisibility()== View.VISIBLE){
                     hideLauncherView();
@@ -377,10 +380,10 @@ public class RegisterAndLoginActivity extends Activity {
                 public void onFailed(int code, String msg) {
                     if(code>4000000)
                     {
-                        ErrorMessage e=new ErrorMessage(getApplicationContext(),code);
+                        ErrorMessage e=new ErrorMessage(MyApplication.getContext(),code);
                     }else
                     {
-                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                        ToastUtil.showToast(msg);
                     }
                     if(launchView.getVisibility()== View.VISIBLE){
                         hideLauncherView();

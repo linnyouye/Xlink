@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andy.connectutil.Activity.HelpActivity;
 import com.example.andy.connectutil.Bean.HelpItem;
 import com.example.andy.connectutil.R;
 
@@ -27,11 +28,12 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
     List<HelpItem> helpItemList;
     Context context;
     private LayoutInflater mInflater;
-
+private HelpActivity helpActivity = null;
     public HelpAdapter(Context context, List<HelpItem> list) {
         super();
         this.helpItemList = list;
         this.context = context;
+         this.helpActivity = (HelpActivity)context;
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -49,6 +51,7 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
     public void onBindViewHolder(HelpAdapter.MyViewHolder holder, int position) {
           HelpItem helpItem = helpItemList.get(position);
           holder.tv_helpName.setText(helpItem.getHelpName());
+
           holder.bindItem(position,helpItem.getHelpInfo());
 
     }
@@ -77,29 +80,34 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
 
         public void bindItem(int pos,int Res){
             image_helpView.setImageResource(Res);
-            if (pos == opened)
+            if (pos == opened){
                 image_helpView.setVisibility(View.VISIBLE);
+           }
             else
-                image_helpView.setVisibility(View.GONE);
+            {   image_helpView.setVisibility(View.GONE);
+
+            }
 
         }
 
 
         @Override
         public void onClick(View v) {
-            if (opened ==getPosition()) {
+            if (opened ==getAdapterPosition()) {
                 opened = -1;
-                notifyItemChanged(getPosition());
+                notifyItemChanged(getAdapterPosition());
+
             }
             else {
                 int oldOpened = opened;
-                opened = getPosition();
-                notifyItemChanged(oldOpened);
+                opened = getAdapterPosition();
+
                 notifyItemChanged(opened);
+                helpActivity.smoothMoveToPosition(getAdapterPosition());
+               // notifyItemChanged(oldOpened);
             }
 
         }
     }
-
 
 }

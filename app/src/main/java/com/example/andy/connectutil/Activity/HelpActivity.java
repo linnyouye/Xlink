@@ -20,7 +20,13 @@ import java.util.List;
 
 public class HelpActivity extends BarActivity {
 
+    private  LinearLayoutManager linearLayoutManager;
     private List<HelpItem> helpItemList;
+
+    public RecyclerView getRecyclerHelp() {
+        return recyclerHelp;
+    }
+
     private RecyclerView recyclerHelp;
     private HelpAdapter helpAdapter;
 
@@ -43,8 +49,8 @@ public class HelpActivity extends BarActivity {
         recyclerHelp = obtainView(R.id.recycleview_help);
         helpAdapter = new HelpAdapter(this, helpItemList);
 // 实现RecyclerView实现竖向列表展示模式
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerHelp.setLayoutManager(layoutManager);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerHelp.setLayoutManager(linearLayoutManager);
 
 
         recyclerHelp.setAdapter(helpAdapter);
@@ -61,4 +67,16 @@ public class HelpActivity extends BarActivity {
     protected int getLayoutId() {
         return R.layout.activity_help;
     }
+
+   public void smoothMoveToPosition(int position) {
+        int firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+        if(position <= lastPosition){
+            int top = recyclerHelp.getChildAt(position - firstPosition).getTop();
+            recyclerHelp.smoothScrollBy(0, top);
+        }
+
+    }
+
+
 }
