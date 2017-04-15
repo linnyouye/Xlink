@@ -72,7 +72,6 @@ public class CountDownFragment extends BaseFragment {
 
         @Override
         public void onTimeOut() {
-            Toast.makeText(getActivity(), "配网失败", Toast.LENGTH_SHORT).show();
             notifyMainActivity();
         }
     };

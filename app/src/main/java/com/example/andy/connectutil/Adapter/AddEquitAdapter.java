@@ -107,9 +107,10 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             DeviceName = equitmentList.get(position).getName();
             resource = returnDeviceDrawable(equitmentList.get(position).getProduct_ID());
         }
-
+        //右边的拖动ibtn和中间的edittext这时要隐藏
         viewHolder.right_ibtn.setVisibility(View.INVISIBLE);
         viewHolder.edit_name.setVisibility(View.GONE);
+        viewHolder.right_ibtn.setClickable(false);
         //每次刷新，初始状态变成不拦截
         viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -117,26 +118,22 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                 return false;
             }
         });
+        viewHolder.left_ibtn.setClickable(false);
+        if(!DeviceName.equals("")&& resource !=0 ){
+        viewHolder.tv_realname.setText(DeviceName);
+        //左边ibtn要设置设备图片和不可点击
+
+        viewHolder.left_ibtn.setImageResource(resource);}
 
         // 根据show_type进行相应的显示
         if (show_type) {
-            if (!DeviceName.equals("") && !(resource == 0)) {
-                //右边的拖动ibtn和中间的edittext这时要隐藏
-                viewHolder.right_ibtn.setVisibility(View.INVISIBLE);
-                viewHolder.right_ibtn.setClickable(false);
-                viewHolder.edit_name.setVisibility(View.GONE);
-                //这里重写是为了返回的时候拦截长按，否则在编辑长按返回正常显示后，这里也能长按编辑
-             viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-             public boolean onTouch(View v, MotionEvent event) {
-        return true;
-    }
-});
-                viewHolder.tv_realname.setText(DeviceName);
-                //左边ibtn要设置设备图片和不可点击
-                viewHolder.left_ibtn.setClickable(false);
-                viewHolder.left_ibtn.setImageResource(resource);
-            }
+            //这里重写是为了返回的时候拦截长按，否则在编辑长按返回正常显示后，这里也能长按编辑
+            viewHolder.tv_realname.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
 
 
         } else {
@@ -149,7 +146,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
                     if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                         //通知开始滑动
-                     mainActivity.getItemTouchHelper().startDrag(viewHolder);
+                        mainActivity.getItemTouchHelper().startDrag(viewHolder);
                     }
                     return true;
                 }
@@ -163,11 +160,11 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             viewHolder.left_ibtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                //    在主类的该方法写你的删除逻辑，已经传进去Position;
+                    //    在主类的该方法写你的删除逻辑，已经传进去Position;
                     mainActivity.delectDevice(viewHolder.getAdapterPosition());
                     //改变
-                    notifyItemChanged(viewHolder.getAdapterPosition());
-              //   notifyDataSetChanged();
+                    notifyDataSetChanged();
+                    //   notifyDataSetChanged();
 
                     Toast.makeText(mContext, "删除设备开始", Toast.LENGTH_SHORT).show();
             /*    LoginUtil.renameDevice(new HttpUtils.HttpUtilsListner() {
@@ -210,7 +207,6 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             });
 
 
-
             //长按中间的textview
             viewHolder.tv_realname.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -221,6 +217,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
                     viewHolder.edit_name.setClickable(true);
                     viewHolder.edit_name.requestFocus();
                     setEditTextFocused(viewHolder.edit_name);
+                    viewHolder.edit_name.setText(DeviceName);
                     return true;
                 }
             });
@@ -264,17 +261,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
             });
 
 
-
-
-
-
-
-
         }
-
-
-
-
 
 
         /* viewHolder.tv_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -299,6 +286,7 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+
         public EditText edit_name;
         public ImageButton right_ibtn;
         public TextView tv_realname;
@@ -330,9 +318,6 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
     }
 
-    public void setAddEquipmentListener(AddEquipmentListener addEquipmentListener) {
-        this.addEquipmentListener = addEquipmentListener;
-    }
 
     //返回图片id
     private int returnDeviceDrawable(String product_id) {

@@ -178,6 +178,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         bottomRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
         bottomRecyclerView.setAdapter(mAdapter);
+        mAdapter.setShow_type(true);
 
         onlineDeviceAdapter = new OnlineDeviceAdapter(this, OnlinedeviceList);
         OnlineDeviceRecycleview.setAdapter(onlineDeviceAdapter);
