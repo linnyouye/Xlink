@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andy.connectutil.Bean.HelpItem;
 import com.example.andy.connectutil.R;
 
 import java.util.List;
-
-import com.example.andy.connectutil.Bean.HelpItem;
 
 /**
  * Created by 95815 .
@@ -66,21 +66,21 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView tv_helpName;
-        public TextView tv_helpInfo;
+      public ImageView image_helpView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_helpName = (TextView) itemView.findViewById(R.id.item_help_tv);
-            tv_helpInfo = (TextView) itemView.findViewById(R.id.item_help_info);
+            image_helpView = (ImageView) itemView.findViewById(R.id.item_image_helpInfo) ;
            itemView.setOnClickListener(this);
         }
 
-        public void bindItem(int pos,String str){
-            tv_helpInfo.setText(str);
+        public void bindItem(int pos,int Res){
+            image_helpView.setImageResource(Res);
             if (pos == opened)
-                tv_helpInfo.setVisibility(View.VISIBLE);
+                image_helpView.setVisibility(View.VISIBLE);
             else
-                tv_helpInfo.setVisibility(View.GONE);
+                image_helpView.setVisibility(View.GONE);
 
         }
 

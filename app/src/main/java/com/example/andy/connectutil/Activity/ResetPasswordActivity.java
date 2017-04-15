@@ -31,6 +31,7 @@ public class ResetPasswordActivity extends RegisBasicActivity {
 
 
     private TextView tv_title;
+    private LinearLayout linearLayout_backup;
     private ImageButton ibtn_backup;
 
     private Account mAccount;
@@ -63,10 +64,14 @@ public class ResetPasswordActivity extends RegisBasicActivity {
 
         ButterKnife.bind(this);
 
-        tv_title =(TextView) findViewById(R.id.tv_toolbar_others);
+        tv_title =(TextView) findViewById(R.id.title_text);
         tv_title.setText("重置密码");
-        ibtn_backup = (ImageButton)findViewById(R.id.ibtn_toolbar_backup);
-        ibtn_backup.setOnClickListener(new View.OnClickListener() {
+        linearLayout_backup = (LinearLayout)findViewById(R.id.linearlayout_backup);
+
+
+
+//        ibtn_backup = (ImageButton)findViewById(R.id.ibtn_toolbar_backup);
+        linearLayout_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

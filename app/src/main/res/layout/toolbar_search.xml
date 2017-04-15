@@ -43,10 +43,6 @@
 
 </LinearLayout>
 
-    <View  android:layout_height="4px"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape_divider"
-
-        />
+   <include layout="@layout/layout_divider"/>
 
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import com.example.andy.connectutil.Adapter.HelpAdapter;
 import com.example.andy.connectutil.Bean.HelpItem;
 import com.example.andy.connectutil.R;
-import com.example.andy.connectutil.View.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +28,13 @@ public class HelpActivity extends BarActivity {
     protected void setBefortLayout() {
         super.setBefortLayout();
         helpItemList = new ArrayList<>();
-        helpItemList.add(new HelpItem("设备列表", "设备列表设备列表设备列表"));
-        helpItemList.add(new HelpItem("风扇灯", "设备列表设备列表设备列表" +
-                "设备列表设备列表设备列表"
-        ));
-        helpItemList.add(new HelpItem("灯", "设备列表设备列表设备列表"));
-        helpItemList.add(new HelpItem("LED", "设备列表设备列表设备列表"));
-        helpItemList.add(new HelpItem("浴霸", "设备列表设备列表设备列表"));
+        helpItemList.add(new HelpItem("设备列表", R.drawable.help_device_list));
+        helpItemList.add(new HelpItem("风扇灯", R.drawable.help_fan_light));
+        helpItemList.add(new HelpItem("灯", R.drawable.help_light));
+        helpItemList.add(new HelpItem("LED", R.drawable.help_led));
+        helpItemList.add(new HelpItem("浴霸", R.drawable.help_wash_heater));
+        helpItemList.add(new HelpItem("添加设备",R.drawable.help_add_device));
+        helpItemList.add(new HelpItem("设备列表属性",R.drawable.help_edit_device_list));
     }
 
     @Override
@@ -46,7 +45,7 @@ public class HelpActivity extends BarActivity {
 // 实现RecyclerView实现竖向列表展示模式
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerHelp.setLayoutManager(layoutManager);
-        recyclerHelp.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.VERTICAL,3,R.drawable.shape_recycleview_divider));
+
 
         recyclerHelp.setAdapter(helpAdapter);
 

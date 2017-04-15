@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.andy.connectutil.R;
@@ -46,7 +47,7 @@ public class RegisterAndLoginActivity extends Activity {
     private Account mAccount;
 
 
-
+     private LinearLayout layout_backup;
     private ImageButton ibtn_backup;
     private View layoutRegister;
     private View layoutLogin;
@@ -101,6 +102,8 @@ public class RegisterAndLoginActivity extends Activity {
         rEtUserName=(EditText)layoutRegister.findViewById(R.id.et_user_name);
         btnRegister=(Button)layoutRegister.findViewById(R.id.btn_register);
         btnGetCode=(Button)layoutRegister.findViewById(R.id.btn_get_code);
+
+        layout_backup = (LinearLayout)layoutRegister.findViewById(R.id.linearlayout_backup);
         ibtn_backup = (ImageButton)layoutRegister.findViewById(R.id.ibtn_backup);
        // btnBack=(Button)layoutRegister.findViewById(R.id.btnBack);
         authCodeItem=layoutRegister.findViewById(R.id.auth_code_item);
@@ -151,7 +154,7 @@ public class RegisterAndLoginActivity extends Activity {
             }
         });
 
-        ibtn_backup.setOnClickListener(new View.OnClickListener() {
+        layout_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 layoutRegister.setVisibility(View.GONE);

@@ -10,10 +10,10 @@ package com.example.andy.connectutil.Bean;
 public class HelpItem {
 
     private String helpName;
-    private String helpInfo;
-public HelpItem(String name, String info){
+    private int image_helpInfo;
+    public HelpItem(String name, int Res){
     this.helpName = name;
-    this.helpInfo =info;
+    this.image_helpInfo =Res;
 
 }
     public String getHelpName() {
@@ -24,11 +24,11 @@ public HelpItem(String name, String info){
         this.helpName = helpName;
     }
 
-    public String getHelpInfo() {
-        return helpInfo;
+    public int getHelpInfo() {
+        return image_helpInfo;
     }
 
-    public void setHelpInfo(String helpInfo) {
-        this.helpInfo = helpInfo;
+    public void setHelpInfo(int Res) {
+        this.image_helpInfo= Res;
     }
 }

@@ -14,11 +14,7 @@
 
     />
 
-    <View  android:layout_height="2px"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape_divider"
-        />
+   <include layout="@layout/layout_divider"/>
 
     <TextView
         android:id="@+id/tv_toolbar_others"

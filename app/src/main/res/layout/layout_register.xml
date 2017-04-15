@@ -6,23 +6,40 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <RelativeLayout
-        style="@style/TitleBar">
+    <RelativeLayout style="@style/TitleBar">
 
         <TextView
             style="@style/TitleTextView"
+            android:layout_alignParentRight="true"
             android:text="注册" />
 
-        <ImageButton
-            android:id="@+id/ibtn_backup"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:background="@color/colorMainGray"
-            android:src="@drawable/backup"
-            android:layout_height="match_parent"
-           android:layout_width="70dp"
+        <LinearLayout
+            android:id="@+id/linearlayout_backup"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@color/colorMainGray">
 
-             />
+            <ImageButton
+                android:id="@+id/ibtn_backup"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorMainGray"
+                android:paddingLeft="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="登录"
+                android:textColor="#fff" />
+
+
+        </LinearLayout>
+
+
+        />
 
     </RelativeLayout>
 

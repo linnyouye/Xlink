@@ -44,8 +44,11 @@
     <color name="colorIconGray">#cdcdcd</color>
     <color name="colorIconAdddGray">#515151</color>
 
-    <color name="colorMainGray">#354046</color>
-    <color name="colorInnerGray">#2b3036</color>
+    <color name="colorMainGray">#303538</color>
+
+    <color name="colorInnerGray">#242529</color>
+    <!--<color name="colorMainGray">#354046</color>-->
+    <!--<color name="colorInnerGray">#2b3036</color>-->
 
     <color name="colorBottomPopViewEnd">#354044</color>
     <color name="colorBottomPopViewStart">#8c9197</color>
