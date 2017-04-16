@@ -7,7 +7,12 @@
     android:orientation="vertical">
 
     <RelativeLayout style="@style/TitleBar">
+<ProgressBar
+    android:id="@+id/login_progressbar"
+    android:padding="10dp"
 
+    android:layout_width="70dp"
+    android:layout_height="match_parent" />
         <TextView
             style="@style/TitleTextView"
             android:text="登录" />
@@ -16,7 +21,10 @@
 
             android:id="@+id/to_register"
             style="@style/TitleActionButton"
-            android:text="注册" />
+            android:text="注册"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

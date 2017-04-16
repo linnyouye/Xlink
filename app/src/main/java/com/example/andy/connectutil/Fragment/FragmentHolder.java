@@ -2,6 +2,7 @@ package com.example.andy.connectutil.Fragment;
 
 
 import android.content.Context;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -85,6 +86,9 @@ public class FragmentHolder {
      * @param isBackToStack 是否添加到回退栈中
      */
     public void replaceFragment(Fragment fragment, String tag, boolean isBackToStack) {
+           if(mainActivity.behavior.getState()== BottomSheetBehavior.STATE_EXPANDED){
+            mainActivity.setBottomSheetOnOff();
+        }
         fragmentstack.push(tag);
         Fragment_State=fragmentstack.peek();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

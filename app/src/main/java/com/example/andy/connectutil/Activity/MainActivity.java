@@ -59,6 +59,10 @@ import java.util.Timer;
 public class MainActivity extends BasicActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, HolderListener {
 
 
+    public boolean isSetting_state() {
+        return setting_state;
+    }
+
     private boolean setting_state = true;
 
     private long firstTime = 0;
@@ -104,7 +108,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     private ImageButton bottom_setting;
 
     TextView main_title;
-    protected BottomSheetBehavior behavior;
+    public BottomSheetBehavior behavior;
 
     @Override
     protected void setBefortLayout() {
@@ -225,13 +229,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 holder.removeAllFragment();
                 break;
             case R.id.bottom_setting:
-                if (setting_state) {
-
+                if (isSetting_state()) {
                     mAdapter.setShow_type(true);
                     setting_state = false;
 
                 } else {
-                    mAdapter.setShow_type(false);
+                  mAdapter.setShow_type(false);
                     setting_state = true;
                 }
                 break;
@@ -324,6 +327,7 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
     public void setBottomSheetOnOff() {
             int state = behavior.getState();
             if (state == BottomSheetBehavior.STATE_EXPANDED) {
+                offSetting();
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             } else {
@@ -348,35 +352,15 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
                 super.onBackPressed();
             }
         }
-
-
     }
 
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//
-//            int state=behavior.getState();
-//            if (state==BottomSheetBehavior.STATE_EXPANDED) {
-//          //      behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//         //       return true;
-//            }else
-//            {
-//                if (keyCode == event.KEYCODE_BACK) {
-//
-//                    if (drawer.isDrawerOpen(GravityCompat.START)) {
-//                        drawer.closeDrawer(GravityCompat.START);
-//                    } else if (!holder.removeOne()) {
-//
-//                  //      backup();
-//
-//                    }
-//
-//                }
-//            }
-//        return false;  //super.onKeyDown(keyCode, event);
-//    }
-
+public void offSetting(){
+    if(mAdapter.isShow_type() == false){
+        mAdapter.setShow_type(true);
+        setting_state=false;
+    }
+}
     public String getFragment_state() {
         return fragment_state;
     }
@@ -510,6 +494,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
         mAdapter.notifyDataSetChanged();
         onlineDeviceAdapter.notifyDataSetChanged();
     }
+
+
+
+
 
     public void saveInstance() {
 

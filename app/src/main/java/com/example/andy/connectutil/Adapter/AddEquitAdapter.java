@@ -12,13 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.andy.connectutil.Activity.MainActivity;
-
 import com.example.andy.connectutil.Activity.MyApplication;
-import com.example.andy.connectutil.Fragment.HolderListener;
-
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.entity.Device.Device;
 import com.example.andy.connectutil.entity.Device.ToastUtil;
@@ -49,6 +45,10 @@ public class AddEquitAdapter extends RecyclerView.Adapter<AddEquitAdapter.MyView
 
     private AddEquipmentListener addEquipmentListener = null;
 
+
+    public boolean isShow_type() {
+        return show_type;
+    }
 
     //正常显示状态
     private boolean show_type = true;

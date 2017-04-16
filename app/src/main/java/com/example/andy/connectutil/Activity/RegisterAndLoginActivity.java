@@ -14,11 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.andy.connectutil.R;
 import com.example.andy.connectutil.SharePrefrence.Account;
 import com.example.andy.connectutil.XlinkConnect;
-import com.example.andy.connectutil.andy;
 import com.example.andy.connectutil.entity.Device.ToastUtil;
 import com.example.andy.connectutil.entity.Net.ErrorMessage;
 import com.example.andy.connectutil.entity.Net.HttpUtils;
@@ -53,6 +53,7 @@ public class RegisterAndLoginActivity extends Activity {
     private View layoutRegister;
     private View layoutLogin;
 
+    private ProgressBar progressBar;
     private EditText rEtAccount;
     private EditText rEtCode;
     private EditText rEtPassword;
@@ -109,6 +110,8 @@ public class RegisterAndLoginActivity extends Activity {
        // btnBack=(Button)layoutRegister.findViewById(R.id.btnBack);
         authCodeItem=layoutRegister.findViewById(R.id.auth_code_item);
 
+        progressBar = (ProgressBar)layoutLogin.findViewById(R.id.login_progressbar);
+        progressBar.setVisibility(View.GONE);
         lEtAccount=(EditText)layoutLogin.findViewById(R.id.et_account);
         lEtPassword=(EditText)layoutLogin.findViewById(R.id.et_password);
         btnLogin=(Button)layoutLogin.findViewById(R.id.btn_login);
@@ -150,7 +153,7 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //shwProgressDialog();
-
+             progressBar.setVisibility(View.VISIBLE);
                 login();
             }
         });
@@ -310,7 +313,7 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onSuccess(String content) {
              //   cancelProgressDialog();
-
+             progressBar.setVisibility(View.GONE);
                 ToastUtil.showToast("登陆成功");
 
                 mAccount.setAccount(account,password);
@@ -324,6 +327,7 @@ public class RegisterAndLoginActivity extends Activity {
             @Override
             public void onFailed(int code, String msg) {
                // cancelProgressDialog();
+                progressBar.setVisibility(View.GONE);
                // showToast(msg);
                 if(code>4000000)
                 {

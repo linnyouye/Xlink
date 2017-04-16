@@ -62,14 +62,15 @@ public class DragItemCallback extends ItemTouchHelper.Callback {
         }
         addEquitAdapter.notifyItemMoved(fromPosition, toPosition);
         onlineDeviceAdapter.notifyItemMoved(fromPosition,toPosition);
-        //通知刷新视图和OnbindviewHolder的position，否则position不刷新，OnbindviewHolder里引用position将会出错，移动后点击删除，删除的将是移动位置前的条目
-        if (fromPosition < toPosition) {
-            addEquitAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
-            onlineDeviceAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
-        } else {
-            addEquitAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
-            onlineDeviceAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
-        }
+
+//        //通知刷新视图和OnbindviewHolder的position，否则position不刷新，OnbindviewHolder里引用position将会出错，移动后点击删除，删除的将是移动位置前的条目
+//        if (fromPosition < toPosition) {
+//            addEquitAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
+//            onlineDeviceAdapter.notifyItemRangeChanged(fromPosition, toPosition-fromPosition+1);
+//        } else {
+//            addEquitAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
+//            onlineDeviceAdapter.notifyItemRangeChanged(toPosition,fromPosition+1);
+//        }
 
         return true;
 

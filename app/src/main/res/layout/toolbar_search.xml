@@ -10,14 +10,14 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
 
-    <EditText
+    <com.example.andy.connectutil.View.ClearEditText
+        android:paddingRight="10dp"
         android:id="@+id/toolbar_et_search"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:gravity="center"
         android:background="@drawable/shape_toolbar_edittext"
-
         android:layout_weight="8"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
@@ -32,14 +32,15 @@
         android:layout_height="match_parent" />
 
     <ImageButton
-        android:background="@color/colorMainGray"
-        android:scaleType="fitCenter"
-        android:padding="7dp"
-        android:src="@drawable/toolbar_menu_white"
+        android:layout_marginRight="10dp"
         android:id="@+id/toolbar_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/colorMainGray"
+        android:padding="7dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/toolbar_menu_white" />
 
 </LinearLayout>
 

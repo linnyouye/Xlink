@@ -47,21 +47,23 @@
 
         <ImageButton
             android:id="@+id/bottom_add_ibtn"
+            android:padding="8dp"
             style="@style/ibtn_icon_size_stytle"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/icon_add"
             android:layout_alignTop="@+id/bottom_setting"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:src="@drawable/icon_add" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <ImageButton
             android:id="@+id/bottom_setting"
+            android:padding="8dp"
             style="@style/ibtn_icon_size_stytle"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:src="@drawable/setting" />
     </RelativeLayout>
 
